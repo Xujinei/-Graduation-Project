@@ -1,0 +1,32 @@
+body{
+    letter-spacing: 2px;
+}
+a:hover{
+    cursor: pointer;
+}
+.loginPanelHead{
+    font-size: large;
+
+}
+.welcom{
+    height: 80px;
+    line-height: 80px;
+    color: skyblue;
+}
+.myTopRow{
+    border-bottom: 4px cornflowerblue solid;
+    padding: 1%;
+}
+.myBottomRow{
+    padding: 0.5%;
+}
+.myHomeLeft{
+    border-right:4px cornflowerblue solid;
+    height: 100%;
+}
+.myUl{
+   list-style: none;
+}
+.myLi{
+    height: 25px;
+}
