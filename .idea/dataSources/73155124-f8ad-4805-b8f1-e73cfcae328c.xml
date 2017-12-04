@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="swm@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="swm">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sys"/>
+    <table id="7" parent="2" name="account">
+      <Comment>账号表</Comment>
+    </table>
+    <table id="8" parent="2" name="accountstatus">
+      <Comment>员工状态表</Comment>
+    </table>
+    <table id="9" parent="2" name="department">
+      <Comment>部门表</Comment>
+    </table>
+    <table id="10" parent="2" name="employeeinfo">
+      <Comment>员工信息表</Comment>
+    </table>
+    <table id="11" parent="2" name="employeestatus">
+      <Comment>员工状态表</Comment>
+    </table>
+    <table id="12" parent="2" name="employeesubsidy">
+      <Comment>员工补贴表</Comment>
+    </table>
+    <table id="13" parent="2" name="insurancestandard">
+      <Comment>五险一金标准</Comment>
+    </table>
+    <table id="14" parent="2" name="notice">
+      <Comment>通知表</Comment>
+    </table>
+    <table id="15" parent="2" name="position">
+      <Comment>职务表</Comment>
+    </table>
+    <table id="16" parent="2" name="promission">
+      <Comment>权限表</Comment>
+    </table>
+    <table id="17" parent="2" name="salary">
+      <Comment>员工工资表</Comment>
+    </table>
+    <table id="18" parent="2" name="salarystatus">
+      <Comment>工资状态</Comment>
+    </table>
+    <table id="19" parent="2" name="subsidytype">
+      <Comment>补贴类型</Comment>
+    </table>
+    <table id="20" parent="2" name="workinghours">
+      <Comment>工时表</Comment>
+    </table>
+    <column id="21" parent="7" name="id">
+      <Position>1</Position>
+      <Comment>账号编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="22" parent="7" name="username">
+      <Position>2</Position>
+      <Comment>用户名</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="23" parent="7" name="password">
+      <Position>3</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="7" name="employeeId">
+      <Position>4</Position>
+      <Comment>员工编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="25" parent="7" name="lastLoginTime">
+      <Position>5</Position>
+      <Comment>最近登录时间</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="26" parent="7" name="status">
+      <Position>6</Position>
+      <Comment>状态</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+    </column>
+    <column id="27" parent="7" name="promission">
+      <Position>7</Position>
+      <Comment>账号权限</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="28" parent="7" name="account_username_uindex">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="29" parent="7" name="account_employeeId_index">
+      <ColNames>employeeId</ColNames>
+    </index>
+    <index id="30" parent="7" name="account_accountstatus_id_fk">
+      <ColNames>status</ColNames>
+    </index>
+    <index id="31" parent="7" name="account_promission_id_fk">
+      <ColNames>promission</ColNames>
+    </index>
+    <key id="32" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="33" parent="7" name="account_username_uindex">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>account_username_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="34" parent="7" name="account_employeeinfo_id_fk">
+      <ColNames>employeeId</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>employeeinfo</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="35" parent="7" name="account_accountstatus_id_fk">
+      <ColNames>status</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>accountstatus</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="36" parent="7" name="account_promission_id_fk">
+      <ColNames>promission</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>promission</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="37" parent="8" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="8" name="name">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="39" parent="8" name="accountStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="40" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="41" parent="8" name="accountStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>accountStatus_name_uindex</UnderlyingIndexName>
+    </key>
+    <column id="42" parent="9" name="id">
+      <Position>1</Position>
+      <Comment>编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="43" parent="9" name="name">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="44" parent="9" name="leaderId">
+      <Position>3</Position>
+      <Comment>领导编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="45" parent="9" name="remark">
+      <Position>4</Position>
+      <Comment>备注</Comment>
+      <DataType>varchar(250)|0</DataType>
+    </column>
+    <index id="46" parent="9" name="department_name_uindex">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="47" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="48" parent="9" name="department_name_uindex">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>department_name_uindex</UnderlyingIndexName>
+    </key>
+    <column id="49" parent="10" name="id">
+      <Position>1</Position>
+      <Comment>员工信息编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="50" parent="10" name="name">
+      <Position>2</Position>
+      <Comment>员工姓名</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="51" parent="10" name="sex">
+      <Position>3</Position>
+      <Comment>员工性别</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="52" parent="10" name="brithday">
+      <Position>4</Position>
+      <Comment>生日</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="53" parent="10" name="telPhone">
+      <Position>5</Position>
+      <Comment>联系电话</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="10" name="email">
+      <Position>6</Position>
+      <Comment>邮箱地址</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="55" parent="10" name="address">
+      <Position>7</Position>
+      <Comment>地址</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="56" parent="10" name="identificationId">
+      <Position>8</Position>
+      <Comment>身份证号</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="57" parent="10" name="education">
+      <Position>9</Position>
+      <Comment>学历</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="58" parent="10" name="school">
+      <Position>10</Position>
+      <Comment>毕业院校</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="59" parent="10" name="profession">
+      <Position>11</Position>
+      <Comment>专业</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="60" parent="10" name="nationality">
+      <Position>12</Position>
+      <Comment>国籍</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="61" parent="10" name="politicalStatus">
+      <Position>13</Position>
+      <Comment>政治面貌</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="62" parent="10" name="entryTime">
+      <Position>14</Position>
+      <Comment>入职时间</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
+    </column>
+    <column id="63" parent="10" name="expireDate">
+      <Position>15</Position>
+      <Comment>合同到期时间</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
+    </column>
+    <column id="64" parent="10" name="departmentId">
+      <Position>16</Position>
+      <Comment>部门编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="10" name="positionId">
+      <Position>17</Position>
+      <Comment>职务编码</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="66" parent="10" name="baseSalary">
+      <Position>18</Position>
+      <Comment>基本工资</Comment>
+      <DataType>double|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="10" name="positionSalary">
+      <Position>19</Position>
+      <Comment>职务工资</Comment>
+      <DataType>double|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="68" parent="10" name="subsidy">
+      <Position>20</Position>
+      <Comment>基本补贴</Comment>
+      <DataType>double|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="69" parent="10" name="insuranceStandard">
+      <Position>21</Position>
+      <Comment>五险一金标准,外检</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="70" parent="10" name="employeeStatus">
+      <Position>22</Position>
+      <Comment>员工状态,外检，默认在职</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+    </column>
+    <index id="71" parent="10" name="employeeinfo_department_id_fk">
+      <ColNames>departmentId</ColNames>
+    </index>
+    <index id="72" parent="10" name="employeeinfo_position_id_fk">
+      <ColNames>positionId</ColNames>
+    </index>
+    <index id="73" parent="10" name="employeeinfo_insurancestandard_id_fk">
+      <ColNames>insuranceStandard</ColNames>
+    </index>
+    <index id="74" parent="10" name="employeeinfo_employeestatus_id_fk">
+      <ColNames>employeeStatus</ColNames>
+    </index>
+    <key id="75" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="76" parent="10" name="employeeinfo_department_id_fk">
+      <ColNames>departmentId</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>department</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="77" parent="10" name="employeeinfo_position_id_fk">
+      <ColNames>positionId</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>position</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="78" parent="10" name="employeeinfo_insurancestandard_id_fk">
+      <ColNames>insuranceStandard</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>insurancestandard</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="79" parent="10" name="employeeinfo_employeestatus_id_fk">
+      <ColNames>employeeStatus</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>employeestatus</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="80" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="81" parent="11" name="name">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="82" parent="11" name="employeeStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="83" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="84" parent="11" name="employeeStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>employeeStatus_name_uindex</UnderlyingIndexName>
+    </key>
+    <column id="85" parent="12" name="employeeId">
+      <Position>1</Position>
+      <Comment>员工编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="86" parent="12" name="workData">
+      <Position>2</Position>
+      <Comment>时间</Comment>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="87" parent="12" name="subsidyId">
+      <Position>3</Position>
+      <Comment>补贴类型</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="88" parent="12" name="subsidyAmount">
+      <Position>4</Position>
+      <Comment>补贴金额</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="89" parent="12" name="employeesubsidy_subsidytype_id_fk">
+      <ColNames>subsidyId</ColNames>
+    </index>
+    <key id="90" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>workData</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="91" parent="12" name="employeesubsidy_subsidytype_id_fk">
+      <ColNames>subsidyId</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>subsidytype</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="92" parent="13" name="id">
+      <Position>1</Position>
+      <Comment>编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="93" parent="13" name="name">
+      <Position>2</Position>
+      <Comment>名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="13" name="pension">
+      <Position>3</Position>
+      <Comment>养老保险(%)</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="95" parent="13" name="medical">
+      <Position>4</Position>
+      <Comment>医疗保险</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="96" parent="13" name="unemployment">
+      <Position>5</Position>
+      <Comment>失业保险</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="97" parent="13" name="injury">
+      <Position>6</Position>
+      <Comment>工伤保险</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="98" parent="13" name="maternity">
+      <Position>7</Position>
+      <Comment>生育保险</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="99" parent="13" name="housing">
+      <Position>8</Position>
+      <Comment>住房公积金</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="100" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="101" parent="14" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="14" name="recipientId">
+      <Position>2</Position>
+      <Comment>接收人编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="103" parent="14" name="content">
+      <Position>3</Position>
+      <Comment>通知内容</Comment>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="104" parent="14" name="noticeTime">
+      <Position>4</Position>
+      <Comment>通知时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="105" parent="14" name="status">
+      <Position>5</Position>
+      <Comment>状态</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="106" parent="14" name="notice_employeeinfo_id_fk">
+      <ColNames>recipientId</ColNames>
+    </index>
+    <key id="107" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="108" parent="14" name="notice_employeeinfo_id_fk">
+      <ColNames>recipientId</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>employeeinfo</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="109" parent="15" name="id">
+      <Position>1</Position>
+      <Comment>职务编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="110" parent="15" name="name">
+      <Position>2</Position>
+      <Comment>职务名称</Comment>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="15" name="remark">
+      <Position>3</Position>
+      <Comment>备注</Comment>
+      <DataType>varchar(250)|0</DataType>
+    </column>
+    <key id="112" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="113" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="114" parent="16" name="name">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <index id="115" parent="16" name="promission_name_uindex">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="116" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="117" parent="16" name="promission_name_uindex">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>promission_name_uindex</UnderlyingIndexName>
+    </key>
+    <column id="118" parent="17" name="employeeId">
+      <Position>1</Position>
+      <Comment>员工编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="119" parent="17" name="workData">
+      <Position>2</Position>
+      <Comment>工作周期(2017-11-01)</Comment>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="120" parent="17" name="baseSalary">
+      <Position>3</Position>
+      <Comment>基本工资</Comment>
+      <DataType>double|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="121" parent="17" name="positionSalary">
+      <Position>4</Position>
+      <Comment>职务工资</Comment>
+      <DataType>double|0</DataType>
+    </column>
+    <column id="122" parent="17" name="baseSubsidy">
+      <Position>5</Position>
+      <Comment>基本补贴</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="123" parent="17" name="otherSubsidy">
+      <Position>6</Position>
+      <Comment>其他补贴</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="124" parent="17" name="tax">
+      <Position>7</Position>
+      <Comment>税收</Comment>
+      <DataType>double|0</DataType>
+    </column>
+    <column id="125" parent="17" name="insurance">
+      <Position>8</Position>
+      <Comment>五险一金</Comment>
+      <DataType>double|0</DataType>
+    </column>
+    <column id="126" parent="17" name="status">
+      <Position>9</Position>
+      <Comment>工资状态</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="127" parent="17" name="approver">
+      <Position>10</Position>
+      <Comment>审批人</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="128" parent="17" name="payTime">
+      <Position>11</Position>
+      <Comment>发放时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <index id="129" parent="17" name="salary_employeeinfo_id_fk">
+      <ColNames>approver</ColNames>
+    </index>
+    <index id="130" parent="17" name="salary_salarystatus_id_fk">
+      <ColNames>status</ColNames>
+    </index>
+    <key id="131" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>workData</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="132" parent="17" name="salary_salarystatus_id_fk">
+      <ColNames>status</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>salarystatus</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="133" parent="17" name="salary_employeeinfo_id_fk">
+      <ColNames>approver</ColNames>
+      <RefSchemaName>swm</RefSchemaName>
+      <RefTableName>employeeinfo</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="134" parent="18" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="135" parent="18" name="name">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="136" parent="18" name="salaryStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="137" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="138" parent="18" name="salaryStatus_name_uindex">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>salaryStatus_name_uindex</UnderlyingIndexName>
+    </key>
+    <column id="139" parent="19" name="id">
+      <Position>1</Position>
+      <Comment>编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="140" parent="19" name="name">
+      <Position>2</Position>
+      <Comment>名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="141" parent="19" name="remark">
+      <Position>3</Position>
+      <Comment>备注</Comment>
+      <DataType>varchar(250)|0</DataType>
+    </column>
+    <key id="142" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="143" parent="20" name="id">
+      <Position>1</Position>
+      <Comment>员工编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="144" parent="20" name="workData">
+      <Position>2</Position>
+      <Comment>时间周期（2017-11-01）data</Comment>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="145" parent="20" name="workHours">
+      <Position>3</Position>
+      <Comment>总工时</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="146" parent="20" name="overTime">
+      <Position>4</Position>
+      <Comment>总加班时长</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="147" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
