@@ -13,6 +13,8 @@ a:hover{
     line-height: 80px;
     color: skyblue;
 }
+
+
 .myTopRow{
     border-bottom: 4px cornflowerblue solid;
     padding: 1%;
@@ -29,4 +31,15 @@ a:hover{
 }
 .myLi{
     height: 25px;
+}
+/*无效样式
+.col-md-4 #sysTitle{
+    border: 1px solid red;
+    font-weight: bold;
+    font-size: 20px;
+    color:deepskyblue;
+}*/
+.atitle{
+    margin-bottom: 2%;
+    margin-top: 2%;
 }

@@ -27,9 +27,14 @@
 <div class="mycontain">
     <div class="container-fluid">
         <div class="row myTopRow">
-            <div class="col-md-4">薪酬福利管理系统</div>
-            <div class="col-md-4 col-md-offset-8">
-                欢迎您：
+            <div class="col-md-4">
+                <div style="color: deepskyblue;font-size: 20px;font-weight: bold"> 薪酬福利管理系统</div>
+            </div>
+            <div class="col-md-2 col-md-offset-6">
+                <div>
+                    欢迎您：<span id="userName">tom</span>
+                    <button type="button" class="btn btn-primary btn-sm pull-right">退出</button>
+                </div>
             </div>
         </div>
         <div class="row myBottomRow">
@@ -48,10 +53,9 @@
                     <div id="personManage" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a> 工时填报</a></li>
-                                <li class="myLi"><a>加班填报</a></li>
-                                <li class="myLi"><a>个人信息管理</a></li>
+                                <li class="myLi"><a>工时填报</a></li>
                                 <li class="myLi"><a>工资报表</a></li>
+                                <li class="myLi"><a>账号管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -70,9 +74,7 @@
                     <div id="message" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>工时审核通知</a></li>
-                                <li class="myLi"><a>加班审核通知</a></li>
-                                <li class="myLi"><a>薪资发放通知</a></li>
+                                <li class="myLi"><a>薪资发放通知</a><span class="badge pull-right">新</span></li>
                             </ul>
                         </div>
                     </div>
@@ -91,8 +93,6 @@
                     <div id="SWManage" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>工时审核</a></li>
-                                <li class="myLi"><a>加班审核</a></li>
                                 <li class="myLi"><a>薪资审核</a></li>
                                 <li class="myLi"><a>部门工资统计报表</a></li>
                                 <li class="myLi"><a>部门人员工资明细</a></li>
@@ -128,7 +128,9 @@
             </div>
             <%--左边导航栏结束--%>
             <%--右边内容--%>
-            <div class="col-md-9 myHomeRight">neirong</div>
+            <div class="col-md-9 myHomeRight">
+                <iframe width="100%" height="840px" src="personalManagement.jsp"></iframe>
+            </div>
             <%--右边内容结束--%>
         </div>
     </div>
