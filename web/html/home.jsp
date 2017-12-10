@@ -53,9 +53,9 @@
                     <div id="personManage" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>工时填报</a></li>
-                                <li class="myLi"><a>工资报表</a></li>
-                                <li class="myLi"><a>账号管理</a></li>
+                                <li class="myLi"><a>个人信息管理</a></li>
+                                <li class="myLi"><a>个人账号管理</a></li>
+                                <li class="myLi"><a>个人薪酬报表</a></li>
                             </ul>
                         </div>
                     </div>
@@ -80,6 +80,26 @@
                     </div>
                 </div>
                 <%--通知模块结束--%>
+                    <%--员工管理模块--%>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="#employee">
+                                    员工管理
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="employee" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <ul class="myUl">
+                                    <li class="myLi"><a>员工信息管理</a></li>
+                                    <li class="myLi"><a>员工账号管理</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <%--员工管理模块结束--%>
                 <%--薪资福利管理模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -129,7 +149,7 @@
             <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">
-                <iframe width="100%" height="840px" src="personalManagement.jsp"></iframe>
+                <iframe width="100%" height="840px" src="accountManagement.jsp"></iframe>
             </div>
             <%--右边内容结束--%>
         </div>

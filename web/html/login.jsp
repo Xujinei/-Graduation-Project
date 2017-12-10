@@ -17,6 +17,7 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+
   </head>
   <body>
       <div class="mycontain">
@@ -24,7 +25,7 @@
             <div class="row" style="margin-top: 150px">
               <div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-primary">
-                  <div class="panel-heading loginPanelHead">
+                    <div class="panel-heading loginPanelHead" id="test">
                     企业薪资福利管理系统登录
                   </div>
                   <div class="panel-body">
