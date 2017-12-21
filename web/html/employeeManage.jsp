@@ -23,28 +23,107 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <script src="js/my.js"></script>
 
     <script>
 
     </script>
-
-
 </head>
 <body>
 <div class="mycontain inerFrame">
     <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
-            <a href="#personalInfo" data-toggle="tab" id="test">
+        <li id="employeeListLab"><a href="#employeeList" data-toggle="tab">员工信息列表</a></li>
+        <li id="employeeInfoLab">
+            <a href="#employeeInfo" data-toggle="tab">
                 员工详细信息
             </a>
         </li>
-        <li><a href="#personalAccount" data-toggle="tab">修改密码</a></li>
-        <li><a href="#salaryReport" data-toggle="tab">工资报表</a></li>
+        <li id="addEmployeeLab">
+            <a href="#addemployee" data-toggle="tab">
+                新增员工
+            </a>
+        </li>
     </ul>
     <div id="myTabContent" class="tab-content">
-        <%--个人信息--%>
-        <div class="tab-pane fade in active" id="personalInfo" style="margin: 2%">
+        <%--员工列表--%>
+        <div class="tab-pane fade" id="employeeList" style="margin:4%;" align="center">
+            <%--条件查询账号--%>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" class="form-control" id="name" placeholder="请输入员工姓名" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="position">职务</label>
+                    <select class="form-control" id="position" name="position">
+                        <option>1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="department">部门</label>
+                    <select class="form-control" id="department" name="department">
+                        <option>1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="employeeStatus">状态</label>
+                    <select class="form-control" id="employeeStatus" name="employeeStatus">
+                        <option>1</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">查询</button>
+            </form>
+            <%--选择删除--%>
+            <form class="form-inline">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 全选
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-primary" id="addEmployeeBtn">添加</button>
+            </form>
+            <%--账号列表--%>
             <table class="table infoTable personInfoTable">
+                <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>姓名</th>
+                    <th>姓名</th>
+                    <th>所在部门</th>
+                    <th>职务</th>
+                    <th>性别</th>
+                    <th>邮箱</th>
+                    <th>基本工资</th>
+                    <th>职务工资</th>
+                    <th>入职时间</th>
+                    <th>编辑</th>
+                    <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button class="btn btn-primary" id="editEmployeeInfoBtn">编辑</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <%--员工列表结束--%>
+        <%--员工详细信息--%>
+        <div class="tab-pane fade" id="employeeInfo" style="margin: 2%">
+            <table class="table infoTable">
                 <tbody>
                 <tr>
                     <td>
@@ -148,62 +227,118 @@
                 </tbody>
             </table>
         </div>
-        <%--个人信息结束--%>
-        <%--个人账号：修改密码--%>
-        <div class="tab-pane fade" id="personalAccount" style="margin:4%;" align="center">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="oldPassword" class="control-label">原密码：</label>
-                    <input type="password" name="password" value="123456" id="oldPassword"/>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="control-label">新密码：</label>
-                    <input type="password" name="password" value="123456" id="password"/>
-                </div>
-                <div class="form-group">
-                    <label for="ensurePassword" class="control-label">确认密码：</label>
-                    <input type="password" name="password" value="123456" id="ensurePassword"/>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">修改</button>
-                </div>
-            </form>
-        </div>
-        <%--个人账号结束--%>
-        <%--工资报表--%>
-        <div class="tab-pane fade" id="salaryReport">
-            <div class="salaryCount">
-                <p>已找到<span>n</span>条工资记录 </p>
-            </div>
+        <%--员工详细信息结束--%>
+        <%--添加员工信息--%>
+        <div class="tab-pane fade" id="addemployee" style="margin: 2%">
             <table class="table infoTable">
-                <thead>
-                <tr>
-                    <th>时间</th>
-                    <th>基本工资</th>
-                    <th>职务工资</th>
-                    <th>基本补贴</th>
-                    <th>其他补贴</th>
-                    <th>税收</th>
-                    <th>五险一金</th>
-                    <th>发放时间</th>
-                </tr>
-                </thead>
                 <tbody>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <label>姓名：</label>
+                        <input name="name" type="text"/>
+                    </td>
+                    <td>
+                        <label>性别：</label>
+                        <input type="radio" name="sex" value=""/>男
+                        <input type="radio" name="sex" value=""/>女
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>出生日期：</label>
+                        <input name="brithday" type="text"/>
+                    </td>
+                    <td>
+                        <label>联系电话：</label>
+                        <input type="tel" name="telPhone"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>邮箱：</label>
+                        <input name="email" type="email"/>
+                    </td>
+                    <td>
+                        <label>地址：</label>
+                        <input type="text" name="address"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>身份证号：</label>
+                        <input name="identificationId" type="text"/>
+                    </td>
+                    <td>
+                        <label>学历：</label>
+                        <input type="text" name="education"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>毕业学校：</label>
+                        <input name="school" type="text"/>
+                    </td>
+                    <td>
+                        <label>专业：</label>
+                        <input type="text" name="profession"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>政治面貌：</label>
+                        <input name="politicalStatus" type="text"/>
+                    </td>
+                    <td>
+                        <label>入职时间：</label>
+                        <input type="text" name="entryTime"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>合同到期时间：</label>
+                        <input name="expireDate" type="text"/>
+                    </td>
+                    <td>
+                        <label>所属部门：</label>
+                        <select name="department">
+                            <option>1</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>职务：</label>
+                        <select name="position">
+                            <option>2</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label>基本工资：</label>
+                        <input name="baseSalary" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>职务工资：</label>
+                        <input type="text" name="positionSalary"/>
+                    </td>
+                    <td>
+                        <label>基本补贴：</label>
+                        <input name="subsidy" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm pull-right">添加</button>
+                    </td>
+                    <td>
+
+                    </td>
                 </tr>
                 </tbody>
-
             </table>
         </div>
-        <%--工资报表结束--%>
+        <%--添加员工信息结束--%>
     </div>
 </div>
 </body>

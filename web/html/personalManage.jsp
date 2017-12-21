@@ -23,6 +23,7 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <script src="js/my.js"></script>
 
     <script>
         $(function () {
@@ -36,17 +37,17 @@
 <body>
 <div class="mycontain inerFrame">
     <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
+        <li id="personalInfoLi">
             <a href="#personalInfo" data-toggle="tab" id="test">
                 个人信息
             </a>
         </li>
-        <li><a href="#personalAccount" data-toggle="tab">修改密码</a></li>
-        <li><a href="#salaryReport" data-toggle="tab">工资报表</a></li>
+        <li id="modifyPWLi"><a href="#personalAccount" data-toggle="tab">修改密码</a></li>
+        <li id="salaryListLi"><a href="#salaryReport" data-toggle="tab">工资报表</a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
         <%--个人信息--%>
-        <div class="tab-pane fade in active" id="personalInfo" style="margin: 2%">
+        <div class="tab-pane fade" id="personalInfo" style="margin: 2%">
             <table class="table infoTable personInfoTable">
                 <tbody>
                 <tr>
