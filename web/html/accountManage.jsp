@@ -14,7 +14,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 可选的Bootstrap主题文件（一般不使用） -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
 
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
@@ -23,8 +23,20 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <script src="js/my.js"></script>
 
     <script>
+        //全选
+        /* console.log(document.getElementById("selectAll").innerHTML);
+         $("#selectAll").change(function () {
+             console.log("change");
+         });
+         if ($("#selectAll").is(':checked')) {
+             console.log("select All");
+             $(".aCheckbox").attr("checked", "checked");
+         }
+         ;*/
+
 
     </script>
 
@@ -33,15 +45,20 @@
 <body>
 <div class="mycontain inerFrame">
     <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
-            <a href="#accountList" data-toggle="tab" id="test">
+        <li id="accountListLi">
+            <a href="#accountList" data-toggle="tab">
                 账号列表
+            </a>
+        </li>
+        <li id="editAccountLi">
+            <a href="#accountInfo" data-toggle="tab">
+                修改账号信息
             </a>
         </li>
     </ul>
     <div id="myTabContent" class="tab-content">
-        <%--账号信息--%>
-        <div class="tab-pane fade in active" id="accountList" style="margin: 2%">
+        <%--账号列表信息--%>
+        <div class="tab-pane fade" id="accountList" style="margin: 2%">
             <%--条件查询账号--%>
             <form class="form-inline">
                 <div class="form-group">
@@ -72,7 +89,7 @@
             <form class="form-inline">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> 全选
+                        <input type="checkbox" id="selectAll"/> 全选
                     </label>
                 </div>
                 <button type="submit" class="btn btn-danger">删除</button>
@@ -96,7 +113,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" class="aCheckbox"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -104,13 +121,64 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <button class="btn btn-primary">编辑</button>
+                        <button class="btn btn-primary" id="editAccount">编辑</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <%--账号结束--%>
+        <%--账号列表结束--%>
+        <%--修改账号信息--%>
+        <div class="tab-pane fade" id="accountInfo" style="margin: 2%">
+            <table class="table infoTable">
+                <tbody>
+                <tr>
+                    <td>
+                        <label>用户名：</label>
+                        <input value="name" name="username" type="text"/>
+                    </td>
+                    <td>
+                        <label>员工姓名：</label>
+                        <input value="name" name="name" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>所在部门：</label>
+                        <select class="form-control" style="width: 50%;display: inline-block" name="department">
+                            <option>1</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label>权限：</label>
+                        <select class="form-control" style="width: 50%;display: inline-block" name="promission">
+                            <option>1</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>状态：</label>
+                        <select class="form-control" style="width: 50%;display: inline-block" name="status">
+                            <option>1</option>
+                        </select>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <button type="button" class="btn btn-primary btn-sm">修改</button>
+                    </td>
+                    <td align="left">
+                        <button type="button" class="btn btn-primary btn-sm" id="exitAccount">退出</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <%--修改账号信息结束--%>
     </div>
 </div>
 </body>

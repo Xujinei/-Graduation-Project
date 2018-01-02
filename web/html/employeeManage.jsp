@@ -217,11 +217,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm pull-right">修改</button>
+                    <td align="center">
+                        <button type="button" class="btn btn-primary btn-sm">修改</button>
                     </td>
-                    <td>
-
+                    <td align="left">
+                        <button type="button" class="btn btn-primary btn-sm" id="exitInfo">退出</button>
                     </td>
                 </tr>
                 </tbody>
@@ -328,11 +328,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm pull-right">添加</button>
+                    <td align="center">
+                        <button type="button" class="btn btn-primary btn-sm">添加</button>
                     </td>
-                    <td>
-
+                    <td align="left">
+                        <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
                     </td>
                 </tr>
                 </tbody>
