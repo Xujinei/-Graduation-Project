@@ -22,6 +22,9 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+
+    <script src="js/home.js"></script>
+    <script src="js/my.js"></script>
 </head>
 <body>
 <div class="mycontain">
@@ -43,19 +46,19 @@
                 <%--个人管理模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title" id="personalManageTitle">
                             <a data-toggle="collapse" data-parent="#accordion"
                                href="#personManage">
                                 个人管理
                             </a>
                         </h4>
                     </div>
-                    <div id="personManage" class="panel-collapse collapse in">
+                    <div id="personManage" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>工时填报</a></li>
-                                <li class="myLi"><a>工资报表</a></li>
-                                <li class="myLi"><a>账号管理</a></li>
+                                <li class="myLi" id="personalManage1"><a>个人信息管理</a></li>
+                                <li class="myLi" id="personalManage2"><a>个人账号管理</a></li>
+                                <li class="myLi" id="personalManage3"><a>个人薪酬报表</a></li>
                             </ul>
                         </div>
                     </div>
@@ -71,7 +74,7 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="message" class="panel-collapse collapse in">
+                    <div id="message" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
                                 <li class="myLi"><a>薪资发放通知</a><span class="badge pull-right">新</span></li>
@@ -80,6 +83,26 @@
                     </div>
                 </div>
                 <%--通知模块结束--%>
+                    <%--员工管理模块--%>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" id="employeeManageTitle">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="#employee">
+                                    员工管理
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="employee" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <ul class="myUl">
+                                    <li class="myLi" id="employeeInfoLi"><a>员工信息管理</a></li>
+                                    <li class="myLi" id="employeeAccount"><a>员工账号管理</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <%--员工管理模块结束--%>
                 <%--薪资福利管理模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -90,13 +113,13 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="SWManage" class="panel-collapse collapse in">
+                    <div id="SWManage" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>薪资审核</a></li>
-                                <li class="myLi"><a>部门工资统计报表</a></li>
-                                <li class="myLi"><a>部门人员工资明细</a></li>
-                                <li class="myLi"><a>职务工统计资明细</a></li>
+                                <li class="myLi" id="salaryCheck"><a>薪资审核结算</a></li>
+                                <li class="myLi" id="departmentSalary"><a>部门工资统计报表</a></li>
+                                <li class="myLi" id="departmentSalaryInfo"><a>部门人员工资明细</a></li>
+                                <li class="myLi" id="positionSalary"><a>职务工资统计报表</a></li>
                             </ul>
                         </div>
                     </div>
@@ -112,14 +135,14 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="sysManage" class="panel-collapse collapse in">
+                    <div id="sysManage" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>部门管理</a></li>
-                                <li class="myLi"><a>职务管理</a></li>
-                                <li class="myLi"><a>补贴类型管理</a></li>
-                                <li class="myLi"><a>六险一金标准管理</a></li>
-                                <li class="myLi"><a>账号管理</a></li>
+                                <li class="myLi" id="departmentManage"><a>部门管理</a></li>
+                                <li class="myLi" id="positionManage"><a>职务管理</a></li>
+                                <%--<li class="myLi"><a>补贴类型管理</a></li>--%>
+                                <li class="myLi" id="insuranceManage"><a>六险一金标准管理</a></li>
+                                <%--<li class="myLi"><a>账号管理</a></li>--%>
                             </ul>
                         </div>
                     </div>
@@ -129,7 +152,7 @@
             <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">
-                <iframe width="100%" height="840px" src="personalManagement.jsp"></iframe>
+                <iframe width="100%" height="840px" src="accountManage.jsp" id="containFrame"></iframe>
             </div>
             <%--右边内容结束--%>
         </div>

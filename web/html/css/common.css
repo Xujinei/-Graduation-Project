@@ -1,6 +1,10 @@
 body{
     letter-spacing: 2px;
 }
+
+.inerFrame {
+
+}
 a:hover{
     cursor: pointer;
 }
@@ -43,3 +47,26 @@ a:hover{
     margin-bottom: 2%;
     margin-top: 2%;
 }
+
+/*个人信息管理样式*/
+.infoTable {
+    padding: 3%;
+}
+
+.personInfoTable > tbody > tr > td > input {
+    border: none;
+}
+
+.salaryCount {
+    margin: 3%;
+}
+
+/*个人信息管理样式结束*/
+
+/*薪酬福利审核 ： salaryCheckManage.jsp*/
+.TipInfo {
+    color: red;
+    padding: 1%;
+}
+
+/*薪酬福利审核 ： salaryCheckManage.jsp 结束*/

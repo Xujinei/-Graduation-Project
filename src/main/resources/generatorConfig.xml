@@ -5,14 +5,30 @@
 
 <generatorConfiguration>
     <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
         <property name="javaFileEncoding" value="UTF-8"/>
         <!--<property name="useMapperCommentGenerator" value="false"/>-->
+
+        <!--生成一对一配置-->
+        <!-- <plugin type="cc.bandaotixi.plugins.OneToOnePlugin"></plugin>
+ -->
+        <!--生成一对多配置-->
+        <!--<plugin type="cc.bandaotixi.plugins.OneToManyPlugin"></plugin>
+-->
+
+        <!--添加数据库中的注释到java-->
+        <!--<commentGenerator type="cc.bandaotixi.plugins.BDTCommentGenerator">
+            <property name="javaFileEncoding" value="UTF-8"/>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="false" />
+        </commentGenerator>-->
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/swm"
                         userId="root"
                         password="123456">
         </jdbcConnection>
+
 
         <!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
         <javaTypeResolver>
@@ -31,5 +47,11 @@
         <table tableName="%">
             <generatedKey column="id" sqlStatement="Mysql"/>
         </table>
+
+        <!-- <table tableName="t_test" domainObjectName="TEst">
+             <generatedKey column="test_id" sqlStatement="MySql" identity="true" />
+
+             <oneToOne mappingTable="t_test" column="test_id" joinColumn="parent_test_id" where="t_test.is_deleted=0" />
+         </table>-->
     </context>
 </generatorConfiguration>
