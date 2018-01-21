@@ -153,13 +153,14 @@
             <table class="table infoTable">
                 <tbody>
                 <tr>
-                    <td>
-                        <label>职务编号：</label>
-                        <input value="id" name="positionId" type="text" disabled="disabled"/>
-                    </td>
+
                     <td>
                         <label>职务名称：</label>
                         <input value="name" name="positionName" type="text"/>
+                    </td>
+                    <td>
+                        <label>备注：</label>
+                        <input value="ramark" name="remark" type="text"/>
                     </td>
                 </tr>
                 <tr>
@@ -170,15 +171,6 @@
                     <td>
                         <label>要求：</label>
                         <textarea value="required" name="required"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>备注：</label>
-                        <input value="ramark" name="remark" type="text"/>
-                    </td>
-                    <td>
-
                     </td>
                 </tr>
                 <tr>

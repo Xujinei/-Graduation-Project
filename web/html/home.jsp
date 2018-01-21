@@ -22,6 +22,8 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+
+    <script src="js/home.js"></script>
     <script src="js/my.js"></script>
 </head>
 <body>
@@ -114,10 +116,10 @@
                     <div id="SWManage" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>薪资审核</a></li>
-                                <li class="myLi"><a>部门工资统计报表</a></li>
-                                <li class="myLi"><a>部门人员工资明细</a></li>
-                                <li class="myLi"><a>职务工统计资明细</a></li>
+                                <li class="myLi" id="salaryCheck"><a>薪资审核结算</a></li>
+                                <li class="myLi" id="departmentSalary"><a>部门工资统计报表</a></li>
+                                <li class="myLi" id="departmentSalaryInfo"><a>部门人员工资明细</a></li>
+                                <li class="myLi" id="positionSalary"><a>职务工资统计报表</a></li>
                             </ul>
                         </div>
                     </div>
@@ -138,9 +140,9 @@
                             <ul class="myUl">
                                 <li class="myLi" id="departmentManage"><a>部门管理</a></li>
                                 <li class="myLi" id="positionManage"><a>职务管理</a></li>
-                                <li class="myLi"><a>补贴类型管理</a></li>
-                                <li class="myLi"><a>六险一金标准管理</a></li>
-                                <li class="myLi"><a>账号管理</a></li>
+                                <%--<li class="myLi"><a>补贴类型管理</a></li>--%>
+                                <li class="myLi" id="insuranceManage"><a>六险一金标准管理</a></li>
+                                <%--<li class="myLi"><a>账号管理</a></li>--%>
                             </ul>
                         </div>
                     </div>

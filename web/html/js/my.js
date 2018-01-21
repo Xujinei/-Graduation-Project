@@ -2,7 +2,7 @@ $(function () {
     /*********************************主页：home.jsp*******************************/
     //个人管理
     $("#personalManageTitle").click(function () {
-        //$("#containFrame").attr("src", "personalManage.jsp");
+        $("#containFrame").attr("src", "personalManage.jsp");
     });
 
 
@@ -61,6 +61,33 @@ $(function () {
         $("#containFrame").attr("src", "accountManage.jsp");
     });
 
+    //--------------------------------薪酬福利管理
+    // 薪酬福利审核
+    $("#salaryCheck").click(function () {
+        $("#containFrame").attr("src", "salaryCheckManage.jsp");
+    });
+
+    // 各部门薪酬福利统计报表
+    $("#departmentSalary").click(
+        function () {
+            $("#containFrame").attr("src", "departmentSalaryCountManage.jsp");
+        }
+    );
+
+    // 各职务薪酬福利统计报表
+    $("#positionSalary").click(
+        function () {
+            $("#containFrame").attr("src", "positionSalaryCountManage.jsp");
+        }
+    );
+    // 部门薪酬福利明细报表
+    $("#departmentSalaryInfo").click(
+        function () {
+            $("#containFrame").attr("src", "departmentSalaryInfoManage.jsp");
+        }
+    );
+
+
     //---------------------------------系统管理
     // 部门管理
     $("#departmentManage").click(function () {
@@ -70,6 +97,12 @@ $(function () {
     $("#positionManage").click(function () {
         $("#containFrame").attr("src", "positionManage.jsp");
     });
+    // 六险一金标准管理
+    $("#insuranceManage").click(function () {
+        $("#containFrame").attr("src", "insuranceStandardManage.jsp");
+    });
+
+
 
     /**************************个人信息管理页面 personalManage.jsp*********************************/
     //初始化样式
@@ -96,6 +129,21 @@ $(function () {
 
 
     };
+
+    // 个人信息修改页面修改按钮点击事件
+    $("#editPersonalInfo").click(function () {
+        var btHtml = $("#editPersonalInfo").html();
+        if (btHtml == "修改") {
+            $(".personInfoTable tbody tr td input").attr("disabled", false).css("background-color", "gray");
+            $("#editPersonalInfo").html("保存");
+        } else {
+            $("#editPersonalInfo").html("修改");
+            // 保存操作
+            $(".personInfoTable tbody tr td input").attr("disabled", "disabled").css("background-color", "white");
+
+        }
+
+    });
 
     /***************************员工信息管理页面************************/
 
@@ -248,6 +296,115 @@ $(function () {
         $("#positionListLi").addClass("active");
         $("#positionList").addClass("in active");
         $("#addPosition").removeClass("in active");
+    });
+
+    /**************************六险一金标准管理页面： insuranceStandardManage.jsp******************************/
+    //初始化六险一金管理页面
+    $("#insuranceListLi").addClass("active");
+    $("#insuranceList").addClass("in active");
+    $("#editInsuranceLi").css("display", "none");
+    $("#addInsuranceLi").css("display", "none");
+
+    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
+    $("#editInsurance").click(function () {
+        $("#editInsuranceLi").css("display", "block");
+        $("#insuranceListLi").removeClass("active");
+        $("#insuranceList").removeClass("in active");
+        $("#insuranceInfo").addClass("in active");
+        $("#editInsuranceLi").addClass("active");
+    });
+
+    //退出编辑按钮点击事件
+    $("#exitInsurance").click(function () {
+        $("#editInsuranceLi").css("display", "none");
+        $("#insuranceListLi").addClass("active");
+        $("#insuranceList").addClass("in active");
+        $("#insuranceInfo").removeClass("in active");
+    });
+
+    // 添加标准点击按钮
+    $("#addInsuranceBtn").click(function () {
+        $("#addInsuranceLi").css("display", "block").addClass("active");
+        $("#addInsurance").addClass("in active");
+        $("#insuranceListLi").removeClass("active");
+        $("#insuranceList").removeClass("in active");
+    });
+
+    //退出添加标准
+    $("#exitAddInsurance").click(function () {
+        $("#addInsuranceLi").css("display", "none");
+        $("#insuranceListLi").addClass("active");
+        $("#insuranceList").addClass("in active");
+        $("#addInsurance").removeClass("in active");
+    });
+
+    /*************************薪酬审核管理页面：salaryCheckManage.jsp*******************/
+    //初始化页面
+    $("#salaryCheckLi").addClass("active");
+    $("#salaryCheckList").addClass("active in");
+    $("#salaryInfoLi").css("display", "none");
+
+    //详情按钮
+    $("#editSalaryCheckBtn").click(function () {
+        $("#salaryInfoLi").css("display", "block").addClass("active");
+        $("#salaryInfo").addClass("active in");
+        $("#salaryCheckLi").removeClass("active");
+        $("#salaryCheckList").removeClass("active in");
+
+    });
+    // 退出详情页按钮
+    $("#exitSalaryInfo").click(function () {
+        $("#salaryCheckLi").addClass("active");
+        $("#salaryCheckList").addClass("active in");
+        $("#salaryInfoLi").css("display", "none");
+        $("#salaryInfo").removeClass("active in");
+
+    });
+
+    /**********************部门工资统计报表： departmentSalaryCountManage**********************************/
+    //初始化页面
+    $("#departmentSalaryLi").addClass("active");
+    $("#departmentSalaryList").addClass("active in");
+    $("#departmentInfoSalaryLi").css("display", "none");
+
+    //详情按钮
+    $("#editDepartmentSalaryCheckBtn").click(function () {
+        $("#departmentInfoSalaryLi").css("display", "block").addClass("active");
+        $("#departmentSalaryInfoList").addClass("active in");
+        $("#departmentSalaryLi").removeClass("active");
+        $("#departmentSalaryList").removeClass("active in");
+
+    });
+    // 退出详情页按钮
+    $("#extDepartmentSalaryInfoBtn").click(function () {
+        $("#departmentSalaryLi").addClass("active");
+        $("#departmentSalaryList").addClass("active in");
+        $("#departmentInfoSalaryLi").css("display", "none");
+        $("#departmentSalaryInfoList").removeClass("active in");
+
+    });
+
+    /**********************职务工资统计报表： positionSalaryCountManage**********************************/
+    //初始化页面
+    $("#positionSalaryLi").addClass("active");
+    $("#positionSalaryList").addClass("active in");
+    $("#positionInfoSalaryLi").css("display", "none");
+
+    //详情按钮
+    $("#editPositionSalaryCheckBtn").click(function () {
+        $("#positionInfoSalaryLi").css("display", "block").addClass("active");
+        $("#positionSalaryInfoList").addClass("active in");
+        $("#positionSalaryLi").removeClass("active");
+        $("#positionSalaryList").removeClass("active in");
+
+    });
+    // 退出详情页按钮
+    $("#extPositionSalaryInfoBtn").click(function () {
+        $("#positionSalaryLi").addClass("active");
+        $("#positionSalaryList").addClass("active in");
+        $("#positionInfoSalaryLi").css("display", "none");
+        $("#positionSalaryInfoList").removeClass("active in");
+
     });
 
 });

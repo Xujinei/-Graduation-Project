@@ -143,7 +143,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary btn-sm pull-right">修改</button>
+                        <button type="button" class="btn btn-primary btn-sm pull-right" id="editPersonalInfo">修改
+                        </button>
                     </td>
                     <td>
 

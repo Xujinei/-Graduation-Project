@@ -62,3 +62,11 @@ a:hover{
 }
 
 /*个人信息管理样式结束*/
+
+/*薪酬福利审核 ： salaryCheckManage.jsp*/
+.TipInfo {
+    color: red;
+    padding: 1%;
+}
+
+/*薪酬福利审核 ： salaryCheckManage.jsp 结束*/
