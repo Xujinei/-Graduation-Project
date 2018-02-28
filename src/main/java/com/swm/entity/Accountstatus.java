@@ -1,7 +1,11 @@
 package com.swm.entity;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 import java.util.Date;
 
+@Component
 public class Accountstatus {
     /**
      *

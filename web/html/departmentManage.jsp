@@ -151,46 +151,49 @@
         <%--修改部门信息结束--%>
         <%--添加部门信息 --%>
         <div class="tab-pane fade" id="addDepartment" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
-                    <td>
-                        <label>部门名称：</label>
-                        <input value="name" name="departmentName" type="text"/>
-                    </td>
-                    <td>
-                        <label>领导名字：</label>
-                        <input value="name" name="leader" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>成立时间：</label>
-                        <input value="createTime" name="createTime" type="text"/>
-                    </td>
-                    <td>
-                        <label>备注：</label>
-                        <input value="name" name="remark" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>介绍：</label>
-                        <textarea value="introduction" name="introduction"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">添加</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <form id="addDepartmentForm">
+                <table class="table infoTable">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>部门名称：</label>
+                            <input name="name" type="text"/>
+                        </td>
+                        <td>
+                            <label>领导名字：</label>
+                            <input name="leaderid" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>成立时间：</label>
+                            <input name="createTime" type="text"/>
+                        </td>
+                        <td>
+                            <label>备注：</label>
+                            <input name="remark" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>介绍：</label>
+                            <textarea name="introduction"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="addDepartmentSubmit">添加</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
-        <%--添加部门信息结束 --%>
+
+            <%--添加部门信息结束 --%>
     </div>
 </div>
 </body>

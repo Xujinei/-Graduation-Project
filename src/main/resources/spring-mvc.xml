@@ -11,9 +11,9 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
 
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="com.swm"/>
 
-    <!-- 自动扫描  @Controller-->
-    <context:component-scan base-package="com.swm.controller"/>
 
     <!--访问静态资源-->
    <!-- <mvc:resources mapping="/css/**" location="/,classpath:html/css/" />
@@ -41,11 +41,9 @@
 
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="prefix" value="/html"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-
 
 
     <!-- 文件上传配置 -->

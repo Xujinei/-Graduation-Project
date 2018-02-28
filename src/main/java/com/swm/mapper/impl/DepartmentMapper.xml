@@ -72,4 +72,11 @@
       select id, name, leaderId, remark, createTime, introduction
     from department
   </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select id, name, leaderId, remark, createTime, introduction
+    from department
+    WHERE name=${name}
+  </select>
+
+
 </mapper>
