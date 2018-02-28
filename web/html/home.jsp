@@ -5,9 +5,17 @@
   Time: 16:44
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/html/";
+%>
 <html>
 <head>
+    <base href="<%=basePath%>">
     <title>主页</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -152,7 +160,8 @@
             <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">
-                <iframe width="100%" height="840px" src="accountManage.jsp" id="containFrame"></iframe>
+
+                <iframe width="100%" height="840px" src="${base}welcome.jsp" id="containFrame"></iframe>
             </div>
             <%--右边内容结束--%>
         </div>

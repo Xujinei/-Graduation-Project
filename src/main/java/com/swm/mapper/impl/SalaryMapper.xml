@@ -8,7 +8,7 @@
       This element was generated on Thu Jan 18 20:59:20 CST 2018.
     -->
     <id column="workData" jdbcType="DATE" property="workdata" />
-    <result column="employeeId" jdbcType="INTEGER" property="employeeid" />
+      <result column="employeeId" jdbcType="INTEGER" property="employeeId"/>
     <result column="baseSalary" jdbcType="DOUBLE" property="basesalary" />
     <result column="positionSalary" jdbcType="DOUBLE" property="positionsalary" />
     <result column="baseSubsidy" jdbcType="INTEGER" property="basesubsidy" />
@@ -38,7 +38,7 @@
       positionSalary, baseSubsidy, otherSubsidy, 
       tax, insurance, status, 
       approver, payTime)
-    values (#{workdata,jdbcType=DATE}, #{employeeid,jdbcType=INTEGER}, #{basesalary,jdbcType=DOUBLE}, 
+      values (#{workdata,jdbcType=DATE}, #{employeeId,jdbcType=INTEGER}, #{basesalary,jdbcType=DOUBLE},
       #{positionsalary,jdbcType=DOUBLE}, #{basesubsidy,jdbcType=INTEGER}, #{othersubsidy,jdbcType=INTEGER}, 
       #{tax,jdbcType=DOUBLE}, #{insurance,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, 
       #{approver,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP})
@@ -50,7 +50,7 @@
       This element was generated on Thu Jan 18 20:59:20 CST 2018.
     -->
     update salary
-    set employeeId = #{employeeid,jdbcType=INTEGER},
+      set employeeId = #{employeeId,jdbcType=INTEGER},
       baseSalary = #{basesalary,jdbcType=DOUBLE},
       positionSalary = #{positionsalary,jdbcType=DOUBLE},
       baseSubsidy = #{basesubsidy,jdbcType=INTEGER},

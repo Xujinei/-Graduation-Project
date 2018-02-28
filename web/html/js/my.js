@@ -11,11 +11,18 @@ $(function () {
         if ($("#containFrame").attr("src") != "personalManage.jsp") {
             $("#containFrame").attr("src", "personalManage.jsp");
         }
+        $()
         var containFrame = document.getElementById("containFrame");
         var win = containFrame.contentWindow;
         var date = new Array();
         date[0] = "personalInfoLi";
         date[1] = "personalInfo";
+        $.ajax({
+            url: "../user/userInfo",
+            success: function (data) {
+
+            }
+        });
         win.postMessage(date, "*");
 
     });
@@ -31,6 +38,7 @@ $(function () {
         var date = new Array();
         date[0] = "modifyPWLi";
         date[1] = "personalAccount";
+
 
         win.postMessage(date, "*");
     });
@@ -113,8 +121,8 @@ $(function () {
     window.onmessage = function (p1) {
         //显示个人信息lab，隐藏其他lab :跨域
         $("#containFrame").attr("src", "personalManage.jsp");
-        console.log(p1.data[0] + "--" + p1.data[1]);
-        console.log("date======" + $("#" + p1.data[0]).html());
+        // console.log(p1.data[0] + "--" + p1.data[1]);
+        //console.log("date======" + $("#" + p1.data[0]).html());
         $("#" + p1.data[0]).siblings("li").each(function () {
             console.log("this==" + this.id);
             $(this).removeClass("active");
@@ -160,6 +168,40 @@ $(function () {
         $("#employeeListLab").removeClass("active");
         $("#addEmployeeLab").css("display", "block").addClass("active");
         $("#addemployee").addClass("in active");
+
+        // 初始化新增员工信息页面 ： 部门信息，职务信息
+        $.ajax({
+            type: 'POST',
+            scriptCharset: 'utf-8',
+            url: '../position/allPosition',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (data) {
+                console.log(data);
+                var d = eval(data);
+                console.log(d.length + "   " + d[0].name);
+                var positionSelect = $("select[name=position]");
+                $.each(d, function (i, item) {
+                    var option = "<option value=" + i + ">" + item.name + "</option>";
+                    positionSelect.append(option);
+                })
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            scriptCharset: 'utf-8',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            url: '../department/allDepartment',
+            success: function (data) {
+                var d = eval(data);
+                var departmentSelect = $("select[name=department]");
+                $.each(d, function (i, item) {
+                    var option = "<option value=" + i + ">" + item.name + "</option>";
+                    departmentSelect.append(option);
+                })
+            }
+        });
+
+
     });
 
     //编辑员工按钮点击事件
@@ -227,6 +269,30 @@ $(function () {
 
         $("#departmentListLi").removeClass("active");
         $("#departmentList").removeClass("in active");
+
+    });
+
+    // 提交添加
+    $("#addDepartmentSubmit").click(function () {
+
+        var departmentName = $("#addDepartmentForm").find("input[name='name']").val();
+
+        if (departmentName == null || departmentName == "") {
+            alert("请输入部门信息");
+        } else {
+            alert($("#addDepartmentForm").serialize())
+            $.ajax({
+                type: "POST",
+                data: $("#addDepartmentForm").serialize(),
+                url: "../department/addDepartment",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        }
 
     });
 

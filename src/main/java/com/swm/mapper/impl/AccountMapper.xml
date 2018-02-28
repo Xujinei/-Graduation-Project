@@ -10,8 +10,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="employeeId" jdbcType="INTEGER" property="employeeid" />
-    <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+      <result column="employeeId" jdbcType="INTEGER" property="employeeId"/>
+      <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastLoginTime"/>
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="promission" jdbcType="INTEGER" property="promission" />
   </resultMap>
@@ -24,6 +24,7 @@
     delete from account
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.swm.entity.Account">
     <!--
       WARNING - @mbg.generated
@@ -36,8 +37,8 @@
     insert into account (id, username, password, 
       employeeId, lastLoginTime, status, 
       promission)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{employeeid,jdbcType=INTEGER}, #{lastlogintime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{employeeId,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
       #{promission,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.swm.entity.Account">
@@ -49,8 +50,8 @@
     update account
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      employeeId = #{employeeid,jdbcType=INTEGER},
-      lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      employeeId = #{employeeId,jdbcType=INTEGER},
+      lastLoginTime = #{lastLoginTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       promission = #{promission,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
@@ -74,4 +75,32 @@
     select id, username, password, employeeId, lastLoginTime, status, promission
     from account
   </select>
+
+    <select id="selectByAccount" resultMap="BaseResultMap" parameterType="com.swm.entity.Account">
+        select id, username, password, employeeId, lastLoginTime, status, promission
+        from account
+        <where>
+            <if test="id!=null">
+                id=#{id}
+            </if>
+            <if test="username!=null">
+                AND username=#{username}
+            </if>
+            <if test="password!=null">
+                AND password=#{password}
+            </if>
+            <if test="employeeId!=null">
+                AND employeeId=#{employeeId}
+            </if>
+            <if test="lastLoginTime!=null">
+                AND lastLoginTime=#{lastLoginTime}
+            </if>
+            <if test="status!=null">
+                AND status=#{status}
+            </if>
+            <if test="promission!=null">
+                AND promission=#{promission}
+            </if>
+        </where>
+    </select>
 </mapper>

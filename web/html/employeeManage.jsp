@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -5,7 +6,9 @@
   Time: 10:54
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" import="java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>员工管理</title>
@@ -26,8 +29,8 @@
     <script src="js/my.js"></script>
 
     <script>
-
     </script>
+
 </head>
 <body>
 <div class="mycontain inerFrame">
@@ -230,113 +233,115 @@
         <%--员工详细信息结束--%>
         <%--添加员工信息--%>
         <div class="tab-pane fade" id="addemployee" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
-                    <td>
-                        <label>姓名：</label>
-                        <input name="name" type="text"/>
-                    </td>
-                    <td>
-                        <label>性别：</label>
-                        <input type="radio" name="sex" value=""/>男
-                        <input type="radio" name="sex" value=""/>女
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>出生日期：</label>
-                        <input name="brithday" type="text"/>
-                    </td>
-                    <td>
-                        <label>联系电话：</label>
-                        <input type="tel" name="telPhone"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>邮箱：</label>
-                        <input name="email" type="email"/>
-                    </td>
-                    <td>
-                        <label>地址：</label>
-                        <input type="text" name="address"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>身份证号：</label>
-                        <input name="identificationId" type="text"/>
-                    </td>
-                    <td>
-                        <label>学历：</label>
-                        <input type="text" name="education"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>毕业学校：</label>
-                        <input name="school" type="text"/>
-                    </td>
-                    <td>
-                        <label>专业：</label>
-                        <input type="text" name="profession"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>政治面貌：</label>
-                        <input name="politicalStatus" type="text"/>
-                    </td>
-                    <td>
-                        <label>入职时间：</label>
-                        <input type="text" name="entryTime"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>合同到期时间：</label>
-                        <input name="expireDate" type="text"/>
-                    </td>
-                    <td>
-                        <label>所属部门：</label>
-                        <select name="department">
-                            <option>1</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>职务：</label>
-                        <select name="position">
-                            <option>2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <label>基本工资：</label>
-                        <input name="baseSalary" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>职务工资：</label>
-                        <input type="text" name="positionSalary"/>
-                    </td>
-                    <td>
-                        <label>基本补贴：</label>
-                        <input name="subsidy" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">添加</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <form action="../user/addEmployee">
+                <table class="table infoTable">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>姓名：</label>
+                            <input name="name" type="text"/>
+                        </td>
+                        <td>
+                            <label>性别：</label>
+                            <input type="radio" name="sex" value=""/>男
+                            <input type="radio" name="sex" value=""/>女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>出生日期：</label>
+                            <input name="brithday" type="text"/>
+                        </td>
+                        <td>
+                            <label>联系电话：</label>
+                            <input type="tel" name="telPhone"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>邮箱：</label>
+                            <input name="email" type="email"/>
+                        </td>
+                        <td>
+                            <label>地址：</label>
+                            <input type="text" name="address"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>身份证号：</label>
+                            <input name="identificationId" type="text"/>
+                        </td>
+                        <td>
+                            <label>学历：</label>
+                            <input type="text" name="education"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>毕业学校：</label>
+                            <input name="school" type="text"/>
+                        </td>
+                        <td>
+                            <label>专业：</label>
+                            <input type="text" name="profession"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>政治面貌：</label>
+                            <input name="politicalStatus" type="text"/>
+                        </td>
+                        <td>
+                            <label>入职时间：</label>
+                            <input type="text" name="entryTime"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>合同到期时间：</label>
+                            <input name="expireDate" type="text" value="${departList}"/>
+                        </td>
+                        <td>
+                            <label>所属部门：</label>
+                            <select name="department">
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>职务：</label>
+                            <select name="position">
+
+                            </select>
+                        </td>
+                        <td>
+                            <label>基本工资：</label>
+                            <input name="baseSalary" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>职务工资：</label>
+                            <input type="text" name="positionSalary"/>
+                        </td>
+                        <td>
+                            <label>基本补贴：</label>
+                            <input name="subsidy" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="submit" class="btn btn-primary btn-sm">添加</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <%--添加员工信息结束--%>
     </div>

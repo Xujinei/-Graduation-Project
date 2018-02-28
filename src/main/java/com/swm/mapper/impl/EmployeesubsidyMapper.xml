@@ -8,7 +8,7 @@
       This element was generated on Thu Jan 18 20:59:20 CST 2018.
     -->
     <id column="workData" jdbcType="DATE" property="workdata" />
-    <result column="employeeId" jdbcType="INTEGER" property="employeeid" />
+      <result column="employeeId" jdbcType="INTEGER" property="employeeId"/>
     <result column="subsidyId" jdbcType="INTEGER" property="subsidyid" />
     <result column="subsidyAmount" jdbcType="INTEGER" property="subsidyamount" />
   </resultMap>
@@ -29,7 +29,7 @@
     -->
     insert into employeesubsidy (workData, employeeId, subsidyId, 
       subsidyAmount)
-    values (#{workdata,jdbcType=DATE}, #{employeeid,jdbcType=INTEGER}, #{subsidyid,jdbcType=INTEGER}, 
+      values (#{workdata,jdbcType=DATE}, #{employeeId,jdbcType=INTEGER}, #{subsidyid,jdbcType=INTEGER},
       #{subsidyamount,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.swm.entity.Employeesubsidy">
@@ -39,7 +39,7 @@
       This element was generated on Thu Jan 18 20:59:20 CST 2018.
     -->
     update employeesubsidy
-    set employeeId = #{employeeid,jdbcType=INTEGER},
+      set employeeId = #{employeeId,jdbcType=INTEGER},
       subsidyId = #{subsidyid,jdbcType=INTEGER},
       subsidyAmount = #{subsidyamount,jdbcType=INTEGER}
     where workData = #{workdata,jdbcType=DATE}
