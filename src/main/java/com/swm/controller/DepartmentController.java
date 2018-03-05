@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.swm.entity.Department;
 import com.swm.entity.Position;
 import com.swm.service.DepartmentService;
+import com.swm.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,12 +47,12 @@ public class DepartmentController {
     @RequestMapping("/addDepartment")
     public void addDepartment(PrintWriter out, HttpServletRequest request) {
         Department department = new Department();
-        department.setName(request.getParameter("departmentName"));
+        department.setName(request.getParameter("name"));
         //  department.setLeaderid();
         // 获取领导名对应的id
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date createDate = sdf.parse(request.getParameter("createTime"));
+            Date createDate = sdf.parse(request.getParameter("createtime"));
             department.setCreatetime(createDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -69,5 +71,19 @@ public class DepartmentController {
         } else {
             out.write("添加失败");
         }
+    }
+
+    /**
+     * 分页获取部门信息
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/pageDepartment")
+    public void getPageDepartment(Integer pageIndex, Integer pageSize, PrintWriter out) {
+        PageUtil<Department> departmentPage = departmentService.getPageDepartment(pageIndex, pageSize);
+        String departmentPageJson = JSON.toJSONString(departmentPage);
+        out.write(departmentPageJson);
     }
 }

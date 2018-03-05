@@ -1,9 +1,6 @@
 $(function () {
     /*********************************主页：home.jsp*******************************/
     //个人管理
-    $("#personalManageTitle").click(function () {
-        $("#containFrame").attr("src", "personalManage.jsp");
-    });
 
 
     //个人信息管理点击事件
@@ -11,7 +8,7 @@ $(function () {
         if ($("#containFrame").attr("src") != "personalManage.jsp") {
             $("#containFrame").attr("src", "personalManage.jsp");
         }
-        $()
+
         var containFrame = document.getElementById("containFrame");
         var win = containFrame.contentWindow;
         var date = new Array();
@@ -100,6 +97,8 @@ $(function () {
     // 部门管理
     $("#departmentManage").click(function () {
         $("#containFrame").attr("src", "departmentManage.jsp");
+
+
     });
     //职务管理
     $("#positionManage").click(function () {
@@ -111,7 +110,6 @@ $(function () {
     });
 
 
-
     /**************************个人信息管理页面 personalManage.jsp*********************************/
     //初始化样式
     $("#personalInfoLi").addClass("active");
@@ -121,10 +119,9 @@ $(function () {
     window.onmessage = function (p1) {
         //显示个人信息lab，隐藏其他lab :跨域
         $("#containFrame").attr("src", "personalManage.jsp");
-        // console.log(p1.data[0] + "--" + p1.data[1]);
-        //console.log("date======" + $("#" + p1.data[0]).html());
+
         $("#" + p1.data[0]).siblings("li").each(function () {
-            console.log("this==" + this.id);
+
             $(this).removeClass("active");
         });
         $("#" + p1.data[1]).siblings(".tab-pane").each(function () {
@@ -176,9 +173,9 @@ $(function () {
             url: '../position/allPosition',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             success: function (data) {
-                console.log(data);
+
                 var d = eval(data);
-                console.log(d.length + "   " + d[0].name);
+
                 var positionSelect = $("select[name=position]");
                 $.each(d, function (i, item) {
                     var option = "<option value=" + i + ">" + item.name + "</option>";
@@ -272,7 +269,7 @@ $(function () {
 
     });
 
-    // 提交添加
+    // 提交部门添加
     $("#addDepartmentSubmit").click(function () {
 
         var departmentName = $("#addDepartmentForm").find("input[name='name']").val();
@@ -331,22 +328,6 @@ $(function () {
     $("#editPositionLi").css("display", "none");
     $("#addPositionLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editPosition").click(function () {
-        $("#editPositionLi").css("display", "block");
-        $("#positionListLi").removeClass("active");
-        $("#positionList").removeClass("in active");
-        $("#positionInfo").addClass("in active");
-        $("#editPositionLi").addClass("active");
-    });
-
-    //退出编辑按钮点击事件
-    $("#exitPosition").click(function () {
-        $("#editPositionLi").css("display", "none");
-        $("#positionListLi").addClass("active");
-        $("#positionList").addClass("in active");
-        $("#positionInfo").removeClass("in active");
-    });
 
     // 添加职务点击按钮
     $("#addPositionBtn").click(function () {
@@ -356,13 +337,30 @@ $(function () {
         $("#positionList").removeClass("in active");
     });
 
-    //退出添加职务
-    $("#exitAddPosition").click(function () {
-        $("#addPositionLi").css("display", "none");
-        $("#positionListLi").addClass("active");
-        $("#positionList").addClass("in active");
-        $("#addPosition").removeClass("in active");
+
+    // 提交职务添加
+    $("#submintAddPos").click(function () {
+
+        var name = $("#addPosiForm").find("input[name='name']").val();
+
+        if (name == null || name == "") {
+            alert("请输入职务信息");
+        } else {
+            $.ajax({
+                type: "POST",
+                data: $("#addPosiForm").serialize(),
+                url: "../position/addPosition",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        }
+
     });
+
 
     /**************************六险一金标准管理页面： insuranceStandardManage.jsp******************************/
     //初始化六险一金管理页面

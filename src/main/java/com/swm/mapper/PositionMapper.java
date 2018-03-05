@@ -1,6 +1,7 @@
 package com.swm.mapper;
 
 import com.swm.entity.Position;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +47,12 @@ public interface PositionMapper {
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
     int updateByPrimaryKey(Position record);
+
+
+    List<Position> selectByName(String name);
+
+    int countAllPosition();
+
+    List<Position> selectByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+
 }

@@ -75,8 +75,19 @@
   <select id="selectByName" resultMap="BaseResultMap">
     select id, name, leaderId, remark, createTime, introduction
     from department
-    WHERE name=${name}
+    where name=#{name,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select id, name, leaderId, remark, createTime, introduction
+    from department
+    <if test="pageIndex!=null and pageSize!=null">
+      limit #{pageIndex},#{pageSize}
+    </if>
+  </select>
+
+  <select id="countAllDepartment" resultType="int">
+    select count(*) from department
+  </select>
 
 </mapper>
