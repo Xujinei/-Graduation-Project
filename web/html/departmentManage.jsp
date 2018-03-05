@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>部门管理</title>
@@ -38,12 +40,63 @@
          ;*/
 
 
+        /*初始化部门列表*/
+        $.ajax({
+            type: "POST",
+            url: "../department/pageDepartment",
+            data: {pageIndex: "1", pageSize: "15"},
+            success: function (data) {
+
+                var ed = $.parseJSON(data);
+
+                var depTbody = $("#departmentInfoBody");
+                $.each(ed.list, function (i, item) {
+                    var id = item.id;
+                    var name = item.name;
+                    var leaderid = item.leaderid;
+                    var createTime = item.createtime;
+                    var remark = item.remark;
+                    console.log(createTime);
+                    if (id != null && id != undefined && id != "") {
+
+                        if (leaderid == undefined || leaderid == null) {
+                            leaderid = "";
+                        }
+                        if (createTime == undefined || createTime == null) {
+                            createTime = "";
+                        }
+                        if (remark == undefined || remark == null) {
+                            remark = "";
+                        }
+                        if (createTime != "") {
+
+                            var timeTd = "<td>" + createTime + "</td>";
+                        } else {
+                            var timeTd = "<td>" + createTime + "</td>";
+                        }
+                        var tr = "<tr>" +
+
+                            "<td>" + id + "</td> " +
+                            "<td>" + name + "</td> " +
+                            "<td>" + leaderid + "</td>" +
+                            timeTd +
+                            "<td>" + remark + "</td>" +
+                            "<td><button class='btn btn-danger deletDepartmentBtn'>删除</button></td>" +
+                            "<td><button class='btn btn-primary editDepartment'>详情</button> </td>" +
+                            "</tr>";
+
+                        depTbody.append(tr);
+                    }
+                });
+            }
+        });
+        /*初始化部门列表结束*/
     </script>
 
 
 </head>
 <body>
-<div class="mycontain inerFrame">
+<div class="mycontain inerFrame" onload="initDepartmentList()">
     <ul id="myTab" class="nav nav-tabs">
         <li id="departmentListLi">
             <a href="#departmentList" data-toggle="tab">
@@ -64,41 +117,26 @@
     <div id="myTabContent" class="tab-content">
         <%--部门列表信息--%>
         <div class="tab-pane fade" id="departmentList" style="margin: 2%">
-            <%--选择删除--%>
+            <%--添加--%>
             <form class="form-inline">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="selectAll"/> 全选
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-danger">删除</button>
+
                 <button type="button" class="btn btn-primary" id="addDepartmentBtn">添加</button>
             </form>
             <%--部门列表--%>
             <table class="table infoTable">
                 <thead>
                 <tr>
-                    <th>选择</th>
                     <th>部门编号</th>
                     <th>部门名称</th>
                     <th>部门领导</th>
                     <th>成立时间</th>
                     <th>备注</th>
+                    <th>删除</th>
                     <th>详情</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox" class="aCheckbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button class="btn btn-primary" id="editDepartment">详情</button>
-                    </td>
-                </tr>
+                <tbody id="departmentInfoBody">
+
                 </tbody>
             </table>
         </div>
@@ -167,7 +205,7 @@
                     <tr>
                         <td>
                             <label>成立时间：</label>
-                            <input name="createTime" type="text"/>
+                            <input name="createtime" type="text"/>
                         </td>
                         <td>
                             <label>备注：</label>

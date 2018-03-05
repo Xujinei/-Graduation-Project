@@ -1,6 +1,7 @@
 package com.swm.mapper;
 
 import com.swm.entity.Department;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,4 +49,8 @@ public interface DepartmentMapper {
     int updateByPrimaryKey(Department record);
 
     List<Department> selectByName(String name);
+
+    List<Department> selectByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+
+    int countAllDepartment();
 }

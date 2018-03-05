@@ -68,4 +68,23 @@
       select id, name, remark, duty, required
     from position
   </select>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select id ,name , remark ,duty ,required
+    from position
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select id ,name , remark ,duty ,required
+    from position
+    <if test="pageIndex!=null and pageSize!=null">
+      limit #{pageIndex},#{pageSize}
+    </if>
+  </select>
+
+  <select id="countAllPosition" resultType="int">
+    select count(*) from position
+  </select>
 </mapper>
