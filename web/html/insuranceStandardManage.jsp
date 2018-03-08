@@ -5,7 +5,9 @@
   Time: 10:54
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>六险一金标准管理</title>
@@ -37,6 +39,73 @@
          }
          ;*/
 
+        function init(a, b) {
+            $.ajax({
+                type: "POST",
+                url: "../insurance/pageInsurance",
+                data: {pageIndex: a, pageSize: b},
+                success: function (data) {
+
+                    var ed = $.parseJSON(data);
+                    /*   $(".list_count").text(ed.pageNumber);
+                       $(".page_count").text(ed.pageCount);
+
+                       end=ed.pageCount;*/
+                    var itbody = $("#insuranceBody");
+
+                    $.each(ed.list, function (i, item) {
+                        var id = item.id;
+                        var name = item.name;
+                        var pension = item.pension;
+                        var medical = item.medical;
+                        var unemployment = item.unemployment;
+                        var injury = item.injury;
+                        var maternity = item.maternity;
+                        var housing = item.housing;
+
+
+                        if (pension == undefined || pension == null) {
+                            pension = "";
+                        }
+                        if (medical == undefined || medical == null) {
+                            medical = "";
+                        }
+                        if (unemployment == undefined || unemployment == null) {
+                            unemployment = "";
+                        }
+                        if (injury == undefined || injury == null) {
+                            injury = "";
+                        }
+                        if (maternity == undefined || maternity == null) {
+                            maternity = "";
+                        }
+                        if (housing == undefined || housing == null) {
+                            housing = "";
+                        }
+
+                        var tr = "<tr>" +
+                            "<td id='id'>" + id + "</td> " +
+                            "<td id='name'>" + name + "</td> " +
+                            "<td id='pension'>" + pension + "</td>" +
+                            "<td id='medical'>" + medical + "</td>" +
+                            "<td id='unemployment'>" + unemployment + "</td>" +
+                            "<td id='injury'>" + injury + "</td>" +
+                            "<td id='maternity'>" + maternity + "</td>" +
+                            "<td id='housing'>" + housing + "</td>" +
+                            "<td><button class='btn btn-danger deletInsBtn'>删除</button></td>" +
+                            "<td><button class='btn btn-primary editPosition'>详情</button> </td>" +
+                            "</tr>";
+
+
+                        itbody.append(tr);
+
+                    });
+                }
+            });
+        }
+
+        // 初始化页面列表
+        init(1, 10);
 
     </script>
 
@@ -52,12 +121,12 @@
         </li>
         <li id="editInsuranceLi">
             <a href="#insuranceInfo" data-toggle="tab">
-                部门信息详情
+                信息详情
             </a>
         </li>
         <li id="addInsuranceLi">
             <a href="#addInsurance" data-toggle="tab">
-                添加部门信息
+                添加信息
             </a>
         </li>
     </ul>
@@ -66,19 +135,13 @@
         <div class="tab-pane fade" id="insuranceList" style="margin: 2%">
             <%--选择删除--%>
             <form class="form-inline">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="selectAll"/> 全选
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-danger">删除</button>
+
                 <button type="button" class="btn btn-primary" id="addInsuranceBtn">添加</button>
             </form>
             <%--六险一金标准列表--%>
             <table class="table infoTable">
                 <thead>
                 <tr>
-                    <th>选择</th>
                     <th>标准编号</th>
                     <th>标准名称</th>
                     <th>养老保险</th>
@@ -87,24 +150,12 @@
                     <th>工伤保险</th>
                     <th>生育保险</th>
                     <th>住房公积金</th>
+                    <th>删除</th>
                     <th>详情</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox" class="aCheckbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button class="btn btn-primary" id="editInsurance">详情</button>
-                    </td>
-                </tr>
+                <tbody id="insuranceBody">
+
                 </tbody>
             </table>
         </div>
@@ -167,58 +218,87 @@
         <%--修改标准信息结束--%>
         <%--添加标准信息 --%>
         <div class="tab-pane fade" id="addInsurance" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
+            <form id="addInsForm">
+                <table class="table infoTable">
+                    <tbody>
+                    <tr>
 
-                    <td colspan="2">
-                        <label>标准名称：</label>
-                        <input value="name" name="insuranceName" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>养老保险：</label>
-                        <input value="pension" name="pension" type="text"/>
-                    </td>
-                    <td>
-                        <label>医疗保险：</label>
-                        <input value="medical" name="medical" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>失业保险：</label>
-                        <input value="Unemployment" name="Unemployment" type="text"/>
-                    </td>
-                    <td>
-                        <label>工伤保险：</label>
-                        <textarea value="injury" name="injury"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>生育保险：</label>
-                        <input value="Maternity" name="Maternity" type="text"/>
-                    </td>
-                    <td>
-                        <label>住房公积金：</label>
-                        <textarea value="housing" name="housing"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">修改</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitAddInsurance">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <td colspan="2">
+                            <label>标准名称：</label>
+                            <input name="name" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>养老保险：</label>
+                            <input name="pension" type="number"/>
+                        </td>
+                        <td>
+                            <label>医疗保险：</label>
+                            <input name="medical" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>失业保险：</label>
+                            <input name="unemployment" type="number"/>
+                        </td>
+                        <td>
+                            <label>工伤保险：</label>
+                            <input name="injury" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>生育保险：</label>
+                            <input name="maternity" type="number"/>
+                        </td>
+                        <td>
+                            <label>住房公积金：</label>
+                            <input name="housing" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="addInsBtn">添加</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitAddInsurance">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <%--添加标准信息结束 --%>
     </div>
 </div>
 </body>
+
+<script>
+    // 删除职务
+    $("body").on("click", ".deletInsBtn", function () {
+        var p = $(this).parent().parent();
+        var id = p.find("#id").text();
+        $.ajax({
+            data: {id: id},
+            url: "../insurance/delet",
+            success: function () {
+                $("#insuranceBody").children("tr").remove();
+                init(1, 10);
+            }
+        });
+    });
+
+
+    // //退出添加标准
+    $("#exitAddInsurance").click(function () {
+        $("#addInsuranceLi").css("display", "none");
+        $("#insuranceListLi").addClass("active");
+        $("#insuranceList").addClass("in active");
+        $("#addInsurance").removeClass("in active");
+        $("#insuranceBody").children("tr").remove();
+        init(1, 10);
+    });
+</script>
 </html>

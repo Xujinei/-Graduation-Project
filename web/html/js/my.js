@@ -394,12 +394,45 @@ $(function () {
         $("#insuranceList").removeClass("in active");
     });
 
-    //退出添加标准
-    $("#exitAddInsurance").click(function () {
-        $("#addInsuranceLi").css("display", "none");
-        $("#insuranceListLi").addClass("active");
-        $("#insuranceList").addClass("in active");
-        $("#addInsurance").removeClass("in active");
+
+    // 提交添加
+    $("#addInsBtn").click(function () {
+        var name = $("#addInsForm").find("input[name='name']").val();
+        var pension = $("#addInsForm").find("input[name='pension']").val();
+        var medical = $("#addInsForm").find("input[name='medical']").val();
+        var unemployment = $("#addInsForm").find("input[name='unemployment']").val();
+        var injury = $("#addInsForm").find("input[name='injury']").val();
+        var maternity = $("#addInsForm").find("input[name='maternity']").val();
+        var housing = $("#addInsForm").find("input[name='housing']").val();
+
+        if (name == null || name == "") {
+            alert("请输入标准名称");
+        } else if (pension == null || pension == '') {
+            alert("请输入养老保险比例");
+        } else if (medical == null || medical == '') {
+            alert("请输入医疗保险比例");
+        } else if (unemployment == null || unemployment == '') {
+            alert("请输入失业保险比例");
+        } else if (injury == null || injury == '') {
+            alert("请输入工伤保险比例");
+        } else if (maternity == null || maternity == '') {
+            alert("请输入生育保险比例");
+        } else if (housing == null || housing == '') {
+            alert("请输入住房公积金比例");
+        } else {
+            $.ajax({
+                type: "POST",
+                data: $("#addInsForm").serialize(),
+                url: "../insurance/addIns",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        }
+
     });
 
     /*************************薪酬审核管理页面：salaryCheckManage.jsp*******************/

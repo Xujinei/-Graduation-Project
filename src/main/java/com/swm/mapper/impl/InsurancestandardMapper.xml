@@ -76,4 +76,17 @@
     select id, name, pension, medical, unemployment, injury, maternity, housing
     from insurancestandard
   </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select id, name, pension, medical, unemployment, injury, maternity, housing
+    from insurancestandard
+    <if test="pageIndex!=null and pageSize!=null">
+      limit #{pageIndex},#{pageSize}
+    </if>
+  </select>
+
+  <select id="countAllResurance" resultType="int">
+    select count(*) from insurancestandard
+  </select>
 </mapper>

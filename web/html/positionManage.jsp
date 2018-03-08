@@ -7,9 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String pageCount = (String) request.getAttribute("pagetCount");
+
+%>
+
 <html>
 <head>
-    <title>职务管理</title>
+    <title>职务管理 "<%=pageCount%>" </title>
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -43,6 +48,7 @@
              $(".aCheckbox").attr("checked", "checked");
          }
          ;*/
+        var end = 1;
 
         function init(a, b) {
             $.ajax({
@@ -58,6 +64,8 @@
 
                     $(".list_count").text(ed.pageNumber);
                     $(".page_count").text(ed.pageCount);
+
+                    end = ed.pageCount;
 
                     $.each(ed.list, function (i, item) {
                         var id = item.id;
@@ -77,7 +85,6 @@
                             if (remark == undefined || remark == null) {
                                 remark = "";
                             }
-
                             var tr = "<tr>" +
                                 "<td id='id'>" + id + "</td> " +
                                 "<td id='name'>" + name + "</td> " +
@@ -93,6 +100,7 @@
                     });
                 }
             });
+
         };
 
         /*初始化职务列表*/
@@ -148,7 +156,8 @@
             <div class="page_div">
                 <span class="list_count"></span>条 &nbsp;&nbsp;
                 共<span class="page_count"></span>页&nbsp;&nbsp;
-                <cj:forEach begin="1" end="${blogs.pageCount }"
+                <cj:forEach begin="1"
+                            end="${pageCount }"
                             varStatus="row">
                     <span class="page_num"><a href="blogManage/pageIndex?index=${row.index }">${row.index }</a></span>
                 </cj:forEach>
