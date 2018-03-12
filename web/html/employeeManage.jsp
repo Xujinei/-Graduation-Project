@@ -29,6 +29,7 @@
     <script src="js/my.js"></script>
 
     <script>
+
     </script>
 
 </head>
@@ -233,7 +234,7 @@
         <%--员工详细信息结束--%>
         <%--添加员工信息--%>
         <div class="tab-pane fade" id="addemployee" style="margin: 2%">
-            <form action="../user/addEmployee">
+            <form id="addEmployeeForm">
                 <table class="table infoTable">
                     <tbody>
                     <tr>
@@ -243,14 +244,14 @@
                         </td>
                         <td>
                             <label>性别：</label>
-                            <input type="radio" name="sex" value=""/>男
-                            <input type="radio" name="sex" value=""/>女
+                            <input type="radio" name="sex" value="男"/>男
+                            <input type="radio" name="sex" value="女"/>女
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>出生日期：</label>
-                            <input name="brithday" type="text"/>
+                            <input name="brithday" type="date"/>
                         </td>
                         <td>
                             <label>联系电话：</label>
@@ -270,7 +271,7 @@
                     <tr>
                         <td>
                             <label>身份证号：</label>
-                            <input name="identificationId" type="text"/>
+                            <input name="identificationid" type="text"/>
                         </td>
                         <td>
                             <label>学历：</label>
@@ -290,21 +291,21 @@
                     <tr>
                         <td>
                             <label>政治面貌：</label>
-                            <input name="politicalStatus" type="text"/>
+                            <input name="politicalstatus" type="text"/>
                         </td>
                         <td>
                             <label>入职时间：</label>
-                            <input type="text" name="entryTime"/>
+                            <input type="date" name="entrytime"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>合同到期时间：</label>
-                            <input name="expireDate" type="text" value="${departList}"/>
+                            <input name="expiredate" type="date"/>
                         </td>
                         <td>
                             <label>所属部门：</label>
-                            <select name="department">
+                            <select name="departmentid">
 
                             </select>
                         </td>
@@ -312,19 +313,19 @@
                     <tr>
                         <td>
                             <label>职务：</label>
-                            <select name="position">
+                            <select name="positionid">
 
                             </select>
                         </td>
                         <td>
                             <label>基本工资：</label>
-                            <input name="baseSalary" type="text"/>
+                            <input name="basesalary" type="text"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>职务工资：</label>
-                            <input type="text" name="positionSalary"/>
+                            <input type="text" name="positionsalary"/>
                         </td>
                         <td>
                             <label>基本补贴：</label>
@@ -332,8 +333,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <label>补贴标准：</label>
+                            <select name="insurancestandard">
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+                    <tr>
                         <td align="center">
-                            <button type="submit" class="btn btn-primary btn-sm">添加</button>
+                            <button type="button" class="btn btn-primary btn-sm" id="addEmployeeSub">添加</button>
                         </td>
                         <td align="left">
                             <button type="button" class="btn btn-primary btn-sm" id="exitAdd">退出</button>
@@ -347,4 +358,48 @@
     </div>
 </div>
 </body>
+<script>
+    $("#addEmployeeSub").click(function () {
+        var name = $("#addEmployeeForm").find("input[name='name']").val();
+        var telPhone = $("#addEmployeeForm").find("input[name='telPhone']").val();
+        var email = $("#addEmployeeForm").find("input[name='email']").val();
+        var identificationid = $("#addEmployeeForm").find("input[name='identificationid']").val();
+        var entrytime = $("#addEmployeeForm").find("input[name='entrytime']").val();
+        var basesalary = $("#addEmployeeForm").find("input[name='basesalary']").val();
+
+        if (name == null || name == "") {
+            alert("请输入员工姓名");
+            return;
+        } else if (telPhone == null || telPhone == "") {
+            alert("请输入员工联系电话");
+            return;
+        } else if (email == null || email == "") {
+            alert("请输入员工邮件");
+            return;
+        } else if (identificationid == null || identificationid == "") {
+            alert("请输入员工身份证号");
+            return;
+        } else if (entrytime == null || entrytime == "") {
+            alert("请输入员工入职时间");
+            return;
+        } else if (basesalary == null || basesalary == "") {
+            alert("请输入员工基本工资");
+            return;
+        } else {
+
+            console.log($("#addEmployeeForm").serialize());
+            $.ajax({
+                type: "POST",
+                data: $("#addEmployeeForm").serialize(),
+                url: "../employInfo/add",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        }
+    });
+</script>
 </html>

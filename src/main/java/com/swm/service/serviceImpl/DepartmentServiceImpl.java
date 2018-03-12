@@ -60,4 +60,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentPage.setPageIndex(pageIndex);
         return departmentPage;
     }
+
+    public int updateDepart(Department department) {
+        return departmentMapper.updateByPrimaryKey(department);
+    }
+
+    public int deletDepart(Integer id) {
+        return departmentMapper.deleteByPrimaryKey(id);
+    }
 }

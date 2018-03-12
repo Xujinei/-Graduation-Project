@@ -93,7 +93,7 @@
                             "<td id='maternity'>" + maternity + "</td>" +
                             "<td id='housing'>" + housing + "</td>" +
                             "<td><button class='btn btn-danger deletInsBtn'>删除</button></td>" +
-                            "<td><button class='btn btn-primary editPosition'>详情</button> </td>" +
+                            "<td><button class='btn btn-primary editIns'>详情</button> </td>" +
                             "</tr>";
 
 
@@ -162,58 +162,60 @@
         <%--六险一金标准列表结束--%>
         <%--修改标准信息--%>
         <div class="tab-pane fade" id="insuranceInfo" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
-                    <td>
-                        <label>标准编号：</label>
-                        <input value="id" name="insuranceId" type="text" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <label>标准名称：</label>
-                        <input value="name" name="insuranceName" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>养老保险：</label>
-                        <input value="pension" name="pension" type="text"/>
-                    </td>
-                    <td>
-                        <label>医疗保险：</label>
-                        <input value="medical" name="medical" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>失业保险：</label>
-                        <input value="Unemployment" name="Unemployment" type="text"/>
-                    </td>
-                    <td>
-                        <label>工伤保险：</label>
-                        <textarea value="injury" name="injury"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>生育保险：</label>
-                        <input value="Maternity" name="Maternity" type="text"/>
-                    </td>
-                    <td>
-                        <label>住房公积金：</label>
-                        <textarea value="housing" name="housing"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">修改</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitInsurance">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <form id="editInsForm">
+                <table class="table infoTable">
+                    <tbody id="insInfoBody">
+                    <tr>
+                        <td>
+                            <label>标准编号：</label>
+                            <input name="id" type="number" disabled="disabled"/>
+                        </td>
+                        <td>
+                            <label>标准名称：</label>
+                            <input name="name" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>养老保险：</label>
+                            <input name="pension" type="number"/>
+                        </td>
+                        <td>
+                            <label>医疗保险：</label>
+                            <input name="medical" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>失业保险：</label>
+                            <input name="unemployment" type="number"/>
+                        </td>
+                        <td>
+                            <label>工伤保险：</label>
+                            <input name="injury" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>生育保险：</label>
+                            <input name="maternity" type="number"/>
+                        </td>
+                        <td>
+                            <label>住房公积金：</label>
+                            <input name="housing" type="number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="editInsSubmit">修改</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitInsurance">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <%--修改标准信息结束--%>
         <%--添加标准信息 --%>
@@ -276,6 +278,60 @@
 </body>
 
 <script>
+
+    // 查看标准详情
+    $("body").on("click", ".editIns", function () {
+        $("#editInsuranceLi").css("display", "block");
+        $("#insuranceListLi").removeClass("active");
+        $("#insuranceList").removeClass("in active");
+        $("#insuranceInfo").addClass("in active");
+        $("#editInsuranceLi").addClass("active");
+
+        var p = $(this).parent().parent();
+        var id = p.find("#id").text();
+        var name = p.find("#name").text();
+        var pension = p.find("#pension").text();
+        var medical = p.find('#medical').text();
+        var unemployment = p.find('#unemployment').text();
+        var injury = p.find('#injury').text();
+        var maternity = p.find('#maternity').text();
+        var housing = p.find('#housing').text();
+
+
+        $("#insInfoBody").find("input[name='id']").val(id);
+        $("#insInfoBody").find("input[name='name']").val(name);
+        $("#insInfoBody").find("input[name='pension']").val(pension);
+        $("#insInfoBody").find("input[name='unemployment']").val(unemployment);
+        $("#insInfoBody").find("input[name='medical']").val(medical);
+        $("#insInfoBody").find("input[name='injury']").val(injury);
+        $("#insInfoBody").find("input[name='maternity']").val(maternity);
+        $("#insInfoBody").find("input[name='housing']").val(housing);
+
+    });
+
+    // 提交职务修改
+    $("#editInsSubmit").click(function () {
+        $("#insInfoBody").find("input[name='id']").removeAttr("disabled");
+        $.ajax({
+            type: "POST",
+            data: $("#editInsForm").serialize(),
+            url: "../insurance/updateIns",
+            success: function (data) {
+                alert(data);
+                $("#editInsForm").find("input[name='id']").attr("disabled", "disabled");
+            }
+        });
+    });
+    //退出编辑按钮点击事件
+    $("#exitInsurance").click(function () {
+        $("#editInsuranceLi").css("display", "none");
+        $("#insuranceListLi").addClass("active");
+        $("#insuranceList").addClass("in active");
+        $("#insuranceInfo").removeClass("in active");
+        $("#insuranceBody").children("tr").remove();
+        init(1, 10);
+    });
+
     // 删除职务
     $("body").on("click", ".deletInsBtn", function () {
         var p = $(this).parent().parent();
@@ -289,8 +345,6 @@
             }
         });
     });
-
-
     // //退出添加标准
     $("#exitAddInsurance").click(function () {
         $("#addInsuranceLi").css("display", "none");

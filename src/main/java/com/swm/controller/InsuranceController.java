@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/insurance")
@@ -34,6 +35,13 @@ public class InsuranceController {
         out.write(PageJson);
     }
 
+    @RequestMapping("/getAll")
+    public void getAllInsurance(PrintWriter out) {
+        List<Insurancestandard> insurancestandardList = insuranceService.getAllInsu();
+        String insJson = JSON.toJSONString(insurancestandardList);
+        out.write(insJson);
+    }
+
     /**
      * 添加
      *
@@ -43,22 +51,11 @@ public class InsuranceController {
     @RequestMapping("/addIns")
     public void addInsurance(PrintWriter out, HttpServletRequest request) {
 
-        Insurancestandard insurancestandard = new Insurancestandard();
-        String name = request.getParameter("name");
-        String pension = request.getParameter("pension");
-        String medical = request.getParameter("medical");
-        String unemployment = request.getParameter("unemployment");
-        String injury = request.getParameter("injury");
-        String maternity = request.getParameter("maternity");
-        String housing = request.getParameter("housing");
-
-        insurancestandard.setName(name);
-        insurancestandard.setPension(Integer.valueOf(pension));
-        insurancestandard.setMaternity(Integer.valueOf(maternity));
-        insurancestandard.setMedical(Integer.valueOf(medical));
-        insurancestandard.setUnemployment(Integer.valueOf(unemployment));
-        insurancestandard.setInjury(Integer.valueOf(injury));
-        insurancestandard.setHousing(Integer.valueOf(housing));
+        Insurancestandard insurancestandard = initIns(request);
+        if (insurancestandard == null) {
+            out.write("添加失败");
+            return;
+        }
         int re = insuranceService.addInsurance(insurancestandard);
         if (re > 0) {
             out.write("添加成功");
@@ -82,7 +79,61 @@ public class InsuranceController {
         } else {
             out.write("删除失败");
         }
-
-
     }
+
+
+    /**
+     * 修改职位信息
+     *
+     * @param out
+     * @param request
+     */
+    @RequestMapping("/updateIns")
+    public void updateIns(PrintWriter out, HttpServletRequest request) {
+        String sid = request.getParameter("id");
+        if (sid == null && sid == "") {
+            out.write("修改失败");
+            return;
+        }
+
+        Insurancestandard insurancestandard = initIns(request);
+        insurancestandard.setId(Integer.valueOf(sid));
+        if (insurancestandard == null) {
+            out.write("修改失败");
+            return;
+        }
+        insuranceService.updateInsurance(insurancestandard);
+        out.write("修改成功");
+    }
+
+
+    /**
+     * 从前后获取值初始化对象
+     *
+     * @param request
+     * @return
+     */
+    public Insurancestandard initIns(HttpServletRequest request) {
+        Insurancestandard insurancestandard = new Insurancestandard();
+
+        String name = request.getParameter("name");
+        String pension = request.getParameter("pension");
+        String medical = request.getParameter("medical");
+        String unemployment = request.getParameter("unemployment");
+        String injury = request.getParameter("injury");
+        String maternity = request.getParameter("maternity");
+        String housing = request.getParameter("housing");
+
+
+        insurancestandard.setName(name);
+        insurancestandard.setPension(Integer.valueOf(pension));
+        insurancestandard.setMaternity(Integer.valueOf(maternity));
+        insurancestandard.setMedical(Integer.valueOf(medical));
+        insurancestandard.setUnemployment(Integer.valueOf(unemployment));
+        insurancestandard.setInjury(Integer.valueOf(injury));
+        insurancestandard.setHousing(Integer.valueOf(housing));
+        return insurancestandard;
+    }
+
+
 }

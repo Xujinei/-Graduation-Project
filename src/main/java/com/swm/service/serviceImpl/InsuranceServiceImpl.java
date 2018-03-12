@@ -35,11 +35,19 @@ public class InsuranceServiceImpl implements InsuranceService {
         return insurancestandardPage;
     }
 
+    public List<Insurancestandard> getAllInsu() {
+        return insurancestandardMapper.selectAll();
+    }
+
     public int addInsurance(Insurancestandard insurancestandard) {
         return insurancestandardMapper.insert(insurancestandard);
     }
 
     public int deletInsurance(Integer id) {
         return insurancestandardMapper.deleteByPrimaryKey(id);
+    }
+
+    public int updateInsurance(Insurancestandard insurancestandard) {
+        return insurancestandardMapper.updateByPrimaryKey(insurancestandard);
     }
 }

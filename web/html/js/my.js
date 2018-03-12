@@ -166,7 +166,7 @@ $(function () {
         $("#addEmployeeLab").css("display", "block").addClass("active");
         $("#addemployee").addClass("in active");
 
-        // 初始化新增员工信息页面 ： 部门信息，职务信息
+        // 初始化新增员工信息页面 ： 部门信息，职务信息,补贴标准
         $.ajax({
             type: 'POST',
             scriptCharset: 'utf-8',
@@ -176,9 +176,9 @@ $(function () {
 
                 var d = eval(data);
 
-                var positionSelect = $("select[name=position]");
+                var positionSelect = $("#addEmployeeForm").find("select[name='positionid']");
                 $.each(d, function (i, item) {
-                    var option = "<option value=" + i + ">" + item.name + "</option>";
+                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
                     positionSelect.append(option);
                 })
             }
@@ -190,13 +190,29 @@ $(function () {
             url: '../department/allDepartment',
             success: function (data) {
                 var d = eval(data);
-                var departmentSelect = $("select[name=department]");
+                var departmentSelect = $("#addEmployeeForm").find("select[name='departmentid']");
                 $.each(d, function (i, item) {
-                    var option = "<option value=" + i + ">" + item.name + "</option>";
+                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
                     departmentSelect.append(option);
                 })
             }
         });
+
+        $.ajax({
+            type: 'POST',
+            scriptCharset: 'utf-8',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            url: '../insurance/getAll',
+            success: function (data) {
+                var d = eval(data);
+                var insurancestandardSelect = $("#addEmployeeForm").find("select[name='insurancestandard']");
+                $.each(d, function (i, item) {
+                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                    insurancestandardSelect.append(option);
+                })
+            }
+        });
+
 
 
     });
@@ -259,15 +275,6 @@ $(function () {
     $("#editDepartmentLi").css("display", "none");
     $("#addDepartmentLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editDepartment").click(function () {
-        $("#editDepartmentLi").css("display", "block").addClass("active");
-        $("#departmentInfo").addClass("in active");
-
-        $("#departmentListLi").removeClass("active");
-        $("#departmentList").removeClass("in active");
-
-    });
 
     // 提交部门添加
     $("#addDepartmentSubmit").click(function () {
@@ -277,7 +284,7 @@ $(function () {
         if (departmentName == null || departmentName == "") {
             alert("请输入部门信息");
         } else {
-            alert($("#addDepartmentForm").serialize())
+
             $.ajax({
                 type: "POST",
                 data: $("#addDepartmentForm").serialize(),
@@ -293,13 +300,6 @@ $(function () {
 
     });
 
-    //退出编辑按钮点击事件
-    $("#exitDepartment").click(function () {
-        $("#editDepartmentLi").css("display", "none");
-        $("#departmentListLi").addClass("active");
-        $("#departmentList").addClass("in active");
-        $("#departmentInfo").removeClass("in active");
-    });
 
     // 添加部门按钮点击事件
     $("#addDepartmentBtn").click(function () {
@@ -311,13 +311,6 @@ $(function () {
 
     });
 
-    // 退出添加
-    $("#exitAdd").click(function () {
-        $("#addDepartmentLi").css("display", "none");
-        $("#departmentListLi").addClass("active");
-        $("#departmentList").addClass("in active");
-        $("#addDepartment").removeClass("in active");
-    });
 
 
     /*******************************职务管理页面： positionMange.jsp***********************************/
@@ -369,22 +362,6 @@ $(function () {
     $("#editInsuranceLi").css("display", "none");
     $("#addInsuranceLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editInsurance").click(function () {
-        $("#editInsuranceLi").css("display", "block");
-        $("#insuranceListLi").removeClass("active");
-        $("#insuranceList").removeClass("in active");
-        $("#insuranceInfo").addClass("in active");
-        $("#editInsuranceLi").addClass("active");
-    });
-
-    //退出编辑按钮点击事件
-    $("#exitInsurance").click(function () {
-        $("#editInsuranceLi").css("display", "none");
-        $("#insuranceListLi").addClass("active");
-        $("#insuranceList").addClass("in active");
-        $("#insuranceInfo").removeClass("in active");
-    });
 
     // 添加标准点击按钮
     $("#addInsuranceBtn").click(function () {
