@@ -36,6 +36,10 @@ a:hover{
 .myLi{
     height: 25px;
 }
+
+.redSpan {
+    color: red;
+}
 /*无效样式
 .col-md-4 #sysTitle{
     border: 1px solid red;

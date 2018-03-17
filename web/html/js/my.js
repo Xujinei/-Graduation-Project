@@ -158,6 +158,41 @@ $(function () {
     $("#employeeInfoLab").css("display", "none");
     $("#addEmployeeLab").css("display", "none");
 
+    // 初始化新增员工信息页面 ： 部门信息，职务信息,补贴标准
+    var positionSelect = $(".InitCommon").find("select[name='positionid']");
+    positionSelect.children("option").remove();
+    var departmentSelect = $(".InitCommon").find("select[name='departmentid']");
+    departmentSelect.children("option").remove();
+    $.ajax({
+        type: 'POST',
+        scriptCharset: 'utf-8',
+        url: '../position/allPosition',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (data) {
+
+            var d = eval(data);
+
+            $.each(d, function (i, item) {
+                var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                positionSelect.append(option);
+            })
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        scriptCharset: 'utf-8',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        url: '../department/allDepartment',
+        success: function (data) {
+            var d = eval(data);
+
+            $.each(d, function (i, item) {
+                var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                departmentSelect.append(option);
+            })
+        }
+    });
+
 
     //新增员工按钮点击事件
     $("#addEmployeeBtn").click(function () {
@@ -166,38 +201,9 @@ $(function () {
         $("#addEmployeeLab").css("display", "block").addClass("active");
         $("#addemployee").addClass("in active");
 
-        // 初始化新增员工信息页面 ： 部门信息，职务信息,补贴标准
-        $.ajax({
-            type: 'POST',
-            scriptCharset: 'utf-8',
-            url: '../position/allPosition',
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function (data) {
 
-                var d = eval(data);
-
-                var positionSelect = $("#addEmployeeForm").find("select[name='positionid']");
-                $.each(d, function (i, item) {
-                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
-                    positionSelect.append(option);
-                })
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            scriptCharset: 'utf-8',
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            url: '../department/allDepartment',
-            success: function (data) {
-                var d = eval(data);
-                var departmentSelect = $("#addEmployeeForm").find("select[name='departmentid']");
-                $.each(d, function (i, item) {
-                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
-                    departmentSelect.append(option);
-                })
-            }
-        });
-
+        var insurancestandardSelect = $("#addEmployeeForm").find("select[name='insurancestandard']");
+        insurancestandardSelect.children("option").remove();
         $.ajax({
             type: 'POST',
             scriptCharset: 'utf-8',
@@ -205,7 +211,7 @@ $(function () {
             url: '../insurance/getAll',
             success: function (data) {
                 var d = eval(data);
-                var insurancestandardSelect = $("#addEmployeeForm").find("select[name='insurancestandard']");
+
                 $.each(d, function (i, item) {
                     var option = "<option value=" + item.id + ">" + item.name + "</option>";
                     insurancestandardSelect.append(option);
@@ -213,24 +219,6 @@ $(function () {
             }
         });
 
-
-
-    });
-
-    //编辑员工按钮点击事件
-    $("#editEmployeeInfoBtn").click(function () {
-        $("#employeeList").removeClass("in active");
-        $("#employeeListLab").removeClass("active");
-        $("#employeeInfoLab").css("display", "block").addClass("active");
-        $("#employeeInfo").addClass("in active");
-    });
-
-    //退出员工添加面板
-    $("#exitAdd").click(function () {
-        $("#addEmployeeLab").css("display", "none");
-        $("#addemployee").removeClass("in active");
-        $("#employeeList").addClass("in active");
-        $("#employeeListLab").addClass("active");
     });
 
     //退出员工详情面板

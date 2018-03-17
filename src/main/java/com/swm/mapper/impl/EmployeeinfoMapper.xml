@@ -116,4 +116,19 @@
         baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
         from employeeinfo
     </select>
+
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select id, name, sex, brithday, telPhone, email, address, identificationId, education,
+        school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        from employeeinfo
+        <if test="pageIndex!=null and pageSize!=null">
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="countAll" resultType="int">
+        select count(*) from employeeinfo
+    </select>
 </mapper>

@@ -52,7 +52,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         // 日期格式
         for (Department dep : departmentList) {
 
-
         }
         departmentPage.setList(departmentList);
         departmentPage.setPageCount(pageCount);

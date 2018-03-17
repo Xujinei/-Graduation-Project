@@ -1,6 +1,7 @@
 package com.swm.mapper;
 
 import com.swm.entity.Employeeinfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +47,8 @@ public interface EmployeeinfoMapper {
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
     int updateByPrimaryKey(Employeeinfo record);
+
+    int countAll();
+
+    List<Employeeinfo> selectByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
 }

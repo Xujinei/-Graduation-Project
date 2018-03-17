@@ -25,6 +25,12 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <style type="text/css">
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
     <script src="js/my.js"></script>
 
     <script>
@@ -43,6 +49,8 @@
         /*初始化部门列表*/
 
         function initList(a, b) {
+            $("#departmentInfoBody").children("tr").remove();
+            $(".page_num").remove();
             $.ajax({
                 type: "POST",
                 url: "../department/pageDepartment",
@@ -92,6 +100,20 @@
                             depTbody.append(tr);
                         }
                     });
+
+                    $(".list_count").text(ed.pageNumber);
+                    $(".page_count").text(ed.pageCount);
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:initList(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
                 }
             });
         }
@@ -146,6 +168,11 @@
 
                 </tbody>
             </table>
+                <div class="page_div">
+                    <span class="list_count"></span>条 &nbsp;&nbsp;
+                    共<span class="page_count"></span>页&nbsp;&nbsp;
+
+                </div>
         </div>
         <%--部门列表结束--%>
         <%--修改部门信息--%>
@@ -281,7 +308,7 @@
         $("#departmentListLi").addClass("active");
         $("#departmentList").addClass("in active");
         $("#departmentInfo").removeClass("in active");
-        $("#departmentInfoBody").children("tr").remove();
+
         initList(1, 10);
     });
 
@@ -293,7 +320,7 @@
             data: {id: id},
             url: "../department/deletDepartment",
             success: function () {
-                $("#departmentInfoBody").children("tr").remove();
+
                 initList(1, 10);
             }
         });
@@ -305,7 +332,6 @@
         $("#departmentListLi").addClass("active");
         $("#departmentList").addClass("in active");
         $("#addDepartment").removeClass("in active");
-        $("#departmentInfoBody").children("tr").remove();
         initList(1, 10);
     });
 </script>

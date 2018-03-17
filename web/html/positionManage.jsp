@@ -48,9 +48,11 @@
              $(".aCheckbox").attr("checked", "checked");
          }
          ;*/
-        var end = 1;
+
 
         function init(a, b) {
+            $("#positionBody").children("tr").remove();
+            $(".page_num").remove();
             $.ajax({
                 type: "POST",
                 url: "../position/pagePosition",
@@ -64,8 +66,6 @@
 
                     $(".list_count").text(ed.pageNumber);
                     $(".page_count").text(ed.pageCount);
-
-                    end = ed.pageCount;
 
                     $.each(ed.list, function (i, item) {
                         var id = item.id;
@@ -94,10 +94,21 @@
                                 "<td><button class='btn btn-danger deletPositionBtn'>删除</button></td>" +
                                 "<td><button class='btn btn-primary editPosition'>详情</button> </td>" +
                                 "</tr>";
-
                             tbody.append(tr);
+
                         }
                     });
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:init(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
                 }
             });
 
@@ -156,11 +167,7 @@
             <div class="page_div">
                 <span class="list_count"></span>条 &nbsp;&nbsp;
                 共<span class="page_count"></span>页&nbsp;&nbsp;
-                <cj:forEach begin="1"
-                            end="${pageCount }"
-                            varStatus="row">
-                    <span class="page_num"><a href="blogManage/pageIndex?index=${row.index }">${row.index }</a></span>
-                </cj:forEach>
+
             </div>
         </div>
         <%--职务列表结束--%>
@@ -312,7 +319,7 @@
         $("#positionListLi").addClass("active");
         $("#positionList").addClass("in active");
         $("#positionInfo").removeClass("in active");
-        $("#positionBody").children("tr").remove();
+
         init(1, 10);
     });
 
@@ -325,7 +332,7 @@
             data: {id: id},
             url: "../position/deletPostion",
             success: function () {
-                $("#positionBody").children("tr").remove();
+
                 init(1, 10);
             }
         });

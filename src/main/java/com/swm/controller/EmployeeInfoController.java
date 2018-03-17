@@ -1,7 +1,9 @@
 package com.swm.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.swm.entity.Employeeinfo;
 import com.swm.service.EmployeeInfoService;
+import com.swm.util.PageUtil;
 import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,20 @@ public class EmployeeInfoController {
 
     @Autowired
     private EmployeeInfoService employeeInfoService;
+
+    /**
+     * 分页获取员工信息
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @param out
+     */
+    @RequestMapping("/pageEmployee")
+    public void getPageEmployee(Integer pageIndex, Integer pageSize, PrintWriter out) {
+        PageUtil<Employeeinfo> employeeinfoPage = employeeInfoService.getPageEmployee(pageIndex, pageSize);
+        String employeeListJSON = JSON.toJSONString(employeeinfoPage);
+        out.write(employeeListJSON);
+    }
 
     /**
      * 添加员工信息
@@ -49,10 +65,50 @@ public class EmployeeInfoController {
      * 查询员工详细信息
      *
      * @param out
-     * @param request
+     *
      */
     @RequestMapping("detail")
-    public void EmployeeDetail(PrintWriter out, HttpServletRequest request) {
+    public void EmployeeDetail(int id, PrintWriter out) {
+        Employeeinfo employeeinfo = employeeInfoService.getEmployeeDetail(id);
+        String employJSON = JSON.toJSONString(employeeinfo);
+        out.write(employJSON);
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param out
+     * @param request
+     */
+    @RequestMapping("/update")
+    public void updateEmployeeInfo(PrintWriter out, HttpServletRequest request) {
+        Employeeinfo employeeinfo = initEmployee(request);
+        employeeinfo.setId(Integer.valueOf(request.getParameter("id")));
+        employeeinfo.setEmployeestatus(1);
+        int re = employeeInfoService.updateInfo(employeeinfo);
+        if (re > 0) {
+            out.write("修改成功");
+        } else {
+            out.write("修改失败");
+        }
+
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @param out
+     */
+    @RequestMapping("/delete")
+    public void deletEmployee(Integer id, PrintWriter out) {
+        int re = employeeInfoService.deleteInfo(id);
+        if (re > 0) {
+            out.write("删除成功");
+        }
+    }
+
+    public void selectEmployee(){
 
     }
 

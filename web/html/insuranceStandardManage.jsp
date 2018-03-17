@@ -25,6 +25,12 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <style type="text/css">
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
     <script src="js/my.js"></script>
 
     <script>
@@ -40,6 +46,7 @@
          ;*/
 
         function init(a, b) {
+            $("#insuranceBody").children("tr").remove();
             $.ajax({
                 type: "POST",
                 url: "../insurance/pageInsurance",
@@ -47,10 +54,7 @@
                 success: function (data) {
 
                     var ed = $.parseJSON(data);
-                    /*   $(".list_count").text(ed.pageNumber);
-                       $(".page_count").text(ed.pageCount);
 
-                       end=ed.pageCount;*/
                     var itbody = $("#insuranceBody");
 
                     $.each(ed.list, function (i, item) {
@@ -95,11 +99,21 @@
                             "<td><button class='btn btn-danger deletInsBtn'>删除</button></td>" +
                             "<td><button class='btn btn-primary editIns'>详情</button> </td>" +
                             "</tr>";
-
-
                         itbody.append(tr);
-
                     });
+                    $(".list_count").text(ed.pageNumber);
+                    $(".page_count").text(ed.pageCount);
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:initList(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
                 }
             });
         }
@@ -158,6 +172,11 @@
 
                 </tbody>
             </table>
+                <div class="page_div">
+                    <span class="list_count"></span>条 &nbsp;&nbsp;
+                    共<span class="page_count"></span>页&nbsp;&nbsp;
+
+                </div>
         </div>
         <%--六险一金标准列表结束--%>
         <%--修改标准信息--%>
@@ -328,7 +347,7 @@
         $("#insuranceListLi").addClass("active");
         $("#insuranceList").addClass("in active");
         $("#insuranceInfo").removeClass("in active");
-        $("#insuranceBody").children("tr").remove();
+
         init(1, 10);
     });
 
@@ -340,7 +359,7 @@
             data: {id: id},
             url: "../insurance/delet",
             success: function () {
-                $("#insuranceBody").children("tr").remove();
+
                 init(1, 10);
             }
         });
@@ -351,7 +370,7 @@
         $("#insuranceListLi").addClass("active");
         $("#insuranceList").addClass("in active");
         $("#addInsurance").removeClass("in active");
-        $("#insuranceBody").children("tr").remove();
+
         init(1, 10);
     });
 </script>
