@@ -2,6 +2,7 @@ package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.swm.entity.Employeeinfo;
+import com.swm.entity.EmployeeinfoEntity;
 import com.swm.service.EmployeeInfoService;
 import com.swm.util.PageUtil;
 import org.omg.CORBA.INTERNAL;
@@ -31,7 +32,7 @@ public class EmployeeInfoController {
      */
     @RequestMapping("/pageEmployee")
     public void getPageEmployee(Integer pageIndex, Integer pageSize, PrintWriter out) {
-        PageUtil<Employeeinfo> employeeinfoPage = employeeInfoService.getPageEmployee(pageIndex, pageSize);
+        PageUtil<EmployeeinfoEntity> employeeinfoPage = employeeInfoService.getPageEmployee(pageIndex, pageSize);
         String employeeListJSON = JSON.toJSONString(employeeinfoPage);
         out.write(employeeListJSON);
     }
@@ -108,8 +109,37 @@ public class EmployeeInfoController {
         }
     }
 
-    public void selectEmployee(){
+    /**
+     * 根据条件查询用户信息
+     *
+     * @param out
+     * @param request
+     */
+    @RequestMapping("/selectByKey")
+    public void selectEmployee(Integer pageIndex, Integer pageSize, Employeeinfo employeeinfoParam, PrintWriter out, HttpServletRequest request) {
 
+        Employeeinfo employeeinfo = new Employeeinfo();
+        String name = request.getParameter("name");
+        // String departmentId=request.getParameter("departmentid");
+        Integer departmentId = employeeinfoParam.getDepartmentid();
+        Object obj = request.getParameter("employeeinfoParam");
+        /* Integer dId=null;
+       if(departmentId!=""){
+            dId=Integer.valueOf(departmentId);
+        }*/
+       /* String positionId=request.getParameter("positionid");
+        Integer pId=null;
+        if(positionId!=""){
+            pId=Integer.valueOf(positionId);
+        }*/
+        Integer positionId = employeeinfoParam.getPositionid();
+        employeeinfo.setName(name);
+        employeeinfo.setDepartmentid(departmentId);
+        employeeinfo.setPositionid(positionId);
+
+        PageUtil<EmployeeinfoEntity> employeeinfoPage = employeeInfoService.getPageEmployeeByKey(pageIndex, pageSize, employeeinfo);
+        String employeeListJSON = JSON.toJSONString(employeeinfoPage);
+        out.write(employeeListJSON);
     }
 
     /**

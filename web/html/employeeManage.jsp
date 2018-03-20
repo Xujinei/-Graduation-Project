@@ -40,6 +40,64 @@
     <script src="js/my.js"></script>
 
     <script>
+
+        /*绘制用户列表公共方法*/
+        function successEach(data) {
+            var ed = $.parseJSON(data);
+            var depTbody = $("#EmployeeListBody");
+            $.each(ed.list, function (i, item) {
+                var id = item.id;
+                var name = item.name;
+                var positionid = item.position.name;
+                var sex = item.sex;
+                var entrytime = item.entrytime;
+                var departmentid = item.department.name;
+                var basesalary = item.basesalary;
+                var positionsalary = item.positionsalary;
+                var email = item.email;
+
+                if (id != null && id != undefined && id != "") {
+
+                    if (positionid == undefined || positionid == null) {
+                        positionid = "";
+                    }
+                    if (sex == undefined || sex == null) {
+                        sex = "";
+                    }
+                    if (entrytime == undefined || entrytime == null) {
+                        entrytime = "";
+                    }
+                    if (departmentid == undefined || departmentid == null) {
+                        departmentid = "";
+                    }
+                    if (basesalary == undefined || basesalary == null) {
+                        basesalary = "";
+                    }
+                    if (positionsalary == undefined || positionsalary == null) {
+                        positionsalary = "";
+                    }
+                    if (email == undefined || email == null) {
+                        email = "";
+                    }
+
+                    var tr = "<tr>" +
+                        "<td><input type='checkbox' class='aEmpCheck' value='" + id + "'/> </td>" +
+                        "<td class='name'>" + name + "</td> " +
+                        "<td class='departmentid'>" + departmentid + "</td>" +
+                        "<td class='positionid'>" + positionid + "</td>" +
+                        "<td class='sex'>" + sex + "</td>" +
+                        "<td class='email'>" + email + "</td>" +
+                        "<td class='basesalary'>" + basesalary + "</td>" +
+                        "<td class='positionsalary'>" + positionsalary + "</td>" +
+                        "<td><button class='btn btn-primary editEmployeeInfoBtn'>详情</button> </td>" +
+                        "</tr>";
+
+                    depTbody.append(tr);
+                }
+            });
+        };
+
+
         /*初始化员工列表*/
         function initList(a, b) {
             $("#EmployeeListBody").children("tr").remove();
@@ -50,59 +108,7 @@
                 data: {pageIndex: a, pageSize: b},
                 success: function (data) {
                     var ed = $.parseJSON(data);
-
-                    var depTbody = $("#EmployeeListBody");
-                    $.each(ed.list, function (i, item) {
-                        var id = item.id;
-                        var name = item.name;
-                        var positionid = item.positionid;
-                        var sex = item.sex;
-                        var entrytime = item.entrytime;
-                        var departmentid = item.departmentid;
-                        var basesalary = item.basesalary;
-                        var positionsalary = item.positionsalary;
-                        var email = item.email;
-
-                        if (id != null && id != undefined && id != "") {
-
-                            if (positionid == undefined || positionid == null) {
-                                positionid = "";
-                            }
-                            if (sex == undefined || sex == null) {
-                                sex = "";
-                            }
-                            if (entrytime == undefined || entrytime == null) {
-                                entrytime = "";
-                            }
-                            if (departmentid == undefined || departmentid == null) {
-                                departmentid = "";
-                            }
-                            if (basesalary == undefined || basesalary == null) {
-                                basesalary = "";
-                            }
-                            if (positionsalary == undefined || positionsalary == null) {
-                                positionsalary = "";
-                            }
-                            if (email == undefined || email == null) {
-                                email = "";
-                            }
-
-                            var tr = "<tr>" +
-                                "<td><input type='checkbox'> <input type='hidden' class='id' value='" + id + "'/></td>" +
-                                "<td class='name'>" + name + "</td> " +
-                                "<td class='departmentid'>" + departmentid + "</td>" +
-                                "<td class='positionid'>" + positionid + "</td>" +
-                                "<td class='sex'>" + sex + "</td>" +
-                                "<td class='email'>" + email + "</td>" +
-                                "<td class='basesalary'>" + basesalary + "</td>" +
-                                "<td class='positionsalary'>" + positionsalary + "</td>" +
-                                "<td><button class='btn btn-primary editEmployeeInfoBtn'>详情</button> </td>" +
-                                "</tr>";
-
-                            depTbody.append(tr);
-                        }
-                    });
-
+                    successEach(data);
                     $(".list_count").text(ed.pageNumber);
                     $(".page_count").text(ed.pageCount);
                     var end = ed.pageCount;
@@ -144,7 +150,7 @@
         <%--员工列表--%>
         <div class="tab-pane fade" id="employeeList" style="margin:4%;" align="center">
             <%--条件查询账号--%>
-            <form class="form-inline InitCommon">
+            <form class="form-inline InitCommon" id="selectForm">
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <input type="text" class="form-control" id="name" placeholder="请输入员工姓名" name="name">
@@ -161,22 +167,22 @@
 
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="employeeStatus">状态</label>
-                    <select class="form-control" id="employeeStatus" name="employeeStatus">
-                        <option>1</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">查询</button>
+                <%-- <div class="form-group">
+                     <label for="employeeStatus">状态</label>
+                     <select class="form-control" id="employeeStatus" name="employeeStatus">
+                         <option>1</option>
+                     </select>
+                 </div>--%>
+                <button type="button" class="btn btn-primary" id="selectEmpByKey">查询</button>
             </form>
             <%--选择删除--%>
             <form class="form-inline">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> 全选
+                        <input type="checkbox" class="checkAll"> 全选
                     </label>
                 </div>
-                <button type="submit" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-danger" id="deleteEmployeeBtn">删除</button>
                 <button type="button" class="btn btn-primary" id="addEmployeeBtn">添加</button>
             </form>
             <%--账号列表--%>
@@ -231,7 +237,7 @@
                         </td>
                         <td>
                             <label>出生日期：</label>
-                            <input name="brithday" type="date"/>
+                            <input name="brithday" type="text"/>
                         </td>
 
                     </tr>
@@ -282,11 +288,11 @@
                     <tr>
                         <td>
                             <label>入职时间：</label>
-                            <input type="date" name="entrytime"/>
+                            <input type="text" name="entrytime"/>
                         </td>
                         <td>
                             <label>合同到期时间：</label>
-                            <input name="expiredate" type="date"/>
+                            <input name="expiredate" type="text"/>
                         </td>
 
                     </tr>
@@ -468,6 +474,48 @@
 </div>
 </body>
 <script>
+
+    /*查询*/
+    function selectByKey(a, b) {
+        $("#EmployeeListBody").children("tr").remove();
+        $(".page_num").remove();
+        console.log($("#selectForm").serialize());
+        $.ajax({
+            type: "POST",
+            data: {employeeinfoParam: $("#selectForm").serialize(), pageIndex: a, pageSize: b},
+            url: "../employInfo/selectByKey",
+            success: function (data) {
+                var ed = $.parseJSON(data);
+
+                successEach(data);
+                $(".list_count").text(ed.pageNumber);
+                $(".page_count").text(ed.pageCount);
+                var end = ed.pageCount;
+                var page_div = $(".page_div");
+                for (var i = 1; i <= end; i++) {
+                    var skip = 1;
+                    if (i > 1) {
+                        skip = (i - 1) * 10;
+                    }
+                    var aSpan = " <span class='page_num'>" +
+                        "<a href='javascript:selectByKey(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                    page_div.append(aSpan);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    $("#selectEmpByKey").click(function () {
+        selectByKey(1, 10);
+    });
+
+
+
+
+
     /*添加员工信息*/
     $("#addEmployeeSub").click(function () {
         var name = $("#addEmployeeForm").find("input[name='name']").val();
@@ -592,13 +640,13 @@
             success: function (data) {
                 var info = $.parseJSON(data);
 
-                var entryDate = new Date(info.entrytime);
+                var strBriDate = getStrDate(info.brithday);
+                var strentryDate = getStrDate(info.entrytime);
+                var strExpDate = getStrDate(info.expiredate);
 
-                console.log(entryDate);
-                console.log(info.entrytime);
                 $("#infoBody").find("input[name='id']").val(info.id);
                 $("#infoBody").find("input[name='name']").val(info.name);
-                $("#infoBody").find("input[name='brithday']").val(info.brithday);
+                $("#infoBody").find("input[name='brithday']").val(strBriDate);
                 $("#infoBody").find("input[name='telphone']").val(info.telphone);
                 $("#infoBody").find("input[name='email']").val(info.email);
                 $("#infoBody").find("input[name='identificationid']").val(info.identificationid);
@@ -607,8 +655,11 @@
                 $("#infoBody").find("input[name='school']").val(info.school);
                 $("#infoBody").find("input[name='profession']").val(info.profession);
                 $("#infoBody").find("input[name='politicalstatus']").val(info.politicalstatus);
-                <%--$("#infoBody").find("input[name='entrytime']").val("<fmt:formatDate value='"+entryDate+"' pattern='yyyy-MM-dd'/>");--%>
-                $("#infoBody").find("input[name='expiredate']").val(entryDate);
+                <%--$("#infoBody").find("input[name='entrytime']").val("<fmt:formatDate value="+entryDate+" pattern='yyyy-MM-dd'/>");--%>
+                $("#infoBody").find("input[name='entrytime']").val(strentryDate);
+
+
+                $("#infoBody").find("input[name='expiredate']").val(strExpDate);
                 $("#infoBody").find("input[name='basesalary']").val(info.basesalary);
                 $("#infoBody").find("input[name='positionsalary']").val(info.positionsalary);
                 $("#infoBody").find("input[name='subsidy']").val(info.subsidy);
@@ -639,6 +690,65 @@
                 $("#infoBody").find("input[name='id']").attr("disabled", "disabled");
             }
         });
+    });
+
+    //退出员工详情面板
+    $("#exitInfo").click(function () {
+        $("#employeeInfoLab").css("display", "none");
+        $("#employeeInfo").removeClass("in active");
+        $("#employeeList").addClass("in active");
+        $("#employeeListLab").addClass("active");
+        initList(1, 10);
+    });
+
+
+    /*格式化日期*/
+    function getStrDate(date) {
+        var entryDate = new Date(date);
+        var year = entryDate.getFullYear();
+        var month = entryDate.getMonth();
+        var day = entryDate.getDate();
+        var strDate = year + "-" + month + "-" + day;
+        return strDate;
+    }
+
+    /*全选*/
+
+    $(".checkAll").change(function () {
+        var checkAll = $(".checkAll").is(':checked');
+        console.log(checkAll);
+        if (checkAll) {
+            $.each($('input[class=aEmpCheck]'), function () {
+                $(this).attr("checked", true);
+            });
+        } else {
+            $.each($('input[class=aEmpCheck]'), function () {
+                $(this).attr("checked", false);
+            });
+        }
+    });
+
+
+    /*删除员工*/
+    $("#deleteEmployeeBtn").click(function () {
+
+        var f = $(".aEmpCheck").is(':checked');
+        if (!f) {
+            alert("请选择要删除的员工");
+        } else {
+            $.each($('input[class=aEmpCheck]:checked'), function () {
+                var id = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    data: {id: id},
+                    url: "../employInfo/delete",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+            initList(1, 10);
+        }
     });
 </script>
 </html>

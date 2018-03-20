@@ -1,6 +1,7 @@
 package com.swm.mapper;
 
 import com.swm.entity.Employeeinfo;
+import com.swm.entity.EmployeeinfoEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -50,5 +51,13 @@ public interface EmployeeinfoMapper {
 
     int countAll();
 
+    int countAllByKey(@Param("employeeinfo") Employeeinfo employeeinfo);
+
     List<Employeeinfo> selectByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+
+    List<EmployeeinfoEntity> selectEntityByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+
+    List<EmployeeinfoEntity> selectEntityByPageAndOther(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize, @Param("employeeinfo") Employeeinfo employeeinfo);
+
+
 }

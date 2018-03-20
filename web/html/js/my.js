@@ -221,14 +221,6 @@ $(function () {
 
     });
 
-    //退出员工详情面板
-    $("#exitInfo").click(function () {
-        $("#employeeInfoLab").css("display", "none");
-        $("#employeeInfo").removeClass("in active");
-        $("#employeeList").addClass("in active");
-        $("#employeeListLab").addClass("active");
-    });
-
 
     /*************************员工账号页面： accountManage.jsp***************************/
 

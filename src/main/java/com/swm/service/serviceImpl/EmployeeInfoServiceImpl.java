@@ -2,6 +2,7 @@ package com.swm.service.serviceImpl;
 
 import com.swm.entity.Department;
 import com.swm.entity.Employeeinfo;
+import com.swm.entity.EmployeeinfoEntity;
 import com.swm.mapper.EmployeeinfoMapper;
 import com.swm.service.EmployeeInfoService;
 import com.swm.util.PageUtil;
@@ -27,8 +28,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return employeeinfoMapper.insert(employeeinfo);
     }
 
-    public PageUtil<Employeeinfo> getPageEmployee(Integer pageIndex, Integer pageSize) {
-        PageUtil<Employeeinfo> employeeinfoPage = new PageUtil<Employeeinfo>();
+    /**
+     * 分页查询所有
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    public PageUtil<EmployeeinfoEntity> getPageEmployee(Integer pageIndex, Integer pageSize) {
+        PageUtil<EmployeeinfoEntity> employeeinfoPage = new PageUtil<EmployeeinfoEntity>();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Integer skipSize = (pageIndex - 1) * pageSize;
@@ -38,11 +46,35 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             pageCount = 1;
         }
 
-        List<Employeeinfo> employeeinfoList = employeeinfoMapper.selectByPage(skipSize, pageSize);
-        // 日期格式
-        for (Employeeinfo dep : employeeinfoList) {
+        List<EmployeeinfoEntity> employeeinfoList = employeeinfoMapper.selectEntityByPage(skipSize, pageSize);
 
+        employeeinfoPage.setList(employeeinfoList);
+        employeeinfoPage.setPageCount(pageCount);
+        employeeinfoPage.setPageNumber(pageNumber);
+        employeeinfoPage.setPageIndex(pageIndex);
+        return employeeinfoPage;
+    }
+
+    /**
+     * 根据条件分页查询
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @param employeeinfo
+     * @return
+     */
+    public PageUtil<EmployeeinfoEntity> getPageEmployeeByKey(Integer pageIndex, Integer pageSize, Employeeinfo employeeinfo) {
+        PageUtil<EmployeeinfoEntity> employeeinfoPage = new PageUtil<EmployeeinfoEntity>();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer pageNumber = employeeinfoMapper.countAllByKey(employeeinfo);
+        Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
+        if (pageCount == 0) {
+            pageCount = 1;
         }
+
+        List<EmployeeinfoEntity> employeeinfoList = employeeinfoMapper.selectEntityByPageAndOther(skipSize, pageSize,employeeinfo);
         employeeinfoPage.setList(employeeinfoList);
         employeeinfoPage.setPageCount(pageCount);
         employeeinfoPage.setPageNumber(pageNumber);

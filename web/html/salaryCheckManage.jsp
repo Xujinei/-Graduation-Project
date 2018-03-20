@@ -46,16 +46,16 @@
         <div class="tab-pane fade" id="salaryCheckList">
             <%--带审核薪酬福利列表--%>
             <div class="tipInfo"> 在审核前请先导入当月员工工时与员工补贴</div>
-            <form class="form-inline" style="margin-left: 2%">
+            <form class="form-inline" id="uploadForm" enctype="multipart/form-data" style="margin-left: 2%">
                 <div class="form-group">
                     <label for="workTime">上传工时</label>
-                    <input type="file" id="workTime"/>
+                    <input type="file" id="workTime" name="workTime"/>
                 </div>
                 <div class="form-group">
                     <label for="subsidy">上传补贴</label>
-                    <input type="file" id="subsidy"/>
+                    <input type="file" id="subsidy" name="subside"/>
                 </div>
-                <button type="submit" class="btn btn-primary">上传</button>
+                <button type="button" class="btn btn-primary" id="uploadFile">上传</button>
             </form>
             <%--条件查询--%>
             <form class="form-inline" style="margin-left: 2%">
@@ -197,4 +197,26 @@
     </div>
 </div>
 </body>
+<script>
+    $("#uploadFile").click(function () {
+        var workTime = $("#workTime").val();
+        var subsidy = $("#subsidy").val();
+        if ((workTime == "" || workTime.length == 0) && (subsidy == "" || subsidy.length == 0)) {
+            alert("请选择上传的文件");
+            return;
+        } else {
+            var form = new FormData($("#uploadForm")[0]);
+            $.ajax({
+                type: "post",
+                url: "../upload/upload",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    });
+</script>
 </html>

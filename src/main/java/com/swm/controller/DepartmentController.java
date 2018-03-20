@@ -35,7 +35,6 @@ public class DepartmentController {
         response.setContentType("text/html;charset=utf-8");
         List<Department> departmentList = departmentService.getAllDepartment();
         String departmentJson = JSON.toJSONString(departmentList);
-        System.out.println(departmentJson);
         out.write(departmentJson);
     }
 
