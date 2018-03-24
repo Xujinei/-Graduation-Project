@@ -1,6 +1,8 @@
 package com.swm.mapper;
 
 import com.swm.entity.Account;
+import com.swm.entity.Employeeinfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -54,4 +56,17 @@ public interface AccountMapper {
      * @return
      */
     Account selectByAccount(Account account);
+
+    List<Account> selectByPageAccount(@Param("pageIndex") Integer pageIndex,
+                                      @Param("pageSize") Integer pageSize,
+                                      @Param("account") Account account,
+                                      @Param("personList") List<Employeeinfo> personList);
+
+    int countAll();
+
+    int countByPageAccount(@Param("pageIndex") Integer pageIndex,
+                           @Param("pageSize") Integer pageSize,
+                           @Param("account") Account account,
+                           @Param("personList") List<Employeeinfo> personList);
+
 }

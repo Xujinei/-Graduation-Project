@@ -5,7 +5,6 @@ import com.swm.entity.Employeeinfo;
 import com.swm.entity.EmployeeinfoEntity;
 import com.swm.service.EmployeeInfoService;
 import com.swm.util.PageUtil;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +52,7 @@ public class EmployeeInfoController {
         if (employeeinfo.getEmployeestatus() == null || "".equals(employeeinfo.getEmployeestatus())) {
             employeeinfo.setEmployeestatus(1); // 在职
         }
+
         int re = employeeInfoService.addEmployee(employeeinfo);
         if (re > 0) {
             out.write("添加成功");
@@ -69,7 +69,7 @@ public class EmployeeInfoController {
      *
      */
     @RequestMapping("detail")
-    public void EmployeeDetail(int id, PrintWriter out) {
+    public void EmployeeDetail(Integer id, PrintWriter out) {
         Employeeinfo employeeinfo = employeeInfoService.getEmployeeDetail(id);
         String employJSON = JSON.toJSONString(employeeinfo);
         out.write(employJSON);
@@ -236,7 +236,7 @@ public class EmployeeInfoController {
         employeeinfo.setPositionsalary(dPositionSalary);
         employeeinfo.setInsurancestandard(intInsuStand);
         employeeinfo.setSubsidy(dSubsidy);
-
+        employeeinfo.setHoursSalary((employeeinfo.getBasesalary() + employeeinfo.getPositionsalary()) / 40.0); // 小时工资
         return employeeinfo;
 
     }

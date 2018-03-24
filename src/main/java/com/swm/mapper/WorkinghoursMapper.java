@@ -1,8 +1,10 @@
 package com.swm.mapper;
 
 import com.swm.entity.Workinghours;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -46,4 +48,8 @@ public interface WorkinghoursMapper {
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
     int updateByPrimaryKey(Workinghours record);
+
+    List<Workinghours> selectByKey(@Param("workinghours") Workinghours workinghours);
+
+//    int deleteByKey(@Param("workinghours") Workinghours workinghours);
 }

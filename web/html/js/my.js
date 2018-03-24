@@ -398,14 +398,7 @@ $(function () {
     $("#salaryCheckList").addClass("active in");
     $("#salaryInfoLi").css("display", "none");
 
-    //详情按钮
-    $("#editSalaryCheckBtn").click(function () {
-        $("#salaryInfoLi").css("display", "block").addClass("active");
-        $("#salaryInfo").addClass("active in");
-        $("#salaryCheckLi").removeClass("active");
-        $("#salaryCheckList").removeClass("active in");
 
-    });
     // 退出详情页按钮
     $("#exitSalaryInfo").click(function () {
         $("#salaryCheckLi").addClass("active");
@@ -460,5 +453,6 @@ $(function () {
         $("#positionSalaryInfoList").removeClass("active in");
 
     });
+
 
 });

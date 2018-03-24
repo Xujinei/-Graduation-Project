@@ -20,7 +20,7 @@ public class LoginController {
 
     @RequestMapping("/userLogin")
     public ModelAndView login(String username, String password, String remember, HttpSession session, HttpServletResponse response) {
-
+        // if(null != session.getAttribute("account"))
         ModelAndView modelAndView = new ModelAndView();
 
         Account account = loginService.userLogin(username, password, remember, response);

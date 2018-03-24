@@ -8,11 +8,13 @@ import com.swm.service.EmployeeInfoService;
 import com.swm.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
+@Transactional
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
     @Autowired
@@ -86,11 +88,19 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return employeeinfoMapper.selectByPrimaryKey(id);
     }
 
+    public EmployeeinfoEntity getEmployeeEntityById(Integer id) {
+        return employeeinfoMapper.getEmployeeEntityById(id);
+    }
+
     public int updateInfo(Employeeinfo employeeinfo) {
         return employeeinfoMapper.updateByPrimaryKey(employeeinfo);
     }
 
     public int deleteInfo(Integer id) {
         return employeeinfoMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Employeeinfo> getEmployeeBySearch(Employeeinfo employeeinfo) {
+        return employeeinfoMapper.selectBySearch(employeeinfo);
     }
 }

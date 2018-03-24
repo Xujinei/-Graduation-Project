@@ -81,7 +81,7 @@
                     }
 
                     var tr = "<tr>" +
-                        "<td><input type='checkbox' class='aEmpCheck' value='" + id + "'/> </td>" +
+                        "<td><input type='checkbox' class='aEmpCheck' value='" + id + "'/> <input type='hidden' class='id' value='" + id + "'/></td>" +
                         "<td class='name'>" + name + "</td> " +
                         "<td class='departmentid'>" + departmentid + "</td>" +
                         "<td class='positionid'>" + positionid + "</td>" +
@@ -327,12 +327,12 @@
                             <label>基本补贴：</label>
                             <input name="subsidy" type="number" step="0.1"/>
                         </td>
-                        <td>
-                            <label>补贴标准：</label>
-                            <select name="insurancestandard">
+                        <%--  <td>
+                              <label>补贴标准：</label>
+                              <select name="insurancestandard">
 
-                            </select>
-                        </td>
+                              </select>
+                          </td>--%>
                     </tr>
                     <tr>
                         <td align="center">
@@ -448,15 +448,15 @@
                             <input name="subsidy" type="number" step="0.01"/>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <label>补贴标准：</label>
-                            <select name="insurancestandard">
+                    <%-- <tr>
+                         <td>
+                             <label>补贴标准：</label>
+                             <select name="insurancestandard">
 
-                            </select>
-                        </td>
+                             </select>
+                         </td>
 
-                    </tr>
+                     </tr>--%>
                     <tr>
                         <td align="center">
                             <button type="button" class="btn btn-primary btn-sm" id="addEmployeeSub">添加</button>
@@ -582,8 +582,8 @@
         positionSelect.children("option").remove();
         var departmentSelect = $("#infoBody").find("select[name='departmentid']");
         departmentSelect.children("option").remove();
-        var insurancestandardSelect = $("#infoBody").find("select[name='insurancestandard']");
-        insurancestandardSelect.children("option").remove();
+        /* var insurancestandardSelect = $("#infoBody").find("select[name='insurancestandard']");
+         insurancestandardSelect.children("option").remove();*/
         $.ajax({
             type: 'POST',
             scriptCharset: 'utf-8',
@@ -614,24 +614,24 @@
             }
         });
 
-        $.ajax({
-            type: 'POST',
-            scriptCharset: 'utf-8',
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            url: '../insurance/getAll',
-            success: function (data) {
-                var d = eval(data);
+        /*  $.ajax({
+              type: 'POST',
+              scriptCharset: 'utf-8',
+              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+              url: '../insurance/getAll',
+              success: function (data) {
+                  var d = eval(data);
 
-                $.each(d, function (i, item) {
-                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
-                    insurancestandardSelect.append(option);
-                })
-            }
-        });
+                  $.each(d, function (i, item) {
+                      var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                      insurancestandardSelect.append(option);
+                  })
+              }
+          });*/
 
         var p = $(this).parent().parent();
         var id = p.find(".id").val();
-
+        console.log("id======" + id);
         /*设置表单值*/
         $.ajax({
             type: "POST",
@@ -639,7 +639,6 @@
             url: "../employInfo/detail",
             success: function (data) {
                 var info = $.parseJSON(data);
-
                 var strBriDate = getStrDate(info.brithday);
                 var strentryDate = getStrDate(info.entrytime);
                 var strExpDate = getStrDate(info.expiredate);
@@ -669,7 +668,7 @@
                 // 设置下拉框的值
                 $("#infoBody").find("select[name='departmentid']").find("option[value='" + info.departmentid + "']").attr("selected", true);
                 $("#infoBody").find("select[name='positionid']").find("option[value='" + info.positionid + "']").attr("selected", true);
-                $("#infoBody").find("select[name='insurancestandard']").find("option[value='" + info.insurancestandard + "']").attr("selected", true);
+//                $("#infoBody").find("select[name='insurancestandard']").find("option[value='" + info.insurancestandard + "']").attr("selected", true);
             },
             error: function () {
 
@@ -702,15 +701,7 @@
     });
 
 
-    /*格式化日期*/
-    function getStrDate(date) {
-        var entryDate = new Date(date);
-        var year = entryDate.getFullYear();
-        var month = entryDate.getMonth();
-        var day = entryDate.getDate();
-        var strDate = year + "-" + month + "-" + day;
-        return strDate;
-    }
+
 
     /*全选*/
 
@@ -750,5 +741,15 @@
             initList(1, 10);
         }
     });
+
+    /*格式化日期*/
+    function getStrDate(date) {
+        var entryDate = new Date(date);
+        var year = entryDate.getFullYear();
+        var month = entryDate.getMonth();
+        var day = entryDate.getDate();
+        var strDate = year + "-" + month + "-" + day;
+        return strDate;
+    }
 </script>
 </html>

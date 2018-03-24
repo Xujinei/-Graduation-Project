@@ -4,6 +4,8 @@ import com.swm.entity.Employeeinfo;
 import com.swm.entity.EmployeeinfoEntity;
 import com.swm.util.PageUtil;
 
+import java.util.List;
+
 public interface EmployeeInfoService {
 
     int addEmployee(Employeeinfo employeeinfo);
@@ -14,7 +16,12 @@ public interface EmployeeInfoService {
 
     Employeeinfo getEmployeeDetail(Integer id);
 
+    EmployeeinfoEntity getEmployeeEntityById(Integer id);
+
     int updateInfo(Employeeinfo employeeinfo);
 
+
     int deleteInfo(Integer id);
+
+    List<Employeeinfo> getEmployeeBySearch(Employeeinfo employeeinfo);
 }

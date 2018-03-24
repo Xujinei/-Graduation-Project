@@ -1,5 +1,6 @@
 package com.swm.controller;
 
+import com.swm.service.SalaryService;
 import com.swm.service.serviceImpl.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,27 +19,32 @@ public class UploadController {
     @Autowired
     private UploadService uploadService;
 
+
     @RequestMapping("/upload")
+    /**
+     * 导入当月工时
+     */
     public void uploadWorkTime(PrintWriter out, HttpServletRequest request) {
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         MultipartFile workTimefile = multipartHttpServletRequest.getFile("workTime");
+//        MultipartFile subsidyfile = multipartHttpServletRequest.getFile("subsidy");
         if (workTimefile == null) {
             return;
         }
         String workTimeName = workTimefile.getOriginalFilename();
+//        String subSidyName = subsidyfile.getOriginalFilename();
         long workTimesize = workTimefile.getSize();
-        if ((workTimeName == null || "".equals(workTimeName)) && workTimesize == 0) {
+//        long subSidySize = subsidyfile.getSize();
+        if (((workTimeName == null || "".equals(workTimeName)) && workTimesize == 0)) {
             return;
         }
-        //批量导入。参数：文件名，文件。
+        //批量导入。参数：文件名，文件。,并结算当月工资
         boolean b = uploadService.batchImport(workTimeName, workTimefile);
         if (b) {
-            out.write("导入excel成功");
+            out.write("导入结算当月薪酬成功");
         } else {
-            out.write("导入excel失败");
+            out.write("导入结算当月薪酬失败");
         }
-
-
     }
 }

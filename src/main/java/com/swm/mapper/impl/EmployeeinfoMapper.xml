@@ -25,6 +25,7 @@
         <result column="positionId" jdbcType="INTEGER" property="positionid"/>
         <result column="baseSalary" jdbcType="DOUBLE" property="basesalary"/>
         <result column="positionSalary" jdbcType="DOUBLE" property="positionsalary"/>
+        <result column="hoursSalary" jdbcType="DOUBLE" property="hoursSalary"/>
         <result column="subsidy" jdbcType="DOUBLE" property="subsidy"/>
         <result column="insuranceStandard" jdbcType="INTEGER" property="insurancestandard"/>
         <result column="employeeStatus" jdbcType="INTEGER" property="employeestatus"/>
@@ -61,7 +62,7 @@
                      select="com.swm.mapper.DepartmentMapper.selectByPrimaryKey"/>
         <association property="position" column="positionId"
                      select="com.swm.mapper.PositionMapper.selectByPrimaryKey"/>
-        <association property="insurancestandard" column="insurancestandard"
+        <association property="insurancestandard" column="insuranceStandard"
                      select="com.swm.mapper.InsurancestandardMapper.selectByPrimaryKey"/>
     </resultMap>
 
@@ -89,7 +90,7 @@
         school, profession, politicalStatus,
         entryTime, expireDate, departmentId,
         positionId, baseSalary, positionSalary,
-        subsidy, insuranceStandard, employeeStatus
+        subsidy, insuranceStandard, employeeStatus,hoursSalary
         )
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
         #{brithday,jdbcType=TIMESTAMP}, #{telphone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
@@ -97,7 +98,8 @@
         #{school,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{politicalstatus,jdbcType=VARCHAR},
         #{entrytime,jdbcType=TIMESTAMP}, #{expiredate,jdbcType=TIMESTAMP}, #{departmentid,jdbcType=INTEGER},
         #{positionid,jdbcType=INTEGER}, #{basesalary,jdbcType=DOUBLE}, #{positionsalary,jdbcType=DOUBLE},
-        #{subsidy,jdbcType=DOUBLE}, #{insurancestandard,jdbcType=INTEGER}, #{employeestatus,jdbcType=INTEGER}
+        #{subsidy,jdbcType=DOUBLE}, #{insurancestandard,jdbcType=INTEGER},
+        #{employeestatus,jdbcType=INTEGER},#{hoursSalary,jdbcType=DOUBLE}
         )
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.swm.entity.Employeeinfo">
@@ -126,7 +128,8 @@
         positionSalary = #{positionsalary,jdbcType=DOUBLE},
         subsidy = #{subsidy,jdbcType=DOUBLE},
         insuranceStandard = #{insurancestandard,jdbcType=INTEGER},
-        employeeStatus = #{employeestatus,jdbcType=INTEGER}
+        employeeStatus = #{employeestatus,jdbcType=INTEGER},
+        hoursSalary = #{hoursSalary,jdbcType=DOUBLE}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -137,10 +140,19 @@
         -->
         select id, name, sex, brithday, telPhone, email, address, identificationId, education,
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
-        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
         from employeeinfo
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="getEmployeeEntityById" parameterType="java.lang.Integer" resultMap="entityResultMap">
+        select id, name, sex, brithday, telPhone, email, address, identificationId, education,
+        school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
+        from employeeinfo
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
     <select id="selectAll" resultMap="BaseResultMap">
         <!--
           WARNING - @mbg.generated
@@ -149,7 +161,7 @@
         -->
         select id, name, sex, brithday, telPhone, email, address, identificationId, education,
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
-        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
         from employeeinfo
     </select>
 
@@ -157,7 +169,7 @@
     <select id="selectByPage" resultMap="BaseResultMap">
         select id, name, sex, brithday, telPhone, email, address, identificationId, education,
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
-        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus, hoursSalary
         from employeeinfo
         <if test="pageIndex!=null and pageSize!=null">
             limit #{pageIndex},#{pageSize}
@@ -167,7 +179,7 @@
     <select id="selectEntityByPage" resultMap="entityResultMap">
         select id, name, sex, brithday, telPhone, email, address, identificationId, education,
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
-        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus, hoursSalary
         from employeeinfo
         <if test="pageIndex!=null and pageSize!=null">
             limit #{pageIndex},#{pageSize}
@@ -177,7 +189,7 @@
     <select id="selectEntityByPageAndOther" resultMap="entityResultMap">
         select id, name, sex, brithday, telPhone, email, address, identificationId, education,
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
-        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
         from employeeinfo
         <if test="#{employeeinfo}!=null">
             <where>
@@ -194,6 +206,27 @@
         </if>
         <if test="pageIndex!=null and pageSize!=null">
             limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+
+
+    <select id="selectBySearch" resultMap="entityResultMap">
+        select id, name, sex, brithday, telPhone, email, address, identificationId, education,
+        school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
+        from employeeinfo
+        <if test="#{employeeinfo}!=null">
+            <where>
+                <if test="employeeinfo.name!=null">
+                    name=#{employeeinfo.name} AND
+                </if>
+                <if test="employeeinfo.departmentId!=null">
+                    departmentId=#{employeeinfo.departmentId} AND
+                </if>
+                <if test="employeeinfo.positionId!=null">
+                    positionId=#{employeeinfo.positionId}
+                </if>
+            </where>
         </if>
     </select>
 
