@@ -81,14 +81,20 @@
                         promission = '普通用户';
                     }
 
+                    /*  $.ajax({
+                          url: "../account/getPage",
+                          data: {pageIndex: a, pageSize: b},
+                          success: function (data) {}
+                      });*/
+
                     var tr = "<tr>" +
-                        "<td><input type='checkbox' class='aCheckbox' name='" + id + "'></td>" +
+                        "<td><input type='checkbox' class='aCheckbox' name='" + id + "' value='" + id + "'></td>" +
                         "<td id='username'>" + username + "<input type='hidden' id='id' value='" + id + "'> </td> " +
                         "<td id='employeeId'>" + employeeId + "</td> " +
                         "<td id='department'>" + department + "</td> " +
                         "<td id='lastLoginTime'>" + lastLoginTime + "</td> " +
-                        "<td id='status'>" + status + "</td>" +
-                        "<td id='promission'>" + promission + "</td>" +
+                        "<td id='status'>" + status + "<input type='hidden' id='statusVal' value='" + status + "'/> </td>" +
+                        "<td id='promission'>" + promission + "<input type='hidden' id='promissionVal' value='" + promission + "'/> </td>" +
                         "<td>  <button class='btn btn-primary' id='editAccount'>编辑</button> </td>" +
                         "</tr>";
                     Tbody.append(tr);
@@ -157,7 +163,8 @@
                 <div class="form-group">
                     <label for="promission">权限</label>
                     <select class="form-control" id="promission" name="promission">
-                        <option>1</option>
+                        <option value="1">超级管理员</option>
+                        <option value="0">普通员工</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -169,7 +176,8 @@
                 <div class="form-group">
                     <label for="status">状态</label>
                     <select class="form-control" id="status" name="status">
-                        <option>1</option>
+                        <option value="1">可用</option>
+                        <option value="0">不可用</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">查询</button>
@@ -181,9 +189,9 @@
                         <input type="checkbox" id="selectAll"/> 全选
                     </label>
                 </div>
-                <button type="submit" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-danger" id="deleteAccount">删除</button>
                 &nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-warning">初始化密码</button>
+                <button type="button" class="btn btn-warning" id="initPassword">初始化密码</button>
             </form>
             <%--账号列表--%>
             <table class="table infoTable personInfoTable">
@@ -201,79 +209,197 @@
                 </tr>
                 </thead>
                 <tbody id="accountListBody">
-                <tr>
-                    <td><input type="checkbox" class="aCheckbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button class="btn btn-primary" id="editAccount">编辑</button>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
-                <div class="page_div">
-                    <span class="list_count"></span>条 &nbsp;&nbsp;
-                    共<span class="page_count"></span>页&nbsp;&nbsp;
+            <div class="page_div">
+                <span class="list_count"></span>条 &nbsp;&nbsp;
+                共<span class="page_count"></span>页&nbsp;&nbsp;
 
-                </div>
+            </div>
         </div>
         <%--账号列表结束--%>
         <%--修改账号信息--%>
         <div class="tab-pane fade" id="accountInfo" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
-                    <td>
-                        <label>用户名：</label>
-                        <input value="name" name="username" type="text"/>
-                    </td>
-                    <td>
-                        <label>员工姓名：</label>
-                        <input value="name" name="name" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>所在部门：</label>
-                        <select class="form-control" style="width: 50%;display: inline-block" name="department">
-                            <option>1</option>
-                        </select>
-                    </td>
-                    <td>
-                        <label>权限：</label>
-                        <select class="form-control" style="width: 50%;display: inline-block" name="promission">
-                            <option>1</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>状态：</label>
-                        <select class="form-control" style="width: 50%;display: inline-block" name="status">
-                            <option>1</option>
-                        </select>
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">修改</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitAccount">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <form id="editAccountForm">
+                <table class="table infoTable">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>用户名：</label>
+                            <input name="username" type="text" disabled="disabled"/>
+                            <input type="hidden" name="id"/>
+                        </td>
+                        <td>
+                            <label>员工姓名：</label>
+                            <input name="name" type="text" disabled="disabled"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>所在部门：</label>
+                            <input name="department" type="text" disabled="disabled"/>
+                        </td>
+                        <td>
+                            <label>权限：</label>
+                            <select class="form-control" style="width: 50%;display: inline-block" name="promission">
+                                <option value="1">超级管理员</option>
+                                <option value="0">普通员工</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>状态：</label>
+                            <select class="form-control" style="width: 50%;display: inline-block" name="status">
+                                <option value="1">可用</option>
+                                <option value="0">不可用</option>
+                            </select>
+                        </td>
+                        <td>
+                            <label>最近登陆时间：</label>
+                            <input name="lastLoginTime" type="text" disabled="disabled"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="updateBtn">修改</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitAccount">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <%--修改账号信息结束--%>
     </div>
 </div>
 </body>
+
+<script>
+    // //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
+    $("body").on("click", "#editAccount", function () {
+        $("#editAccountLi").css("display", "block");
+        $("#accountListLi").removeClass("active");
+        $("#accountList").removeClass("in active");
+        $("#accountInfo").addClass("in active");
+        $("#editAccountLi").addClass("active");
+
+        var p = $(this).parent().parent();
+        var id = p.find("#id").val();
+        var username = p.find("#username").text();
+        var employeeId = p.find("#employeeId").text();
+        var department = p.find('#department').text();
+        var lastLoginTime = p.find('#lastLoginTime').text();
+        var status = p.find('#statusVal').val();
+        var promission = p.find('#promissionVal').val();
+
+        $("#editAccountForm").find("input[name='id']").val(id);
+        $("#editAccountForm").find("input[name='username']").val(username);
+        $("#editAccountForm").find("input[name='name']").val(employeeId);
+        $("#editAccountForm").find("input[name='department']").val(department);
+        $("#editAccountForm").find("input[name='lastLoginTime']").val(lastLoginTime);
+
+        $("#editAccountForm").find("select[name='status']").find("option[value='" + status + "']").attr("selected", true);
+        $("#editAccountForm").find("select[name='promission']").find("option[value='" + promission + "']").attr("selected", true);
+    });
+
+    // 提交修改
+    $("#updateBtn").click(function () {
+        $("#editAccountForm").find("input[name='username']").removeAttr("disabled");
+        $("#editAccountForm").find("input[name='name']").removeAttr("disabled");
+        $("#editAccountForm").find("input[name='department']").removeAttr("disabled");
+        $("#editAccountForm").find("input[name='lastLoginTime']").removeAttr("disabled");
+        console.log($("#editAccountForm").serialize());
+        $.ajax({
+            type: "POST",
+            url: "../account/update",
+            data: $("#editAccountForm").serialize(),
+            success: function (data) {
+                alert(data);
+                initList(1, 10);
+            },
+            error: function () {
+                alert("修改失败");
+            }
+        });
+        $("#editAccountForm").find("input[name='username']").attr("disabled", "disabled");
+        $("#editAccountForm").find("input[name='name']").attr("disabled", "disabled");
+        $("#editAccountForm").find("input[name='department']").attr("disabled", "disabled");
+        $("#editAccountForm").find("input[name='lastLoginTime']").attr("disabled", "disabled");
+    });
+
+
+    /*全选*/
+
+    $("#selectAll").change(function () {
+        var checkAll = $("#selectAll").is(':checked');
+        console.log(checkAll);
+        if (checkAll) {
+            $.each($('input[class=aCheckbox]'), function () {
+                $(this).attr("checked", true);
+            });
+        } else {
+            $.each($('input[class=aCheckbox]'), function () {
+                $(this).attr("checked", false);
+            });
+        }
+    });
+
+    /*初始化账号密码*/
+    $("#initPassword").click(function () {
+        var f = $(".aCheckbox").is(':checked');
+        if (!f) {
+            alert("请选择要初始化密码的账号");
+            return;
+        } else {
+            $.each($('input[class=aCheckbox]:checked'), function () {
+                var id = $(this).val();
+                console.log("id=====" + id);
+                $.ajax({
+                    type: "POST",
+                    data: {id: id},
+                    url: "../account/initPassword",
+                    success: function (data) {
+                        alert(data);
+                        console.log(data);
+                    },
+                    error: function () {
+                        alert("初始化密码失败");
+                    }
+                });
+            });
+        }
+    });
+
+
+    /*删除账号*/
+    $("#deleteAccount").click(function () {
+        var f = $(".aCheckbox").is(':checked');
+        if (!f) {
+            alert("请选择要删除的账号");
+            return;
+        } else {
+            $.each($('input[class=aCheckbox]:checked'), function () {
+                var id = $(this).val();
+                console.log("id=====" + id);
+                $.ajax({
+                    type: "POST",
+                    data: {id: id},
+                    url: "../account/delete",
+                    success: function (data) {
+                        alert(data);
+                        console.log(data);
+                        initList(1, 10);
+                    },
+                    error: function () {
+                        alert("初始化密码失败");
+                    }
+                });
+            });
+        }
+    });
+</script>
 </html>

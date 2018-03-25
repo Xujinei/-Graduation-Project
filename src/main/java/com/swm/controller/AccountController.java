@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -60,4 +61,62 @@ public class AccountController {
         out.write(accountJSON);
     }
 
+    /**
+     * 修改账号信息，只允许修改权限和状态
+     */
+    @RequestMapping("/update")
+    public void updateAccount(HttpServletRequest request, PrintWriter out) {
+        Account account = new Account();
+        Account oldAccount = new Account();
+        String sId = request.getParameter("id");
+        if (sId != null && !"".equals(sId)) {
+            account.setId(Integer.valueOf(sId));
+            oldAccount = accountService.getById(Integer.valueOf(sId));
+            account.setPassword(oldAccount.getPassword());
+            account.setLastLoginTime(oldAccount.getLastLoginTime());
+            account.setUsername(oldAccount.getUsername());
+            account.setEmployeeId(oldAccount.getEmployeeId());
+            account.setStatus(Integer.valueOf(request.getParameter("status")));
+            account.setPromission(Integer.valueOf(request.getParameter("promission")));
+            accountService.updateAccount(account);
+            out.write("修改成功");
+        } else {
+            out.write("修改失败");
+        }
+    }
+
+    /**
+     * 初始化密码
+     *
+     * @param id
+     * @param out
+     */
+    @RequestMapping("/initPassword")
+    public void initPassword(Integer id, PrintWriter out) {
+        Account oldAccount = null;
+        if (id != null) {
+            oldAccount = accountService.getById(id);
+            oldAccount.setPassword("aaa888");
+            accountService.updateAccount(oldAccount);
+            out.write("初始化成功");
+        } else {
+            out.write("初始化失败");
+        }
+    }
+
+    /**
+     * 删除账号
+     *
+     * @param id
+     * @param out
+     */
+    @RequestMapping("/delete")
+    public void deleteAccount(Integer id, PrintWriter out) {
+        if (id != null) {
+            accountService.delete(id);
+            out.write("删除成功");
+        } else {
+            out.write("删除失败");
+        }
+    }
 }

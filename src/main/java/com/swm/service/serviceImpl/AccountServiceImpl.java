@@ -36,4 +36,16 @@ public class AccountServiceImpl implements AccountService {
         return accountPage;
 
     }
+
+    public void updateAccount(Account account) {
+        accountMapper.updateByPrimaryKey(account);
+    }
+
+    public Account getById(Integer id) {
+        return accountMapper.selectByPrimaryKey(id);
+    }
+
+    public int delete(Integer id) {
+        return accountMapper.deleteByPrimaryKey(id);
+    }
 }

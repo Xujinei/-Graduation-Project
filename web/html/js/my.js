@@ -230,14 +230,6 @@ $(function () {
     $("#accountList").addClass("in active");
     $("#editAccountLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editAccount").click(function () {
-        $("#editAccountLi").css("display", "block");
-        $("#accountListLi").removeClass("active");
-        $("#accountList").removeClass("in active");
-        $("#accountInfo").addClass("in active");
-        $("#editAccountLi").addClass("active");
-    });
 
     //退出编辑按钮点击事件
     $("#exitAccount").click(function () {
