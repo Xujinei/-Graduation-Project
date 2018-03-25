@@ -51,7 +51,8 @@ a:hover{
     margin-bottom: 2%;
     margin-top: 2%;
 }
-h4.panel-title>a{
+
+h4.panel-title > a {
     display: block;
     text-decoration: none;
 }

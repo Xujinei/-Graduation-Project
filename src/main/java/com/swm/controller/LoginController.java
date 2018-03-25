@@ -21,8 +21,7 @@ public class LoginController {
     @RequestMapping("/userLogin")
     public ModelAndView login(String username, String password, String remember, HttpSession session, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(session.getAttribute("account"));
-        if(null==session.getAttribute("account")){
+        if (null == session.getAttribute("account")) {
             Account account = loginService.userLogin(username, password, remember, response);
 
             if (account == null) {
@@ -32,7 +31,7 @@ public class LoginController {
                 session.setAttribute("account", account);
                 modelAndView.setViewName("/home");
             }
-        }else{
+        } else {
             modelAndView.setViewName("/home");
         }
         return modelAndView;

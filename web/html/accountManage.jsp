@@ -32,67 +32,66 @@
     <script src="js/my.js"></script>
 
     <script>
+
+        /*格式化日期*/
+        function getStrDate(date) {
+            var entryDate = new Date(date);
+            var year = entryDate.getFullYear();
+            var month = entryDate.getMonth();
+            var day = entryDate.getDate();
+            var strDate = year + "-" + month + "-" + day;
+            return strDate;
+        }
+
+
         /*公共方法*/
         function commonSuccess(data) {
-            $("#salaryBody").children("tr").remove();
+            $("#accountListBody").children("tr").remove();
             $(".page_num").remove();
             var ed = $.parseJSON(data);
             console.log(ed);
-            var salTbody = $("#salaryBody");
+            var Tbody = $("#accountListBody");
 
             $.each(ed.list, function (i, item) {
+                var id = item.id;
                 var username = item.username;
                 var employeeId = item.employeeId.name;
-                var department = item.employeeId.department;
+                var department = item.employeeId.departmentid;
                 var lastLoginTime = item.lastLoginTime;
                 var status = item.status;
                 var promission = item.promission;
 
 
-                if (workdata != null && workdata != undefined && workdata != "") {
-                    workdata = getStrDate(workdata); // 格式化时间
-                    if (name == undefined || name == null) {
-                        name = "";
-                    }
-                    if (workHours == undefined || workHours == null) {
-                        workHours = 0;
-                    }
+                if (id != null && id != undefined && id != "") {
+
                     if (department == undefined || department == null) {
                         department = "";
                     }
-                    if (basesalary == undefined || basesalary == null) {
-                        basesalary = 0;
+                    if (lastLoginTime != undefined || lastLoginTime != null) {
+                        lastLoginTime = getStrDate(lastLoginTime);
                     }
-                    if (positionsalary == undefined || positionsalary == "") {
-                        positionsalary = 0;
+                    if (status == 1 || status == 1) {
+                        status = '可用';
+                    } else {
+                        status = '不可用';
                     }
-                    if (basesubsidy == undefined || basesubsidy == null) {
-                        basesubsidy = 0;
+                    if (promission == 1 || promission == 1) {
+                        promission = '超级管理员';
+                    } else if (promission == 0 || promission == 0) {
+                        promission = '普通用户';
                     }
-                    if (tax == undefined || tax == null) {
-                        tax = 0;
-                    }
-                    if (insurance == undefined || insurance == null) {
-                        insurance = 0;
-                    }
-                    if (total == undefined || total == null) {
-                        total = 0;
-                    }
-                    var tr = "<tr>" +
-                        "<td id='name'>" + name + "<input type='hidden' id='empId' value='" + empId + "'> </td> " +
-                        "<td id='workdata'>" + workdata + "</td> " +
-                        "<td id='workHours'>" + workHours + "</td> " +
-                        "<td id='department'>" + department + "</td> " +
-                        "<td id='basesalary'>" + basesalary + "</td> " +
-                        "<td id='positionsalary'>" + positionsalary + "</td>" +
-                        "<td id='basesubsidy'>" + basesubsidy + "</td>" +
-                        "<td id='insurance'>" + insurance + "</td>" +
-                        "<td id='tax'>" + tax + "</td>" +
-                        "<td id='total'>" + total + "</td>" +
-                        "<td> <button class='btn btn-primary' id='editSalaryCheckBtn'>编辑</button> </td>" +
-                        "</tr>";
 
-                    salTbody.append(tr);
+                    var tr = "<tr>" +
+                        "<td><input type='checkbox' class='aCheckbox' name='" + id + "'></td>" +
+                        "<td id='username'>" + username + "<input type='hidden' id='id' value='" + id + "'> </td> " +
+                        "<td id='employeeId'>" + employeeId + "</td> " +
+                        "<td id='department'>" + department + "</td> " +
+                        "<td id='lastLoginTime'>" + lastLoginTime + "</td> " +
+                        "<td id='status'>" + status + "</td>" +
+                        "<td id='promission'>" + promission + "</td>" +
+                        "<td>  <button class='btn btn-primary' id='editAccount'>编辑</button> </td>" +
+                        "</tr>";
+                    Tbody.append(tr);
                 }
             });
 
@@ -101,7 +100,6 @@
 
         /*初始化账号信息列表*/
         function initList(a, b) {
-
             $.ajax({
                 type: "POST",
                 url: "../account/getPage",
@@ -202,7 +200,7 @@
                     <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="accountListBody">
                 <tr>
                     <td><input type="checkbox" class="aCheckbox"></td>
                     <td></td>
