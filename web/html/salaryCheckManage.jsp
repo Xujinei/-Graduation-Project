@@ -398,7 +398,7 @@
         console.log("time========" + time);
         var department = $("#selectForm").find("#department option:selected").val();
         console.log("department=====" + department);
-        searchSalary(1, 0, time, department);
+        searchSalary(1, 10, time, department);
     });
 </script>
 </html>

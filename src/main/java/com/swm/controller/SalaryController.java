@@ -50,7 +50,6 @@ public class SalaryController {
             c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
             try {
                 Date date = sdf.parse(time);
                 c.setTime(date);
@@ -75,6 +74,11 @@ public class SalaryController {
         }
         String salaryPageJson = JSON.toJSONString(salaryPage);
         out.write(salaryPageJson);
+    }
+
+
+    public void departmentSalary() {
+
     }
 
 }

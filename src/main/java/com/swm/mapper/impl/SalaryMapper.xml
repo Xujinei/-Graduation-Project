@@ -173,5 +173,39 @@
         </if>
     </select>
 
+    <select id="selectDepartmentSalary" resultMap="EmpResultMap">
+        select departementId as departementId, workData as workData, sum(total) as total
+        from salary
+        <if test="date!=null">
+            <where>
+                workData between #{date} and last_day(#{date})
+            </where>
+        </if>
+        group by departementId
+        order by sum(total)
+        <if test="upOrDown!=null and upOrDown==1">
+            DESC
+        </if>
+        <if test="upOrDown!=null and upOrDown==0">
+            ASC
+        </if>
+    </select>
+    <select id="selectPositionSalary" resultMap="EmpResultMap">
+        select departementId as departementId, workData as workData, sum(total) as total
+        from salary
+        <if test="date!=null">
+            <where>
+                workData between #{date} and last_day(#{date})
+            </where>
+        </if>
+        group by positionId
+        order by sum(total)
+        <if test="upOrDown!=null and upOrDown==1">
+            DESC
+        </if>
+        <if test="upOrDown!=null and upOrDown==0">
+            ASC
+        </if>
+    </select>
 
 </mapper>

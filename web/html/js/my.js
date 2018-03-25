@@ -169,9 +169,9 @@ $(function () {
         url: '../position/allPosition',
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
-
+            var option = "<option value=''></option>";
+            positionSelect.append(option);
             var d = eval(data);
-
             $.each(d, function (i, item) {
                 var option = "<option value=" + item.id + ">" + item.name + "</option>";
                 positionSelect.append(option);
@@ -185,7 +185,8 @@ $(function () {
         url: '../department/allDepartment',
         success: function (data) {
             var d = eval(data);
-
+            var option = "<option value=''></option>";
+            departmentSelect.append(option);
             $.each(d, function (i, item) {
                 var option = "<option value=" + item.id + ">" + item.name + "</option>";
                 departmentSelect.append(option);

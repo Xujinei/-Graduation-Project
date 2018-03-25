@@ -191,16 +191,16 @@
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
         baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
         from employeeinfo
-        <if test="#{employeeinfo}!=null">
+        <if test="employeeinfo!=null">
             <where>
                 <if test="employeeinfo.name!=null">
-                    name=#{employeeinfo.name} AND
+                    and name=#{employeeinfo.name}
                 </if>
                 <if test="employeeinfo.departmentid!=null">
-                    departmentId=#{employeeinfo.departmentid} AND
+                    and departmentId=#{employeeinfo.departmentid}
                 </if>
-                <if test="employeeinfo.positionId!=null">
-                    positionId=#{employeeinfo.positionId}
+                <if test="employeeinfo.positionid!=null">
+                    and positionId=#{employeeinfo.positionid}
                 </if>
             </where>
         </if>
@@ -223,8 +223,8 @@
                 <if test="employeeinfo.departmentid!=null">
                     and departmentId=#{employeeinfo.departmentid}
                 </if>
-                <if test="employeeinfo.positionId!=null">
-                    and positionId=#{employeeinfo.positionId}
+                <if test="employeeinfo.positionid!=null">
+                    and positionId=#{employeeinfo.positionid}
                 </if>
             </where>
         </if>
@@ -245,8 +245,8 @@
                 <if test="employeeinfo.departmentid!=null">
                     and departmentId=#{employeeinfo.departmentid}
                 </if>
-                <if test="employeeinfo.positionId!=null">
-                    and positionId=#{employeeinfo.positionId}
+                <if test="employeeinfo.positionid!=null">
+                    and positionId=#{employeeinfo.positionid}
                 </if>
             </where>
         </if>

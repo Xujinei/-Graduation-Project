@@ -49,6 +49,7 @@
                 var id = item.id;
                 var name = item.name;
                 var positionid = item.position.name;
+                console.log("pid=====" + positionid);
                 var sex = item.sex;
                 var entrytime = item.entrytime;
                 var departmentid = item.department.name;
@@ -421,7 +422,7 @@
                         </td>
                         <td>
                             <label><span class="redSpan">*</span> 所属部门：</label>
-                            <select name="departmentid">
+                            <select name="departmentid" id="departmentid">
 
                             </select>
                         </td>
@@ -429,7 +430,7 @@
                     <tr>
                         <td>
                             <label><span class="redSpan">*</span> 职务：</label>
-                            <select name="positionid">
+                            <select name="positionid" id="positionid">
 
                             </select>
                         </td>
@@ -479,14 +480,22 @@
     function selectByKey(a, b) {
         $("#EmployeeListBody").children("tr").remove();
         $(".page_num").remove();
-        console.log($("#selectForm").serialize());
+        var name = $("#selectForm").find("input[name='name']").val();
+        var department = $('#department option:selected').val();
+        var positionid = $('#position option:selected').val();
+
         $.ajax({
             type: "POST",
-            data: {employeeinfoParam: $("#selectForm").serialize(), pageIndex: a, pageSize: b},
+            data: {
+                name: name,
+                department: department,
+                position: positionid,
+                pageIndex: a,
+                pageSize: b
+            },
             url: "../employInfo/selectByKey",
             success: function (data) {
                 var ed = $.parseJSON(data);
-
                 successEach(data);
                 $(".list_count").text(ed.pageNumber);
                 $(".page_count").text(ed.pageCount);
@@ -512,10 +521,6 @@
         selectByKey(1, 10);
     });
 
-
-
-
-
     /*添加员工信息*/
     $("#addEmployeeSub").click(function () {
         var name = $("#addEmployeeForm").find("input[name='name']").val();
@@ -524,6 +529,9 @@
         var identificationid = $("#addEmployeeForm").find("input[name='identificationid']").val();
         var entrytime = $("#addEmployeeForm").find("input[name='entrytime']").val();
         var basesalary = $("#addEmployeeForm").find("input[name='basesalary']").val();
+        var department = $('#departmentid option:selected').val();
+        var positionid = $('#positionid option:selected').val();
+
 
         if (name == null || name == "") {
             alert("请输入员工姓名");
@@ -543,7 +551,14 @@
         } else if (basesalary == null || basesalary == "") {
             alert("请输入员工基本工资");
             return;
-        } else {
+        } else if (department == null || "" == department) {
+            alert("请输入员工部门");
+            return;
+        } else if (positionid == null || "" == positionid) {
+            alert("请输入员工职务");
+            return;
+        }
+        else {
 
             console.log($("#addEmployeeForm").serialize());
             $.ajax({

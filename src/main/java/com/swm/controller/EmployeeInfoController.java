@@ -116,27 +116,19 @@ public class EmployeeInfoController {
      * @param request
      */
     @RequestMapping("/selectByKey")
-    public void selectEmployee(Integer pageIndex, Integer pageSize, Employeeinfo employeeinfoParam, PrintWriter out, HttpServletRequest request) {
+    public void selectEmployee(Integer pageIndex, Integer pageSize,
+                               String name, Integer department, Integer position, PrintWriter out, HttpServletRequest request) {
 
         Employeeinfo employeeinfo = new Employeeinfo();
-        String name = request.getParameter("name");
-        // String departmentId=request.getParameter("departmentid");
-        Integer departmentId = employeeinfoParam.getDepartmentid();
-        Object obj = request.getParameter("employeeinfoParam");
-        /* Integer dId=null;
-       if(departmentId!=""){
-            dId=Integer.valueOf(departmentId);
-        }*/
-       /* String positionId=request.getParameter("positionid");
-        Integer pId=null;
-        if(positionId!=""){
-            pId=Integer.valueOf(positionId);
-        }*/
-        Integer positionId = employeeinfoParam.getPositionid();
-        employeeinfo.setName(name);
-        employeeinfo.setDepartmentid(departmentId);
-        employeeinfo.setPositionid(positionId);
-
+        if (name != null && !"".equals(name)) {
+            employeeinfo.setName(name);
+        }
+        if (department != null) {
+            employeeinfo.setDepartmentid(department);
+        }
+        if (position != null) {
+            employeeinfo.setPositionid(position);
+        }
         PageUtil<EmployeeinfoEntity> employeeinfoPage = employeeInfoService.getPageEmployeeByKey(pageIndex, pageSize, employeeinfo);
         String employeeListJSON = JSON.toJSONString(employeeinfoPage);
         out.write(employeeListJSON);

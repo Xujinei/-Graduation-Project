@@ -58,4 +58,8 @@ public interface SalaryMapper {
     int countAll();
 
     int countAllByKey(@Param("salary") Salary salary);
+
+    List<EmpSalary> selectDepartmentSalary(@Param("date") Date date, @Param("upOrDown") Integer upOrDown);
+
+    List<EmpSalary> selectPositionSalary(@Param("date") Date date, @Param("upOrDown") Integer upOrDown);
 }
