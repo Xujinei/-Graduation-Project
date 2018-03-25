@@ -1,6 +1,7 @@
 package com.swm.mapper;
 
 import com.swm.entity.Insurancestandard;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +47,9 @@ public interface InsurancestandardMapper {
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
     int updateByPrimaryKey(Insurancestandard record);
+
+    int countAllResurance();
+
+    List<Insurancestandard> selectByPage(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize);
+
 }

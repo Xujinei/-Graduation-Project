@@ -7,12 +7,14 @@ import com.swm.util.PageUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
+@Transactional
 public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
@@ -52,12 +54,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         // 日期格式
         for (Department dep : departmentList) {
 
-
         }
         departmentPage.setList(departmentList);
         departmentPage.setPageCount(pageCount);
         departmentPage.setPageNumber(pageNumber);
         departmentPage.setPageIndex(pageIndex);
         return departmentPage;
+    }
+
+    public int updateDepart(Department department) {
+        return departmentMapper.updateByPrimaryKey(department);
+    }
+
+    public int deletDepart(Integer id) {
+        return departmentMapper.deleteByPrimaryKey(id);
     }
 }

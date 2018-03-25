@@ -35,7 +35,6 @@ public class DepartmentController {
         response.setContentType("text/html;charset=utf-8");
         List<Department> departmentList = departmentService.getAllDepartment();
         String departmentJson = JSON.toJSONString(departmentList);
-        System.out.println(departmentJson);
         out.write(departmentJson);
     }
 
@@ -48,15 +47,9 @@ public class DepartmentController {
     public void addDepartment(PrintWriter out, HttpServletRequest request) {
         Department department = new Department();
         department.setName(request.getParameter("name"));
-        //  department.setLeaderid();
-        // 获取领导名对应的id
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date createDate = sdf.parse(request.getParameter("createtime"));
-            department.setCreatetime(createDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        //  department.setLeaderid();  // 获取领导名对应的id
+
+
         department.setIntroduction(request.getParameter("introduction"));
         department.setRemark(request.getParameter("remark"));
 
@@ -85,5 +78,51 @@ public class DepartmentController {
         PageUtil<Department> departmentPage = departmentService.getPageDepartment(pageIndex, pageSize);
         String departmentPageJson = JSON.toJSONString(departmentPage);
         out.write(departmentPageJson);
+    }
+
+    /**
+     * 修改部门信息
+     *
+     * @param out
+     * @param request
+     */
+    @RequestMapping("/updateDepartment")
+    public void updateDepartment(PrintWriter out, HttpServletRequest request) {
+        String sid = request.getParameter("id");
+        if (sid == null && sid == "") {
+            out.write("修改失败");
+            return;
+        }
+
+        Department department = new Department();
+        department.setId(Integer.valueOf(request.getParameter("id")));
+        department.setName(request.getParameter("name"));
+        department.setIntroduction(request.getParameter("introduction"));
+        department.setRemark(request.getParameter("remark"));
+
+        departmentService.updateDepart(department);
+        out.write("修改成功");
+    }
+
+
+    /**
+     * 删除职务
+     *
+     * @param out
+     * @param request
+     */
+    @RequestMapping("deletDepartment")
+    public void deletDepartment(PrintWriter out, HttpServletRequest request) {
+        String sid = request.getParameter("id");
+        if (sid == null && sid == "") {
+            out.write("删除失败");
+            return;
+        }
+        Integer id = Integer.valueOf(sid);
+        int n = departmentService.deletDepart(id);
+        if (n > 0) {
+            out.write("删除成功");
+        }
+
     }
 }

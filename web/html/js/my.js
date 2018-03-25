@@ -158,6 +158,41 @@ $(function () {
     $("#employeeInfoLab").css("display", "none");
     $("#addEmployeeLab").css("display", "none");
 
+    // 初始化新增员工信息页面 ： 部门信息，职务信息,补贴标准
+    var positionSelect = $(".InitCommon").find("select[name='positionid']");
+    positionSelect.children("option").remove();
+    var departmentSelect = $(".InitCommon").find("select[name='departmentid']");
+    departmentSelect.children("option").remove();
+    $.ajax({
+        type: 'POST',
+        scriptCharset: 'utf-8',
+        url: '../position/allPosition',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (data) {
+
+            var d = eval(data);
+
+            $.each(d, function (i, item) {
+                var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                positionSelect.append(option);
+            })
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        scriptCharset: 'utf-8',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        url: '../department/allDepartment',
+        success: function (data) {
+            var d = eval(data);
+
+            $.each(d, function (i, item) {
+                var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                departmentSelect.append(option);
+            })
+        }
+    });
+
 
     //新增员工按钮点击事件
     $("#addEmployeeBtn").click(function () {
@@ -166,63 +201,24 @@ $(function () {
         $("#addEmployeeLab").css("display", "block").addClass("active");
         $("#addemployee").addClass("in active");
 
-        // 初始化新增员工信息页面 ： 部门信息，职务信息
-        $.ajax({
-            type: 'POST',
-            scriptCharset: 'utf-8',
-            url: '../position/allPosition',
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function (data) {
 
-                var d = eval(data);
-
-                var positionSelect = $("select[name=position]");
-                $.each(d, function (i, item) {
-                    var option = "<option value=" + i + ">" + item.name + "</option>";
-                    positionSelect.append(option);
-                })
-            }
-        });
+        var insurancestandardSelect = $("#addEmployeeForm").find("select[name='insurancestandard']");
+        insurancestandardSelect.children("option").remove();
         $.ajax({
             type: 'POST',
             scriptCharset: 'utf-8',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            url: '../department/allDepartment',
+            url: '../insurance/getAll',
             success: function (data) {
                 var d = eval(data);
-                var departmentSelect = $("select[name=department]");
+
                 $.each(d, function (i, item) {
-                    var option = "<option value=" + i + ">" + item.name + "</option>";
-                    departmentSelect.append(option);
+                    var option = "<option value=" + item.id + ">" + item.name + "</option>";
+                    insurancestandardSelect.append(option);
                 })
             }
         });
 
-
-    });
-
-    //编辑员工按钮点击事件
-    $("#editEmployeeInfoBtn").click(function () {
-        $("#employeeList").removeClass("in active");
-        $("#employeeListLab").removeClass("active");
-        $("#employeeInfoLab").css("display", "block").addClass("active");
-        $("#employeeInfo").addClass("in active");
-    });
-
-    //退出员工添加面板
-    $("#exitAdd").click(function () {
-        $("#addEmployeeLab").css("display", "none");
-        $("#addemployee").removeClass("in active");
-        $("#employeeList").addClass("in active");
-        $("#employeeListLab").addClass("active");
-    });
-
-    //退出员工详情面板
-    $("#exitInfo").click(function () {
-        $("#employeeInfoLab").css("display", "none");
-        $("#employeeInfo").removeClass("in active");
-        $("#employeeList").addClass("in active");
-        $("#employeeListLab").addClass("active");
     });
 
 
@@ -259,15 +255,6 @@ $(function () {
     $("#editDepartmentLi").css("display", "none");
     $("#addDepartmentLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editDepartment").click(function () {
-        $("#editDepartmentLi").css("display", "block").addClass("active");
-        $("#departmentInfo").addClass("in active");
-
-        $("#departmentListLi").removeClass("active");
-        $("#departmentList").removeClass("in active");
-
-    });
 
     // 提交部门添加
     $("#addDepartmentSubmit").click(function () {
@@ -277,7 +264,7 @@ $(function () {
         if (departmentName == null || departmentName == "") {
             alert("请输入部门信息");
         } else {
-            alert($("#addDepartmentForm").serialize())
+
             $.ajax({
                 type: "POST",
                 data: $("#addDepartmentForm").serialize(),
@@ -293,13 +280,6 @@ $(function () {
 
     });
 
-    //退出编辑按钮点击事件
-    $("#exitDepartment").click(function () {
-        $("#editDepartmentLi").css("display", "none");
-        $("#departmentListLi").addClass("active");
-        $("#departmentList").addClass("in active");
-        $("#departmentInfo").removeClass("in active");
-    });
 
     // 添加部门按钮点击事件
     $("#addDepartmentBtn").click(function () {
@@ -311,13 +291,6 @@ $(function () {
 
     });
 
-    // 退出添加
-    $("#exitAdd").click(function () {
-        $("#addDepartmentLi").css("display", "none");
-        $("#departmentListLi").addClass("active");
-        $("#departmentList").addClass("in active");
-        $("#addDepartment").removeClass("in active");
-    });
 
 
     /*******************************职务管理页面： positionMange.jsp***********************************/
@@ -369,22 +342,6 @@ $(function () {
     $("#editInsuranceLi").css("display", "none");
     $("#addInsuranceLi").css("display", "none");
 
-    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
-    $("#editInsurance").click(function () {
-        $("#editInsuranceLi").css("display", "block");
-        $("#insuranceListLi").removeClass("active");
-        $("#insuranceList").removeClass("in active");
-        $("#insuranceInfo").addClass("in active");
-        $("#editInsuranceLi").addClass("active");
-    });
-
-    //退出编辑按钮点击事件
-    $("#exitInsurance").click(function () {
-        $("#editInsuranceLi").css("display", "none");
-        $("#insuranceListLi").addClass("active");
-        $("#insuranceList").addClass("in active");
-        $("#insuranceInfo").removeClass("in active");
-    });
 
     // 添加标准点击按钮
     $("#addInsuranceBtn").click(function () {
@@ -394,12 +351,45 @@ $(function () {
         $("#insuranceList").removeClass("in active");
     });
 
-    //退出添加标准
-    $("#exitAddInsurance").click(function () {
-        $("#addInsuranceLi").css("display", "none");
-        $("#insuranceListLi").addClass("active");
-        $("#insuranceList").addClass("in active");
-        $("#addInsurance").removeClass("in active");
+
+    // 提交添加
+    $("#addInsBtn").click(function () {
+        var name = $("#addInsForm").find("input[name='name']").val();
+        var pension = $("#addInsForm").find("input[name='pension']").val();
+        var medical = $("#addInsForm").find("input[name='medical']").val();
+        var unemployment = $("#addInsForm").find("input[name='unemployment']").val();
+        var injury = $("#addInsForm").find("input[name='injury']").val();
+        var maternity = $("#addInsForm").find("input[name='maternity']").val();
+        var housing = $("#addInsForm").find("input[name='housing']").val();
+
+        if (name == null || name == "") {
+            alert("请输入标准名称");
+        } else if (pension == null || pension == '') {
+            alert("请输入养老保险比例");
+        } else if (medical == null || medical == '') {
+            alert("请输入医疗保险比例");
+        } else if (unemployment == null || unemployment == '') {
+            alert("请输入失业保险比例");
+        } else if (injury == null || injury == '') {
+            alert("请输入工伤保险比例");
+        } else if (maternity == null || maternity == '') {
+            alert("请输入生育保险比例");
+        } else if (housing == null || housing == '') {
+            alert("请输入住房公积金比例");
+        } else {
+            $.ajax({
+                type: "POST",
+                data: $("#addInsForm").serialize(),
+                url: "../insurance/addIns",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert("添加失败");
+                }
+            });
+        }
+
     });
 
     /*************************薪酬审核管理页面：salaryCheckManage.jsp*******************/
@@ -408,14 +398,7 @@ $(function () {
     $("#salaryCheckList").addClass("active in");
     $("#salaryInfoLi").css("display", "none");
 
-    //详情按钮
-    $("#editSalaryCheckBtn").click(function () {
-        $("#salaryInfoLi").css("display", "block").addClass("active");
-        $("#salaryInfo").addClass("active in");
-        $("#salaryCheckLi").removeClass("active");
-        $("#salaryCheckList").removeClass("active in");
 
-    });
     // 退出详情页按钮
     $("#exitSalaryInfo").click(function () {
         $("#salaryCheckLi").addClass("active");
@@ -470,5 +453,6 @@ $(function () {
         $("#positionSalaryInfoList").removeClass("active in");
 
     });
+
 
 });

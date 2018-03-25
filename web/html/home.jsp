@@ -149,7 +149,7 @@
                                 <li class="myLi" id="departmentManage"><a>部门管理</a></li>
                                 <li class="myLi" id="positionManage"><a>职务管理</a></li>
                                 <%--<li class="myLi"><a>补贴类型管理</a></li>--%>
-                                <li class="myLi" id="insuranceManage"><a>六险一金标准管理</a></li>
+                                <%--<li class="myLi" id="insuranceManage"><a>六险一金标准管理</a></li>--%>
                                 <%--<li class="myLi"><a>账号管理</a></li>--%>
                             </ul>
                         </div>

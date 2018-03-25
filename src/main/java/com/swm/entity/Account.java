@@ -40,7 +40,7 @@ public class Account {
      *
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
-    private Integer employeeId;
+    private Employeeinfo employeeId;
 
     /**
      *
@@ -149,7 +149,7 @@ public class Account {
      *
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
-    public Integer getEmployeeId() {
+    public Employeeinfo getEmployeeId() {
         return employeeId;
     }
 
@@ -161,7 +161,7 @@ public class Account {
      *
      * @mbg.generated Thu Jan 18 20:59:16 CST 2018
      */
-    public void setEmployeeId(Integer employeeId) {
+    public void setEmployeeId(Employeeinfo employeeId) {
         this.employeeId = employeeId;
     }
 

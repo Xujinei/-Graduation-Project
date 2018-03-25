@@ -13,4 +13,8 @@ public interface DepartmentService {
 
     PageUtil<Department> getPageDepartment(Integer pageIndex, Integer pageSize);
 
+    int updateDepart(Department department);
+
+    int deletDepart(Integer id);
+
 }

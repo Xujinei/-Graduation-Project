@@ -23,20 +23,111 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <style>
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
     <script src="js/my.js"></script>
 
     <script>
-        //全选
-        /* console.log(document.getElementById("selectAll").innerHTML);
-         $("#selectAll").change(function () {
-             console.log("change");
-         });
-         if ($("#selectAll").is(':checked')) {
-             console.log("select All");
-             $(".aCheckbox").attr("checked", "checked");
-         }
-         ;*/
+        /*公共方法*/
+        function commonSuccess(data) {
+            $("#salaryBody").children("tr").remove();
+            $(".page_num").remove();
+            var ed = $.parseJSON(data);
+            console.log(ed);
+            var salTbody = $("#salaryBody");
 
+            $.each(ed.list, function (i, item) {
+                var username = item.username;
+                var employeeId = item.employeeId.name;
+                var department = item.employeeId.department;
+                var lastLoginTime = item.lastLoginTime;
+                var status = item.status;
+                var promission = item.promission;
+
+
+                if (workdata != null && workdata != undefined && workdata != "") {
+                    workdata = getStrDate(workdata); // 格式化时间
+                    if (name == undefined || name == null) {
+                        name = "";
+                    }
+                    if (workHours == undefined || workHours == null) {
+                        workHours = 0;
+                    }
+                    if (department == undefined || department == null) {
+                        department = "";
+                    }
+                    if (basesalary == undefined || basesalary == null) {
+                        basesalary = 0;
+                    }
+                    if (positionsalary == undefined || positionsalary == "") {
+                        positionsalary = 0;
+                    }
+                    if (basesubsidy == undefined || basesubsidy == null) {
+                        basesubsidy = 0;
+                    }
+                    if (tax == undefined || tax == null) {
+                        tax = 0;
+                    }
+                    if (insurance == undefined || insurance == null) {
+                        insurance = 0;
+                    }
+                    if (total == undefined || total == null) {
+                        total = 0;
+                    }
+                    var tr = "<tr>" +
+                        "<td id='name'>" + name + "<input type='hidden' id='empId' value='" + empId + "'> </td> " +
+                        "<td id='workdata'>" + workdata + "</td> " +
+                        "<td id='workHours'>" + workHours + "</td> " +
+                        "<td id='department'>" + department + "</td> " +
+                        "<td id='basesalary'>" + basesalary + "</td> " +
+                        "<td id='positionsalary'>" + positionsalary + "</td>" +
+                        "<td id='basesubsidy'>" + basesubsidy + "</td>" +
+                        "<td id='insurance'>" + insurance + "</td>" +
+                        "<td id='tax'>" + tax + "</td>" +
+                        "<td id='total'>" + total + "</td>" +
+                        "<td> <button class='btn btn-primary' id='editSalaryCheckBtn'>编辑</button> </td>" +
+                        "</tr>";
+
+                    salTbody.append(tr);
+                }
+            });
+
+
+        };
+
+        /*初始化账号信息列表*/
+        function initList(a, b) {
+
+            $.ajax({
+                type: "POST",
+                url: "../account/getPage",
+                data: {pageIndex: a, pageSize: b},
+                success: function (data) {
+                    commonSuccess(data);
+                    var ed = $.parseJSON(data);
+                    $(".list_count").text(ed.pageNumber);
+                    $(".page_count").text(ed.pageCount);
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:initList(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
+                }
+            });
+        }
+
+        initList(1, 10);
+        /*初始化账号信息列表结束*/
 
     </script>
 
@@ -126,6 +217,11 @@
                 </tr>
                 </tbody>
             </table>
+                <div class="page_div">
+                    <span class="list_count"></span>条 &nbsp;&nbsp;
+                    共<span class="page_count"></span>页&nbsp;&nbsp;
+
+                </div>
         </div>
         <%--账号列表结束--%>
         <%--修改账号信息--%>

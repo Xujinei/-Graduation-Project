@@ -74,9 +74,11 @@ public class PositionController {
      * @return
      */
     @RequestMapping("/pagePosition")
-    public void getPagePosition(Integer pageIndex, Integer pageSize, PrintWriter out) {
+    public void getPagePosition(Integer pageIndex, Integer pageSize, PrintWriter out, HttpServletRequest request) {
         PageUtil<Position> departmentPage = positionService.getPagePosition(pageIndex, pageSize);
         String departmentPageJson = JSON.toJSONString(departmentPage);
+
+        request.setAttribute("pageCount", departmentPage.getPageCount());
         out.write(departmentPageJson);
 
     }

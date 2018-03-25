@@ -25,6 +25,12 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <style type="text/css">
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
     <script src="js/my.js"></script>
 
     <script>
@@ -41,55 +47,78 @@
 
 
         /*初始化部门列表*/
-        $.ajax({
-            type: "POST",
-            url: "../department/pageDepartment",
-            data: {pageIndex: "1", pageSize: "15"},
-            success: function (data) {
 
-                var ed = $.parseJSON(data);
+        function initList(a, b) {
+            $("#departmentInfoBody").children("tr").remove();
+            $(".page_num").remove();
+            $.ajax({
+                type: "POST",
+                url: "../department/pageDepartment",
+                data: {pageIndex: a, pageSize: b},
+                success: function (data) {
+                    var ed = $.parseJSON(data);
 
-                var depTbody = $("#departmentInfoBody");
-                $.each(ed.list, function (i, item) {
-                    var id = item.id;
-                    var name = item.name;
-                    var leaderid = item.leaderid;
-                    var createTime = item.createtime;
-                    var remark = item.remark;
-                    console.log(createTime);
-                    if (id != null && id != undefined && id != "") {
+                    var depTbody = $("#departmentInfoBody");
+                    $.each(ed.list, function (i, item) {
+                        var id = item.id;
+                        var name = item.name;
+                        var leaderid = item.leaderid;
+                        var createTime = item.createtime;
+                        var remark = item.remark;
+                        var introduction = item.introduction;
+                        console.log(createTime);
+                        if (id != null && id != undefined && id != "") {
 
-                        if (leaderid == undefined || leaderid == null) {
-                            leaderid = "";
+                            if (leaderid == undefined || leaderid == null) {
+                                leaderid = "";
+                            }
+                            if (createTime == undefined || createTime == null) {
+                                createTime = "";
+                            }
+                            if (remark == undefined || remark == null) {
+                                remark = "";
+                            }
+                            if (createTime != "") {
+
+                                var timeTd = "<td>" + createTime + "</td>";
+                            } else {
+                                var timeTd = "<td>" + createTime + "</td>";
+                            }
+                            if (introduction == undefined || introduction == null) {
+                                introduction = "";
+                            }
+                            var tr = "<tr>" +
+                                "<td id='id'>" + id + "</td> " +
+                                "<td id='name'>" + name + "</td> " +
+                                "<td id='leaderid'>" + leaderid + "</td>" +
+                                "<td id='introduction'>" + introduction + "</td>" +
+                                "<td id='remark'>" + remark + "</td>" +
+                                "<td><button class='btn btn-danger deletDepartmentBtn'>删除</button></td>" +
+                                "<td><button class='btn btn-primary editDepartment'>详情</button> </td>" +
+                                "</tr>";
+
+                            depTbody.append(tr);
                         }
-                        if (createTime == undefined || createTime == null) {
-                            createTime = "";
-                        }
-                        if (remark == undefined || remark == null) {
-                            remark = "";
-                        }
-                        if (createTime != "") {
+                    });
 
-                            var timeTd = "<td>" + createTime + "</td>";
-                        } else {
-                            var timeTd = "<td>" + createTime + "</td>";
+                    $(".list_count").text(ed.pageNumber);
+                    $(".page_count").text(ed.pageCount);
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
                         }
-                        var tr = "<tr>" +
-
-                            "<td>" + id + "</td> " +
-                            "<td>" + name + "</td> " +
-                            "<td>" + leaderid + "</td>" +
-                            timeTd +
-                            "<td>" + remark + "</td>" +
-                            "<td><button class='btn btn-danger deletDepartmentBtn'>删除</button></td>" +
-                            "<td><button class='btn btn-primary editDepartment'>详情</button> </td>" +
-                            "</tr>";
-
-                        depTbody.append(tr);
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:initList(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
                     }
-                });
-            }
-        });
+                }
+            });
+        }
+
+        initList(1, 10);
         /*初始化部门列表结束*/
     </script>
 
@@ -129,7 +158,7 @@
                     <th>部门编号</th>
                     <th>部门名称</th>
                     <th>部门领导</th>
-                    <th>成立时间</th>
+                    <th>介绍</th>
                     <th>备注</th>
                     <th>删除</th>
                     <th>详情</th>
@@ -139,52 +168,55 @@
 
                 </tbody>
             </table>
+                <div class="page_div">
+                    <span class="list_count"></span>条 &nbsp;&nbsp;
+                    共<span class="page_count"></span>页&nbsp;&nbsp;
+
+                </div>
         </div>
         <%--部门列表结束--%>
         <%--修改部门信息--%>
         <div class="tab-pane fade" id="departmentInfo" style="margin: 2%">
-            <table class="table infoTable">
-                <tbody>
-                <tr>
-                    <td>
-                        <label>部门编号：</label>
-                        <input value="id" name="departmentId" type="text" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <label>部门名称：</label>
-                        <input value="name" name="departmentName" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>领导名字：</label>
-                        <input value="name" name="leader" type="text"/>
-                    </td>
-                    <td>
-                        <label>备注：</label>
-                        <input value="name" name="remark" type="text"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>成立时间：</label>
-                        <input value="createTime" name="createTime" type="text"/>
-                    </td>
-                    <td>
-                        <label>介绍：</label>
-                        <textarea value="introduction" name="introduction"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <button type="button" class="btn btn-primary btn-sm">修改</button>
-                    </td>
-                    <td align="left">
-                        <button type="button" class="btn btn-primary btn-sm" id="exitDepartment">退出</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <form id="editDepartForm">
+                <table class="table infoTable">
+                    <tbody id="editDepartBody">
+                    <tr>
+                        <td>
+                            <label>部门编号：</label>
+                            <input name="id" type="text" disabled="disabled"/>
+                        </td>
+                        <td>
+                            <label>部门名称：</label>
+                            <input name="name" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>领导名字：</label>
+                            <input name="leaderid" type="text"/>
+                        </td>
+                        <td>
+                            <label>备注：</label>
+                            <textarea name="remark"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>介绍：</label>
+                            <textarea name="introduction"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="editDepartBut">修改</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitDepartment">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <%--修改部门信息结束--%>
         <%--添加部门信息 --%>
@@ -204,20 +236,15 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>成立时间：</label>
-                            <input name="createtime" type="text"/>
-                        </td>
-                        <td>
                             <label>备注：</label>
                             <input name="remark" type="text"/>
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             <label>介绍：</label>
                             <textarea name="introduction"></textarea>
                         </td>
                     </tr>
+
                     <tr>
                         <td align="center">
                             <button type="button" class="btn btn-primary btn-sm" id="addDepartmentSubmit">添加</button>
@@ -230,9 +257,82 @@
                 </table>
             </form>
         </div>
-
-            <%--添加部门信息结束 --%>
+        <%--添加部门信息结束 --%>
     </div>
 </div>
 </body>
+
+<script>
+
+    // 查看部门详情
+    $("body").on("click", ".editDepartment", function () {
+        $("#editDepartmentLi").css("display", "block").addClass("active");
+        $("#departmentInfo").addClass("in active");
+
+        $("#departmentListLi").removeClass("active");
+        $("#departmentList").removeClass("in active");
+
+        var p = $(this).parent().parent();
+        var id = p.find("#id").text();
+        var name = p.find("#name").text();
+        var leaderid = p.find("#leaderid").text();
+        var remark = p.find('#remark').text();
+        var introduction = p.find('#introduction').text();
+
+
+        $("#editDepartBody").find("input[name='id']").val(id);
+        $("#editDepartBody").find("input[name='name']").val(name);
+        $("#editDepartBody").find("input[name='leaderid']").val(leaderid);
+        $("#editDepartBody").find("textarea[name='remark']").val(remark);
+        $("#editDepartBody").find("textarea[name='introduction']").val(introduction);
+
+
+    });
+
+    // 提交职务修改
+    $("#editDepartBut").click(function () {
+        $("#editDepartBody").find("input[name='id']").removeAttr("disabled");
+        $.ajax({
+            type: "POST",
+            data: $("#editDepartForm").serialize(),
+            url: "../department/updateDepartment",
+            success: function (data) {
+                alert(data);
+                $("#editDepartBody").find("input[name='id']").attr("disabled", "disabled");
+            }
+        });
+    });
+    //退出编辑按钮点击事件
+    $("#exitDepartment").click(function () {
+        $("#editDepartmentLi").css("display", "none");
+        $("#departmentListLi").addClass("active");
+        $("#departmentList").addClass("in active");
+        $("#departmentInfo").removeClass("in active");
+
+        initList(1, 10);
+    });
+
+    // 删除职务
+    $("body").on("click", ".deletDepartmentBtn", function () {
+        var p = $(this).parent().parent();
+        var id = p.find("#id").text();
+        $.ajax({
+            data: {id: id},
+            url: "../department/deletDepartment",
+            success: function () {
+
+                initList(1, 10);
+            }
+        });
+    });
+
+    // 退出添加
+    $("#exitAdd").click(function () {
+        $("#addDepartmentLi").css("display", "none");
+        $("#departmentListLi").addClass("active");
+        $("#departmentList").addClass("in active");
+        $("#addDepartment").removeClass("in active");
+        initList(1, 10);
+    });
+</script>
 </html>

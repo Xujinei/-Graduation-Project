@@ -30,7 +30,7 @@ public class UserController {
         Account account = (Account) session.getAttribute("account");
         // 根据账号中的employId在employeeinfo表中查找用户信息
         if (account != null) {
-            Employeeinfo employeeinfo = userService.getEmployeeById(account.getEmployeeId());
+            Employeeinfo employeeinfo = userService.getEmployeeById(account.getEmployeeId().getId());
             if (employeeinfo != null) {
                 request.setAttribute("employeeInfo", employeeinfo);
             }

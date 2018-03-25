@@ -7,9 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String pageCount = (String) request.getAttribute("pagetCount");
+
+%>
+
 <html>
 <head>
-    <title>职务管理</title>
+    <title>职务管理 "<%=pageCount%>" </title>
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +49,10 @@
          }
          ;*/
 
+
         function init(a, b) {
+            $("#positionBody").children("tr").remove();
+            $(".page_num").remove();
             $.ajax({
                 type: "POST",
                 url: "../position/pagePosition",
@@ -77,7 +85,6 @@
                             if (remark == undefined || remark == null) {
                                 remark = "";
                             }
-
                             var tr = "<tr>" +
                                 "<td id='id'>" + id + "</td> " +
                                 "<td id='name'>" + name + "</td> " +
@@ -87,12 +94,24 @@
                                 "<td><button class='btn btn-danger deletPositionBtn'>删除</button></td>" +
                                 "<td><button class='btn btn-primary editPosition'>详情</button> </td>" +
                                 "</tr>";
-
                             tbody.append(tr);
+
                         }
                     });
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:init(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
                 }
             });
+
         };
 
         /*初始化职务列表*/
@@ -148,10 +167,7 @@
             <div class="page_div">
                 <span class="list_count"></span>条 &nbsp;&nbsp;
                 共<span class="page_count"></span>页&nbsp;&nbsp;
-                <cj:forEach begin="1" end="${blogs.pageCount }"
-                            varStatus="row">
-                    <span class="page_num"><a href="blogManage/pageIndex?index=${row.index }">${row.index }</a></span>
-                </cj:forEach>
+
             </div>
         </div>
         <%--职务列表结束--%>
@@ -303,7 +319,7 @@
         $("#positionListLi").addClass("active");
         $("#positionList").addClass("in active");
         $("#positionInfo").removeClass("in active");
-        $("#positionBody").children("tr").remove();
+
         init(1, 10);
     });
 
@@ -316,7 +332,7 @@
             data: {id: id},
             url: "../position/deletPostion",
             success: function () {
-                $("#positionBody").children("tr").remove();
+
                 init(1, 10);
             }
         });
