@@ -51,7 +51,10 @@ a:hover{
     margin-bottom: 2%;
     margin-top: 2%;
 }
-
+h4.panel-title>a{
+    display: block;
+    text-decoration: none;
+}
 /*个人信息管理样式*/
 .infoTable {
     padding: 3%;

@@ -20,17 +20,20 @@ public class LoginController {
 
     @RequestMapping("/userLogin")
     public ModelAndView login(String username, String password, String remember, HttpSession session, HttpServletResponse response) {
-        // if(null != session.getAttribute("account"))
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println(session.getAttribute("account"));
+        if(null==session.getAttribute("account")){
+            Account account = loginService.userLogin(username, password, remember, response);
 
-        Account account = loginService.userLogin(username, password, remember, response);
-
-        if (account == null) {
-            modelAndView.addObject("message", "用户名和密码错误，请重新输入");
-            modelAndView.setViewName("/login");
-        } else {
+            if (account == null) {
+                modelAndView.addObject("message", "用户名和密码错误，请重新输入");
+                modelAndView.setViewName("/login");
+            } else {
+                session.setAttribute("account", account);
+                modelAndView.setViewName("/home");
+            }
+        }else{
             modelAndView.setViewName("/home");
-            session.setAttribute("account", account);
         }
         return modelAndView;
     }
