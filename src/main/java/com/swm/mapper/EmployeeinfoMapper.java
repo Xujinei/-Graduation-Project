@@ -63,5 +63,5 @@ public interface EmployeeinfoMapper {
 
     List<EmployeeinfoEntity> selectEntityByPageAndOther(@Param("pageIndex") Integer pageIndex, @Param("pageSize") Integer pageSize, @Param("employeeinfo") Employeeinfo employeeinfo);
 
-
+    List<Employeeinfo> selectNoAccount();
 }

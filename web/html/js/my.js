@@ -229,6 +229,7 @@ $(function () {
     $("#accountListLi").addClass("active");
     $("#accountList").addClass("in active");
     $("#editAccountLi").css("display", "none");
+    $("#addAccountLi").css("display", "none");
 
 
     //退出编辑按钮点击事件

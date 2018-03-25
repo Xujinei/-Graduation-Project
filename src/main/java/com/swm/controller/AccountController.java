@@ -6,6 +6,7 @@ import com.swm.entity.Employeeinfo;
 import com.swm.entity.EmployeeinfoEntity;
 import com.swm.service.AccountService;
 import com.swm.service.EmployeeInfoService;
+import com.swm.util.MD5;
 import com.swm.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,7 +97,7 @@ public class AccountController {
         Account oldAccount = null;
         if (id != null) {
             oldAccount = accountService.getById(id);
-            oldAccount.setPassword("aaa888");
+            oldAccount.setPassword(MD5.toMD5("aaa888"));
             accountService.updateAccount(oldAccount);
             out.write("初始化成功");
         } else {
@@ -118,5 +119,44 @@ public class AccountController {
         } else {
             out.write("删除失败");
         }
+    }
+
+    /**
+     * 查找没有账号的员工
+     *
+     * @param out
+     */
+    @RequestMapping("/selectNoAccountEmp")
+    public void selectEmpNoAccount(PrintWriter out) {
+        List<Employeeinfo> employeeinfos = accountService.selectNoAccount();
+        String empJson = JSON.toJSONString(employeeinfos);
+        out.write(empJson);
+    }
+
+    /**
+     * 添加账号，并关联员工
+     *
+     * @param out
+     * @param accountName
+     * @param promission
+     * @param status
+     */
+    @RequestMapping("/add")
+    public void addAccount(PrintWriter out, String accountName, Integer promission, Integer status, Integer empId) {
+        Account account = new Account();
+        String pw = MD5.toMD5("aaa88");
+        account.setPassword(pw);
+        account.setEmployeeId(employeeInfoService.getEmployeeDetail(empId));
+        account.setUsername(accountName);
+        account.setPromission(promission);
+        account.setLastLoginTime(null);
+        account.setStatus(status);
+        int re = accountService.add(account);
+        if (re > 0) {
+            out.write("添加成功");
+        } else {
+            out.write("添加失败");
+        }
+
     }
 }

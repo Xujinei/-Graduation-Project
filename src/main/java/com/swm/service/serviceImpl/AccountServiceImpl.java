@@ -3,6 +3,7 @@ package com.swm.service.serviceImpl;
 import com.swm.entity.Account;
 import com.swm.entity.Employeeinfo;
 import com.swm.mapper.AccountMapper;
+import com.swm.mapper.EmployeeinfoMapper;
 import com.swm.service.AccountService;
 import com.swm.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     AccountMapper accountMapper;
+    @Autowired
+    EmployeeinfoMapper employeeinfoMapper;
 
     public PageUtil<Account> getPageAccount(Integer pageIndex, Integer pageSize,
                                             Account account, List<Employeeinfo> empList) {
@@ -27,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
             pageCount = 1;
         }
 
-        List<Account> accountList = accountMapper.selectByPageAccount(skipSize, pageSize, account, null);
+        List<Account> accountList = accountMapper.selectByPageAccount(skipSize, pageSize, account, empList);
 
         accountPage.setList(accountList);
         accountPage.setPageCount(pageCount);
@@ -47,5 +50,13 @@ public class AccountServiceImpl implements AccountService {
 
     public int delete(Integer id) {
         return accountMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Employeeinfo> selectNoAccount() {
+        return employeeinfoMapper.selectNoAccount();
+    }
+
+    public int add(Account account) {
+        return accountMapper.insert(account);
     }
 }

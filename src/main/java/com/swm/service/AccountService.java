@@ -15,4 +15,8 @@ public interface AccountService {
     Account getById(Integer id);
 
     int delete(Integer id);
+
+    List<Employeeinfo> selectNoAccount();
+
+    int add(Account account);
 }

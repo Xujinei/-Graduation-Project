@@ -33,7 +33,8 @@ public class LoginServiceImpl implements LoginService {
         if (username != null && password != null) {
             Account account = new Account();
             account.setUsername(username);
-            account.setPassword(password);
+            String pw = MD5.toMD5(password);
+            account.setPassword(pw);
             account.setStatus(1);
             Account user = accountMapper.selectByAccount(account);
             if (user != null) {

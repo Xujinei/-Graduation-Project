@@ -112,7 +112,7 @@
         select workData, employeeId, baseSalary, positionSalary, baseSubsidy, total,
         tax, insurance, status, approver, payTime , workHours ,departementId,positionId
         from salary
-        <if test="#{salary}!=null">
+        <if test="salary!=null">
             <where>
                 <if test="salary.employeeId!=null">
                     employeeId=#{salary.employeeId}

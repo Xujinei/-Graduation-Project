@@ -33,6 +33,25 @@
 
     <script>
 
+        /*初始化部门下拉框*/
+        $.ajax({
+            type: 'POST',
+            scriptCharset: 'utf-8',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            url: '../department/allDepartment',
+            success: function (data) {
+                var departmentSelect = $("#selectDepartment");
+                departmentSelect.children("option").remove();
+                var option = "<option value=''>所有</option>";
+                departmentSelect.append(option);
+                var d = eval(data);
+                $.each(d, function (i, item) {
+                    option = "<option value=" + item.id + ">" + item.name + "</option>";
+                    departmentSelect.append(option);
+                })
+            }
+        });
+
         /*格式化日期*/
         function getStrDate(date) {
             var entryDate = new Date(date);
@@ -64,8 +83,10 @@
 
                 if (id != null && id != undefined && id != "") {
 
-                    if (department == undefined || department == null) {
-                        department = "";
+                    if (department != undefined && department != null && "" != department) {
+                        console.log("did=====" + department);
+                        department = $("#selectDepartment option[value='" + department + "']").text();
+                        console.log("department======" + department);
                     }
                     if (lastLoginTime != undefined || lastLoginTime != null) {
                         lastLoginTime = getStrDate(lastLoginTime);
@@ -80,12 +101,6 @@
                     } else if (promission == 0 || promission == 0) {
                         promission = '普通用户';
                     }
-
-                    /*  $.ajax({
-                          url: "../account/getPage",
-                          data: {pageIndex: a, pageSize: b},
-                          success: function (data) {}
-                      });*/
 
                     var tr = "<tr>" +
                         "<td><input type='checkbox' class='aCheckbox' name='" + id + "' value='" + id + "'></td>" +
@@ -150,12 +165,17 @@
                 修改账号信息
             </a>
         </li>
+        <li id="addAccountLi">
+            <a href="#addAccountInfo" data-toggle="tab">
+                添加账号信息
+            </a>
+        </li>
     </ul>
     <div id="myTabContent" class="tab-content">
         <%--账号列表信息--%>
         <div class="tab-pane fade" id="accountList" style="margin: 2%">
             <%--条件查询账号--%>
-            <form class="form-inline">
+            <form class="form-inline" id="searchForm">
                 <div class="form-group">
                     <label for="account">账号</label>
                     <input type="text" class="form-control" id="account" placeholder="请输入账号" name="username">
@@ -163,24 +183,26 @@
                 <div class="form-group">
                     <label for="promission">权限</label>
                     <select class="form-control" id="promission" name="promission">
+                        <option value="">所有</option>
                         <option value="1">超级管理员</option>
                         <option value="0">普通员工</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="department">部门</label>
-                    <select class="form-control" id="department" name="department">
-                        <option>1</option>
+                    <label for="selectDepartment">部门</label>
+                    <select class="form-control" id="selectDepartment" name="department">
+
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="status">状态</label>
                     <select class="form-control" id="status" name="status">
+                        <option value="">所有</option>
                         <option value="1">可用</option>
                         <option value="0">不可用</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">查询</button>
+                <button type="button" class="btn btn-primary" id="searchBtn">查询</button>
             </form>
             <%--选择删除--%>
             <form class="form-inline">
@@ -192,6 +214,8 @@
                 <button type="button" class="btn btn-danger" id="deleteAccount">删除</button>
                 &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-warning" id="initPassword">初始化密码</button>
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" id="addAccount">添加</button>
             </form>
             <%--账号列表--%>
             <table class="table infoTable personInfoTable">
@@ -274,12 +298,58 @@
             </form>
         </div>
         <%--修改账号信息结束--%>
+
+        <%--新增账号信息并关联用户--%>
+        <div class="tab-pane fade" id="addAccountInfo" style="margin: 2%">
+            <form id="addAccountForm">
+                <table class="table infoTable">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>用户名：</label>
+                            <input name="username" type="text"/>
+                        </td>
+                        <td>
+                            <label>员工姓名：</label>
+                            <select class="form-control" style="width: 50%;display: inline-block" name="name">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>权限：</label>
+                            <select class="form-control" style="width: 50%;display: inline-block" name="promission">
+                                <option value="1">超级管理员</option>
+                                <option value="0">普通员工</option>
+                            </select>
+                        </td>
+                        <td>
+                            <label>状态：</label>
+                            <select class="form-control" style="width: 50%;display: inline-block" name="status">
+                                <option value="1">可用</option>
+                                <option value="0">不可用</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm" id="addBtn">添加</button>
+                        </td>
+                        <td align="left">
+                            <button type="button" class="btn btn-primary btn-sm" id="exitAddAccount">退出</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <%--修改账号信息结束--%>
     </div>
 </div>
 </body>
 
 <script>
-    // //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
+    //编辑按钮点击事件 : 隐藏账号列表页，显示修改页
     $("body").on("click", "#editAccount", function () {
         $("#editAccountLi").css("display", "block");
         $("#accountListLi").removeClass("active");
@@ -363,7 +433,6 @@
                     data: {id: id},
                     url: "../account/initPassword",
                     success: function (data) {
-                        alert(data);
                         console.log(data);
                     },
                     error: function () {
@@ -400,6 +469,110 @@
                 });
             });
         }
+    });
+
+    /*查询*/
+    function selectAccount(a, b) {
+        var userName = $("#searchForm").find("input[name='username']").val();
+        var promission = $('#promission option:selected').val();
+        var department = $('#selectDepartment option:selected').val();
+        var status = $('#status option:selected').val();
+//        console.log(userName+"=========="+promission+"============="+department+"=============="+status);
+        $.ajax({
+            type: "POST",
+            data: {
+                pageIndex: a,
+                pageSize: b,
+                accountName: userName,
+                promission: promission,
+                department: department,
+                status: status
+            },
+            url: "../account/getPage",
+            success: function (data) {
+                commonSuccess(data);
+                var ed = $.parseJSON(data);
+                $(".list_count").text(ed.pageNumber);
+                $(".page_count").text(ed.pageCount);
+                var end = ed.pageCount;
+                var page_div = $(".page_div");
+                for (var i = 1; i <= end; i++) {
+                    var skip = 1;
+                    if (i > 1) {
+                        skip = (i - 1) * 10;
+                    }
+                    var aSpan = " <span class='page_num'>" +
+                        "<a href='javascript:selectAccount(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                    page_div.append(aSpan);
+                }
+            }
+        });
+    };
+
+    $("#searchBtn").click(function () {
+        selectAccount(1, 10);
+    });
+
+
+    /*添加按钮*/
+    $("#addAccount").click(function () {
+        $("#addAccountLi").css("display", "block");
+        $("#accountListLi").removeClass("active");
+        $("#accountList").removeClass("in active");
+        $("#addAccountInfo").addClass("in active");
+        $("#addAccountLi").addClass("active");
+        var empSelect = $("#addAccountForm").find("select[name='name']");
+        empSelect.children("option").remove();
+        /*初始化员工*/
+        $.ajax({
+            type: "POST",
+            url: "../account/selectNoAccountEmp",
+            success: function (data) {
+                var d = eval(data);
+                $.each(d, function (i, item) {
+                    option = "<option value=" + item.id + ">" + item.name + "</option>";
+                    empSelect.append(option);
+                })
+            }
+        });
+    });
+
+    /*提交添加*/
+    $("#addBtn").click(function () {
+        var userName = $("#addAccountForm").find("input[name='username']").val();
+        var name = $("#addAccountForm").find("input[name='name']").val();
+        var promission = $("#addAccountForm").find("input[name='promission']").val();
+        var status = $("#addAccountForm").find("input[name='status']").val();
+
+        if (userName == null || "" == userName) {
+            alert("请输入用户名");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            data: {
+                accountName: userName,
+                promission: promission,
+                status: status,
+                empId: name
+            },
+            url: "../account/add",
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                alert("添加失败");
+            }
+        });
+
+    });
+
+    //退出添加按钮点击事件
+    $("#exitAddAccount").click(function () {
+        $("#addAccountLi").css("display", "none");
+        $("#accountListLi").addClass("active");
+        $("#accountList").addClass("in active");
+        $("#addAccountInfo").removeClass("in active");
     });
 </script>
 </html>

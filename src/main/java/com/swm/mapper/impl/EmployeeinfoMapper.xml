@@ -196,8 +196,8 @@
                 <if test="employeeinfo.name!=null">
                     name=#{employeeinfo.name} AND
                 </if>
-                <if test="employeeinfo.departmentId!=null">
-                    departmentId=#{employeeinfo.departmentId} AND
+                <if test="employeeinfo.departmentid!=null">
+                    departmentId=#{employeeinfo.departmentid} AND
                 </if>
                 <if test="employeeinfo.positionId!=null">
                     positionId=#{employeeinfo.positionId}
@@ -215,16 +215,16 @@
         school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
         baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
         from employeeinfo
-        <if test="#{employeeinfo}!=null">
+        <if test="employeeinfo!=null">
             <where>
                 <if test="employeeinfo.name!=null">
-                    name=#{employeeinfo.name} AND
+                    name=#{employeeinfo.name}
                 </if>
-                <if test="employeeinfo.departmentId!=null">
-                    departmentId=#{employeeinfo.departmentId} AND
+                <if test="employeeinfo.departmentid!=null">
+                    and departmentId=#{employeeinfo.departmentid}
                 </if>
                 <if test="employeeinfo.positionId!=null">
-                    positionId=#{employeeinfo.positionId}
+                    and positionId=#{employeeinfo.positionId}
                 </if>
             </where>
         </if>
@@ -237,18 +237,30 @@
 
     <select id="countAllByKey" resultType="int">
         select count(*) from employeeinfo
-        <if test="#{employeeinfo}!=null">
+        <if test="employeeinfo!=null">
             <where>
                 <if test="employeeinfo.name!=null">
-                    name=#{employeeinfo.name} AND
+                    name=#{employeeinfo.name}
                 </if>
-                <if test="employeeinfo.departmentId!=null">
-                    departmentId=#{employeeinfo.departmentId} AND
+                <if test="employeeinfo.departmentid!=null">
+                    and departmentId=#{employeeinfo.departmentid}
                 </if>
                 <if test="employeeinfo.positionId!=null">
-                    positionId=#{employeeinfo.positionId}
+                    and positionId=#{employeeinfo.positionId}
                 </if>
             </where>
         </if>
     </select>
+
+
+    <select id="selectNoAccount" resultMap="BaseResultMap">
+        select id, name, sex, brithday, telPhone, email, address, identificationId, education,
+        school, profession, politicalStatus, entryTime, expireDate, departmentId, positionId,
+        baseSalary, positionSalary, subsidy, insuranceStandard, employeeStatus ,hoursSalary
+        from employeeinfo
+        where id not in (
+          select employeeId from account
+        )
+    </select>
+
 </mapper>
