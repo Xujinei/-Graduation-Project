@@ -17,5 +17,8 @@ public interface SalaryService {
 
     PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary);
 
+    List<EmpSalary> selectDepartmentSalary(Date date, Integer upOrDown);
+
+    List<EmpSalary> selectPositionSalary(Date date, Integer upOrDown);
 
 }

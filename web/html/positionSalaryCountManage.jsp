@@ -26,6 +26,53 @@
     <script src="js/my.js"></script>
 
     <script>
+        /*格式化日期*/
+        function getStrDate(date) {
+            var entryDate = new Date(date);
+            var year = entryDate.getFullYear();
+            var month = entryDate.getMonth();
+            var day = entryDate.getDate();
+            var strDate = year + "-" + month;
+            return strDate;
+        }
+
+        function initList() {
+            var date = $("#workData").find("option:selected").val();
+            var upOrDown = $("#px").find("option:selected").val();
+
+            console.log("upOrDown" + upOrDown);
+            var body = $("#listBody");
+            body.children("tr").remove();
+            $.ajax({
+                type: "POST",
+                data: {date: date, upOrDown: upOrDown},
+                url: "../salary/positionSalary",
+                success: function (data) {
+                    var body = $("#listBody");
+                    var ed = $.parseJSON(data);
+                    console.log(ed);
+                    $.each(ed, function (i, item) {
+                        var department = item.position.name;
+                        var date = item.workdata;
+                        if (date != null && date != undefined && "" != date) {
+                            date = getStrDate(date);
+                        }
+                        var total = item.total;
+
+                        var tr = "<tr>" +
+                            "<td id='" + department + "'>" + department + "</td>" +
+                            "<td id='" + date + "'>" + date + "</td>" +
+                            "<td id='" + total + "'>" + total + "</td>" +
+                            "<td>  <button class='btn btn-primary' id='editPositionSalaryCheckBtn'>详情</button> </td>" +
+                            "</tr>";
+                        body.append(tr);
+                    });
+                }
+            });
+        };
+
+        initList();
+
 
     </script>
 </head>
@@ -46,23 +93,23 @@
                 <div class="form-group">
                     <label for="workData">月份</label>
                     <select class="form-control" id="workData" name="workData">
-                        <option>1</option>
+
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="px">排序方式</label>
                     <select class="form-control" id="px" name="department">
-                        <option>1</option>
+                        <option value="0">升序</option>
+                        <option value="1">降序</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">查询</button>
+                <button type="button" class="btn btn-primary" id="searchBtn">查询</button>
             </form>
 
             <%--各部门工资统计报表列表--%>
             <table class="table infoTable ">
                 <thead>
                 <tr>
-                    <th>编号</th>
                     <th>职务</th>
                     <th>月份</th>
                     <th>总工资支出</th>
@@ -70,16 +117,8 @@
                     <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button class="btn btn-primary" id="editPositionSalaryCheckBtn">详情</button>
-                    </td>
-                </tr>
+                <tbody id="listBody">
+
                 </tbody>
             </table>
         </div>
@@ -124,4 +163,10 @@
     </div>
 </div>
 </body>
+<script>
+    // 查询
+    $("#searchBtn").click(function () {
+        initList();
+    });
+</script>
 </html>

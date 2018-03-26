@@ -400,5 +400,7 @@
         console.log("department=====" + department);
         searchSalary(1, 10, time, department);
     });
+
+
 </script>
 </html>

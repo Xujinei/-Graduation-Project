@@ -92,4 +92,12 @@ public class SalaryServiceImpl implements SalaryService {
         pageSalary.setPageIndex(pageIndex);
         return pageSalary;
     }
+
+    public List<EmpSalary> selectDepartmentSalary(Date date, Integer upOrDown) {
+        return salaryMapper.selectDepartmentSalary(date, upOrDown);
+    }
+
+    public List<EmpSalary> selectPositionSalary(Date date, Integer upOrDown) {
+        return salaryMapper.selectPositionSalary(date, upOrDown);
+    }
 }
