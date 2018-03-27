@@ -31,7 +31,7 @@
         function getStrDate(date) {
             var entryDate = new Date(date);
             var year = entryDate.getFullYear();
-            var month = entryDate.getMonth();
+            var month = entryDate.getMonth() + 1;
             var day = entryDate.getDate();
             var strDate = year + "-" + month;
             return strDate;
@@ -39,6 +39,9 @@
 
         function initList() {
             var date = $("#workData").find("option:selected").val();
+            if (date != null && "" != date && date != undefined) {
+                date = date + "-01";
+            }
             var upOrDown = $("#px").find("option:selected").val();
 
             var body = $("#listBody");
@@ -168,5 +171,24 @@
     $("#searchBtn").click(function () {
         initList();
     });
+
+    /*生成时间*/
+    var last_year_month = function () {
+        var d = new Date();
+        var result = [];
+        for (var i = 0; i < 24; i++) {
+            d.setMonth(d.getMonth() - 1);
+            var m = d.getMonth() + 1;
+            m = m < 10 ? "0" + m : m;
+            //在这里可以自定义输出的日期格式
+            result.push(d.getFullYear() + "-" + m);
+            //result.push(d.getFullYear() + "年" + m + '月');
+        }
+        return result;
+    }
+
+    for (var allinfo = last_year_month(), i = 0; i < allinfo.length; i++) {
+        $("#workData").append("<option value='" + allinfo[i] + "'>" + allinfo[i] + "</option>");
+    }
 </script>
 </html>

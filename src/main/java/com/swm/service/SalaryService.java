@@ -15,7 +15,7 @@ public interface SalaryService {
 
     void add(Salary salary);
 
-    PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary);
+    PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary, Integer upOrDown);
 
     List<EmpSalary> selectDepartmentSalary(Date date, Integer upOrDown);
 

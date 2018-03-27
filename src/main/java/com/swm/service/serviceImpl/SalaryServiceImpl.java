@@ -66,7 +66,7 @@ public class SalaryServiceImpl implements SalaryService {
      * @param salary
      * @return
      */
-    public PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary) {
+    public PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary, Integer upOrDown) {
         PageUtil<EmpSalary> pageSalary = new PageUtil<EmpSalary>();
 
         Integer skipSize = (pageIndex - 1) * pageSize;
@@ -75,7 +75,7 @@ public class SalaryServiceImpl implements SalaryService {
         if (pageCount == 0) {
             pageCount = 1;
         }
-        List<EmpSalary> salaryList = salaryMapper.selectBySalary(skipSize, pageSize, salary);
+        List<EmpSalary> salaryList = salaryMapper.selectBySalary(skipSize, pageSize, salary, upOrDown);
         /*完善部门职务信息*/
         for (EmpSalary empSalary : salaryList) {
             if (empSalary != null) {

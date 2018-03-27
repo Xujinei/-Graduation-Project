@@ -1,10 +1,8 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.swm.entity.EmpSalary;
-import com.swm.entity.Employeeinfo;
-import com.swm.entity.EmployeeinfoEntity;
-import com.swm.entity.Salary;
+import com.swm.entity.*;
+import com.swm.service.DepartmentService;
 import com.swm.service.EmployeeInfoService;
 import com.swm.service.SalaryService;
 import com.swm.util.PageUtil;
@@ -29,6 +27,8 @@ public class SalaryController {
     private SalaryService salaryService;
     @Autowired
     private EmployeeInfoService employeeInfoService;
+    @Autowired
+    private DepartmentService departmentService;
 
     /**
      * 分页获取当月的薪酬信息（如果没有当月的获取上一个月的）
@@ -36,7 +36,7 @@ public class SalaryController {
      * @param out
      */
     @RequestMapping("/getPage")
-    public void getPageList(PrintWriter out, Integer pageIndex, Integer pageSize, Integer departmentId, String time) {
+    public void getPageList(PrintWriter out, Integer pageIndex, Integer pageSize, Integer departmentId, String time, Integer upOrDown) {
         PageUtil<EmpSalary> salaryPage = new PageUtil<EmpSalary>();
 
         Salary salary = new Salary();
@@ -44,35 +44,30 @@ public class SalaryController {
             salary.setDepartementId(departmentId);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
+        Date now = null;
         Calendar c = Calendar.getInstance();
         if (time == null || "".equals(time)) {
             c.add(Calendar.MONTH, 0);
             c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
+            now = c.getTime();
         } else {
-
             try {
-                Date date = sdf.parse(time);
-                c.setTime(date);
-                c.add(Calendar.MONTH, 0);
-                c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
+                now = sdf.parse(time);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        now = c.getTime();
-
         System.out.println("now===" + sdf.format(now));
         salary.setWorkdata(now);
 
-        salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary);
+        salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, upOrDown);
         if ((time == null || "".equals(time)) && departmentId == null) {
             int month = 0;
             while (salaryPage.getList().size() <= 0 && month > -12) {
                 month = month - 1;
                 c.add(Calendar.MONTH, month);
                 salary.setWorkdata(c.getTime());
-                salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary);
+                salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, upOrDown);
             }
         }
         String salaryPageJson = JSON.toJSONString(salaryPage);
@@ -88,25 +83,34 @@ public class SalaryController {
      * @param upOrDown
      */
     @RequestMapping("/departmentSalary")
-    public void departmentSalary(HttpServletResponse response, PrintWriter out, Date date, Integer upOrDown) {
+    public void departmentSalary(HttpServletResponse response, PrintWriter out, String date, Integer upOrDown) {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         boolean flag = false;
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        if (date == null) {
+        Date time = null;
+        if (date == null || "".equals(date)) {
             c.add(Calendar.MONTH, 0);
             c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
-            date = c.getTime();
+            time = c.getTime();
             flag = true;
-            System.out.println("now===" + sdf.format(date));
+        } else {
+            try {
+                time = sdf.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        List<EmpSalary> empSalaries = salaryService.selectDepartmentSalary(date, upOrDown);
+        List<EmpSalary> empSalaries = salaryService.selectDepartmentSalary(time, upOrDown);
         if (flag && empSalaries.size() <= 0) {
-            c.add(Calendar.MONTH, -1);
-            date = c.getTime();
-            System.out.println("now===" + sdf.format(date));
-            empSalaries = salaryService.selectDepartmentSalary(date, upOrDown);
+            int month = 0;
+            while (month > -12 && empSalaries.size() <= 0) {
+                month--;
+                c.add(Calendar.MONTH, month);
+                time = c.getTime();
+                empSalaries = salaryService.selectDepartmentSalary(time, upOrDown);
+            }
         }
         String json = JSON.toJSONString(empSalaries);
         out.write(json);
@@ -120,28 +124,57 @@ public class SalaryController {
      * @param upOrDown
      */
     @RequestMapping("/positionSalary")
-    public void positionSalary(HttpServletResponse response, PrintWriter out, Date date, Integer upOrDown) {
+    public void positionSalary(HttpServletResponse response, PrintWriter out, String date, Integer upOrDown) {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         boolean flag = false;
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        if (date == null) {
+        Date time = null;
+        if (date == null || "".equals(date)) {
             c.add(Calendar.MONTH, 0);
             c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
-            date = c.getTime();
+            time = c.getTime();
             flag = true;
-            System.out.println("now===" + sdf.format(date));
+        } else {
+            try {
+                time = sdf.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        List<EmpSalary> empSalaries = salaryService.selectPositionSalary(date, upOrDown);
+        List<EmpSalary> empSalaries = salaryService.selectPositionSalary(time, upOrDown);
         if (flag && empSalaries.size() <= 0) {
-            c.add(Calendar.MONTH, -1);
-            date = c.getTime();
-            System.out.println("now===" + sdf.format(date));
-            empSalaries = salaryService.selectPositionSalary(date, upOrDown);
+            int month = 0;
+            while (month > -12 && empSalaries.size() <= 0) {
+                month--;
+                c.add(Calendar.MONTH, month);
+                time = c.getTime();
+                empSalaries = salaryService.selectPositionSalary(time, upOrDown);
+            }
         }
         String json = JSON.toJSONString(empSalaries);
         out.write(json);
+    }
+
+    /**
+     * 获得各部门人员工资详情
+     *
+     * @param response
+     * @param out
+     * @param date
+     * @param upOrDown
+     * @param department
+     */
+    @RequestMapping("/departEmpSalary")
+    public void selectDepartEmpSalary(HttpServletResponse response, PrintWriter out,
+                                      Integer pageIndex, Integer pageSize,
+                                      String date, Integer upOrDown,
+                                      Integer department) {
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+
+        getPageList(out, pageIndex, pageSize, department, date, upOrDown);
     }
 
 }

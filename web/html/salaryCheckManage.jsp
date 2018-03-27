@@ -37,7 +37,7 @@
         function getStrDate(date) {
             var entryDate = new Date(date);
             var year = entryDate.getFullYear();
-            var month = entryDate.getMonth();
+            var month = entryDate.getMonth() + 1;
             var day = entryDate.getDate();
             var strDate = year + "-" + month;
             return strDate;
@@ -177,10 +177,10 @@
             <form class="form-inline InitCommon" id="selectForm" style="margin-left: 2%">
                 <div class="form-group">
                     <label for="workData">时间</label>
-                    <input class="form-control" type="month" id="workData" name="workData" placeholder="如：2018-01-01">
-                    <%--  <select class="form-control" id="workData" name="workData">
-                          <option>1</option>
-                      </select>--%>
+                    <%--<input class="form-control" type="month" id="workData" name="workData" placeholder="如：2018-01-01">--%>
+                    <select class="form-control" id="workData" name="workData">
+
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="department">部门</label>
@@ -195,7 +195,7 @@
                 <thead>
                 <tr>
                     <th>姓名</th>
-                    <th>月份</th>
+                    <th>时间</th>
                     <th>工时</th>
                     <th>所在部门</th>
                     <th>基本工资</th>
@@ -394,13 +394,34 @@
 
     /*查询*/
     $("#selectByKey").click(function () {
-        var time = $("#selectForm").find("input[name='workData']").val();
+        var time = $("#workData").find("option:selected").val();
+        if (time != null && "" != time && time != undefined) {
+            time = time + "-01";
+        }
         console.log("time========" + time);
         var department = $("#selectForm").find("#department option:selected").val();
         console.log("department=====" + department);
         searchSalary(1, 10, time, department);
     });
 
+    /*生成时间*/
+    var last_year_month = function () {
+        var d = new Date();
+        var result = [];
+        for (var i = 0; i < 24; i++) {
+            d.setMonth(d.getMonth() - 1);
+            var m = d.getMonth() + 1;
+            m = m < 10 ? "0" + m : m;
+            //在这里可以自定义输出的日期格式
+            result.push(d.getFullYear() + "-" + m);
+            //result.push(d.getFullYear() + "年" + m + '月');
+        }
+        return result;
+    }
+
+    for (var allinfo = last_year_month(), i = 0; i < allinfo.length; i++) {
+        $("#workData").append("<option value='" + allinfo[i] + "'>" + allinfo[i] + "</option>");
+    }
 
 </script>
 </html>

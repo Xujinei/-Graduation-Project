@@ -132,6 +132,13 @@
                 </if>
             </where>
         </if>
+        order by total
+        <if test="upOrDown!=null and upOrDown==1">
+            DESC
+        </if>
+        <if test="upOrDown!=null and upOrDown==0">
+            ASC
+        </if>
         <if test="pageIndex!=null and pageSize!=null">
             limit #{pageIndex},#{pageSize}
         </if>
