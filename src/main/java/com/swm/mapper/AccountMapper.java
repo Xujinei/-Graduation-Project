@@ -69,5 +69,6 @@ public interface AccountMapper {
                            @Param("account") Account account,
                            @Param("personList") List<Employeeinfo> personList);
 
+    int updatePassword(@Param("id") Integer id, @Param("password") String password);
 
 }

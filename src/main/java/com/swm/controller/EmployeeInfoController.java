@@ -1,6 +1,7 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.Employeeinfo;
 import com.swm.entity.EmployeeinfoEntity;
 import com.swm.service.EmployeeInfoService;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employInfo")
@@ -32,7 +34,17 @@ public class EmployeeInfoController {
     @RequestMapping("/pageEmployee")
     public void getPageEmployee(Integer pageIndex, Integer pageSize, PrintWriter out) {
         PageUtil<EmployeeinfoEntity> employeeinfoPage = employeeInfoService.getPageEmployee(pageIndex, pageSize);
-        String employeeListJSON = JSON.toJSONString(employeeinfoPage);
+        String employeeListJSON = JSON.toJSONString(employeeinfoPage, SerializerFeature.DisableCircularReferenceDetect);
+        out.write(employeeListJSON);
+    }
+
+    /**
+     * 获得所有员工信息
+     */
+    @RequestMapping("/getAll")
+    public void getAll(PrintWriter out) {
+        List<Employeeinfo> employeeinfos = employeeInfoService.getEmployeeBySearch(null);
+        String employeeListJSON = JSON.toJSONString(employeeinfos, SerializerFeature.DisableCircularReferenceDetect);
         out.write(employeeListJSON);
     }
 
@@ -71,7 +83,7 @@ public class EmployeeInfoController {
     @RequestMapping("detail")
     public void EmployeeDetail(Integer id, PrintWriter out) {
         Employeeinfo employeeinfo = employeeInfoService.getEmployeeDetail(id);
-        String employJSON = JSON.toJSONString(employeeinfo);
+        String employJSON = JSON.toJSONString(employeeinfo, SerializerFeature.DisableCircularReferenceDetect);
         out.write(employJSON);
     }
 
@@ -130,7 +142,7 @@ public class EmployeeInfoController {
             employeeinfo.setPositionid(position);
         }
         PageUtil<EmployeeinfoEntity> employeeinfoPage = employeeInfoService.getPageEmployeeByKey(pageIndex, pageSize, employeeinfo);
-        String employeeListJSON = JSON.toJSONString(employeeinfoPage);
+        String employeeListJSON = JSON.toJSONString(employeeinfoPage, SerializerFeature.DisableCircularReferenceDetect);
         out.write(employeeListJSON);
     }
 

@@ -2,6 +2,7 @@ package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.Position;
 import com.swm.service.PositionService;
 import com.swm.util.PageUtil;
@@ -35,7 +36,7 @@ public class PositionController {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         List<Position> positionsList = positionService.getAllPosition();
-        String positionJson = JSON.toJSONString(positionsList);
+        String positionJson = JSON.toJSONString(positionsList, SerializerFeature.DisableCircularReferenceDetect);
         try {
             response.getWriter().write(positionJson);
         } catch (IOException e) {
@@ -76,7 +77,7 @@ public class PositionController {
     @RequestMapping("/pagePosition")
     public void getPagePosition(Integer pageIndex, Integer pageSize, PrintWriter out, HttpServletRequest request) {
         PageUtil<Position> departmentPage = positionService.getPagePosition(pageIndex, pageSize);
-        String departmentPageJson = JSON.toJSONString(departmentPage);
+        String departmentPageJson = JSON.toJSONString(departmentPage, SerializerFeature.DisableCircularReferenceDetect);
 
         request.setAttribute("pageCount", departmentPage.getPageCount());
         out.write(departmentPageJson);

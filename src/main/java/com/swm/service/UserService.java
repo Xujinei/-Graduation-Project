@@ -1,6 +1,7 @@
 package com.swm.service;
 
 import com.swm.entity.Employeeinfo;
+import com.swm.entity.EmployeeinfoEntity;
 
 public interface UserService {
     /**
@@ -15,4 +16,6 @@ public interface UserService {
      * 添加员工
      */
     void addEmployee(Employeeinfo employeeinfo);
+
+    EmployeeinfoEntity getEmployeeInfoEntity(Integer id);
 }

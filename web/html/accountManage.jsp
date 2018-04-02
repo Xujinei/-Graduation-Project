@@ -226,8 +226,8 @@
                     <th>员工姓名</th>
                     <th>所在部门</th>
                     <th>最近登陆时间</th>
-                    <th>权限</th>
                     <th>状态</th>
+                    <th>权限</th>
                     <th>编辑</th>
                     <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
                 </tr>
@@ -540,7 +540,7 @@
     /*提交添加*/
     $("#addBtn").click(function () {
         var userName = $("#addAccountForm").find("input[name='username']").val();
-        var name = $("#addAccountForm").find("input[name='name']").val();
+        var name = $("#addAccountForm select").find('option:selected').val();
         var promission = $("#addAccountForm").find("input[name='promission']").val();
         var status = $("#addAccountForm").find("input[name='status']").val();
 
@@ -573,6 +573,7 @@
         $("#accountListLi").addClass("active");
         $("#accountList").addClass("in active");
         $("#addAccountInfo").removeClass("in active");
+        initList(1, 10);
     });
 </script>
 </html>

@@ -73,7 +73,13 @@
                 var workHours = item.workHours;
                 var name = item.employeeEntity.name;
                 var empId = item.employeeEntity.id;
-                var department = item.department.name;
+                if ('undefined' != item.department) {
+                    var department = item.department.name;
+                    if (department == undefined || department == null) {
+                        department = "";
+                    }
+                }
+
                 var basesalary = item.basesalary;
                 var positionsalary = item.positionsalary;
                 var basesubsidy = item.basesubsidy;
@@ -89,9 +95,7 @@
                     if (workHours == undefined || workHours == null) {
                         workHours = 0;
                     }
-                    if (department == undefined || department == null) {
-                        department = "";
-                    }
+
                     if (basesalary == undefined || basesalary == null) {
                         basesalary = 0;
                     }
@@ -200,6 +204,8 @@
                     </select>
                 </div>
                 <button type="button" class="btn btn-primary" id="searchBtn">查询</button>
+                <button type="button" class="btn btn-primary" id="readOut">导出统计报表</button>
+                <span>如需导出统计报表请先选择时间和部门信息</span>
             </form>
 
             <%--各部门工资明细报表列表--%>
@@ -258,6 +264,41 @@
     for (var allinfo = last_year_month(), i = 0; i < allinfo.length; i++) {
         $("#workData").append("<option value='" + allinfo[i] + "'>" + allinfo[i] + "</option>");
     }
+
+    /*导出报表*/
+    $("#readOut").click(function () {
+        var upOrDown = $("#px").find("option:selected").val();
+        var departmentId = $("#selectDepartment").find("option:selected").val();
+        var date = $("#workData").find("option:selected").val();
+        if (departmentId == null && "" == departmentId) {
+            alert("请先选择统计时间");
+            return;
+        }
+        if (date == null && "" == date) {
+            alert("请先选择统计时间");
+            return;
+        }
+        if (date != null && "" != date && date != undefined) {
+            date = date + "-01";
+        }
+
+        console.log(departmentId + "---" + date + "-----" + upOrDown);
+
+        $.ajax({
+            type: "POST",
+            url: "../salary/export",
+            data: {
+                time: date,
+                upOrDown: upOrDown,
+                departmentId: departmentId
+            },
+            success: function (data) {
+                if (data != null && "" != data) {
+                    alert(data);
+                }
+            }
+        });
+    });
 
 
 </script>

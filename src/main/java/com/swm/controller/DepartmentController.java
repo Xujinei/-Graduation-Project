@@ -1,6 +1,7 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.Department;
 import com.swm.entity.Position;
 import com.swm.service.DepartmentService;
@@ -47,8 +48,7 @@ public class DepartmentController {
     public void addDepartment(PrintWriter out, HttpServletRequest request) {
         Department department = new Department();
         department.setName(request.getParameter("name"));
-        //  department.setLeaderid();  // 获取领导名对应的id
-
+        department.setLeaderid(Integer.valueOf(request.getParameter("leaderid")));
 
         department.setIntroduction(request.getParameter("introduction"));
         department.setRemark(request.getParameter("remark"));
@@ -76,7 +76,7 @@ public class DepartmentController {
     @RequestMapping("/pageDepartment")
     public void getPageDepartment(Integer pageIndex, Integer pageSize, PrintWriter out) {
         PageUtil<Department> departmentPage = departmentService.getPageDepartment(pageIndex, pageSize);
-        String departmentPageJson = JSON.toJSONString(departmentPage);
+        String departmentPageJson = JSON.toJSONString(departmentPage, SerializerFeature.DisableCircularReferenceDetect);
         out.write(departmentPageJson);
     }
 
@@ -97,6 +97,7 @@ public class DepartmentController {
         Department department = new Department();
         department.setId(Integer.valueOf(request.getParameter("id")));
         department.setName(request.getParameter("name"));
+        department.setLeaderid(Integer.valueOf(request.getParameter("leaderid")));
         department.setIntroduction(request.getParameter("introduction"));
         department.setRemark(request.getParameter("remark"));
 

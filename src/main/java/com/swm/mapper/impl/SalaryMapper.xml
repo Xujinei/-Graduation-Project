@@ -41,7 +41,10 @@
                      select="com.swm.mapper.DepartmentMapper.selectByPrimaryKey"></association>
         <association property="position" column="positionId"
                      select="com.swm.mapper.PositionMapper.selectByPrimaryKey"></association>
+        <association property="employeeEntity" column="employeeId"
+                     select="com.swm.mapper.EmployeeinfoMapper.getEmployeeEntityById"></association>
     </resultMap>
+
     <delete id="deleteByPrimaryKey" parameterType="java.util.Date">
         <!--
           WARNING - @mbg.generated
@@ -186,6 +189,8 @@
 
     <select id="selectDepartmentSalary" resultMap="EmpResultMap">
         select departementId , workData as workData, sum(total) as total
+        , round(total/(SELECT sum(total)
+        FROM salary)*100,2) as status
         from salary
         <if test="date!=null">
             <where>
@@ -203,6 +208,8 @@
     </select>
     <select id="selectPositionSalary" resultMap="EmpResultMap">
         select positionId , workData as workData, sum(total) as total
+        , round(total/(SELECT sum(total)
+        FROM salary)*100,2) as status
         from salary
         <if test="date!=null">
             <where>

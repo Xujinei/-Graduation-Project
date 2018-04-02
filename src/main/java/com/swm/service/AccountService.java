@@ -19,4 +19,6 @@ public interface AccountService {
     List<Employeeinfo> selectNoAccount();
 
     int add(Account account);
+
+    int updatePassword(Integer id, String password);
 }

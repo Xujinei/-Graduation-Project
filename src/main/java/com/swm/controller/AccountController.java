@@ -1,6 +1,7 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.Account;
 import com.swm.entity.Employeeinfo;
 import com.swm.entity.EmployeeinfoEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -129,7 +131,7 @@ public class AccountController {
     @RequestMapping("/selectNoAccountEmp")
     public void selectEmpNoAccount(PrintWriter out) {
         List<Employeeinfo> employeeinfos = accountService.selectNoAccount();
-        String empJson = JSON.toJSONString(employeeinfos);
+        String empJson = JSON.toJSONString(employeeinfos, SerializerFeature.DisableCircularReferenceDetect);
         out.write(empJson);
     }
 
@@ -149,7 +151,7 @@ public class AccountController {
         account.setEmployeeId(employeeInfoService.getEmployeeDetail(empId));
         account.setUsername(accountName);
         account.setPromission(promission);
-        account.setLastLoginTime(null);
+        account.setLastLoginTime(new Date());
         account.setStatus(status);
         int re = accountService.add(account);
         if (re > 0) {

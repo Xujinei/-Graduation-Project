@@ -135,20 +135,7 @@ $(function () {
 
     };
 
-    // 个人信息修改页面修改按钮点击事件
-    $("#editPersonalInfo").click(function () {
-        var btHtml = $("#editPersonalInfo").html();
-        if (btHtml == "修改") {
-            $(".personInfoTable tbody tr td input").attr("disabled", false).css("background-color", "gray");
-            $("#editPersonalInfo").html("保存");
-        } else {
-            $("#editPersonalInfo").html("修改");
-            // 保存操作
-            $(".personInfoTable tbody tr td input").attr("disabled", "disabled").css("background-color", "white");
 
-        }
-
-    });
 
     /***************************员工信息管理页面************************/
 
@@ -275,15 +262,7 @@ $(function () {
     });
 
 
-    // 添加部门按钮点击事件
-    $("#addDepartmentBtn").click(function () {
-        $("#addDepartmentLi").css("display", "block").addClass("active");
-        $("#addDepartment").addClass("in active");
-        $("#departmentInfo").removeClass("in active");
-        $("#departmentListLi").removeClass("active");
-        $("#departmentList").removeClass("in active");
 
-    });
 
 
 
@@ -408,14 +387,7 @@ $(function () {
     $("#departmentSalaryList").addClass("active in");
     $("#departmentInfoSalaryLi").css("display", "none");
 
-    //详情按钮
-    $("#editDepartmentSalaryCheckBtn").click(function () {
-        $("#departmentInfoSalaryLi").css("display", "block").addClass("active");
-        $("#departmentSalaryInfoList").addClass("active in");
-        $("#departmentSalaryLi").removeClass("active");
-        $("#departmentSalaryList").removeClass("active in");
 
-    });
     // 退出详情页按钮
     $("#extDepartmentSalaryInfoBtn").click(function () {
         $("#departmentSalaryLi").addClass("active");
@@ -431,14 +403,7 @@ $(function () {
     $("#positionSalaryList").addClass("active in");
     $("#positionInfoSalaryLi").css("display", "none");
 
-    //详情按钮
-    $("#editPositionSalaryCheckBtn").click(function () {
-        $("#positionInfoSalaryLi").css("display", "block").addClass("active");
-        $("#positionSalaryInfoList").addClass("active in");
-        $("#positionSalaryLi").removeClass("active");
-        $("#positionSalaryList").removeClass("active in");
 
-    });
     // 退出详情页按钮
     $("#extPositionSalaryInfoBtn").click(function () {
         $("#positionSalaryLi").addClass("active");

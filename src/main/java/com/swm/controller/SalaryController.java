@@ -1,17 +1,21 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.*;
 import com.swm.service.DepartmentService;
 import com.swm.service.EmployeeInfoService;
 import com.swm.service.SalaryService;
 import com.swm.util.PageUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,12 +40,16 @@ public class SalaryController {
      * @param out
      */
     @RequestMapping("/getPage")
-    public void getPageList(PrintWriter out, Integer pageIndex, Integer pageSize, Integer departmentId, String time, Integer upOrDown) {
+    public void getPageList(PrintWriter out, Integer pageIndex, Integer pageSize,
+                            Integer departmentId, String time, Integer upOrDown, Integer positon) {
         PageUtil<EmpSalary> salaryPage = new PageUtil<EmpSalary>();
 
         Salary salary = new Salary();
         if (departmentId != null) {
             salary.setDepartementId(departmentId);
+        }
+        if (positon != null) {
+            salary.setPositionId(positon);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date now = null;
@@ -59,7 +67,6 @@ public class SalaryController {
         }
         System.out.println("now===" + sdf.format(now));
         salary.setWorkdata(now);
-
         salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, upOrDown);
         if ((time == null || "".equals(time)) && departmentId == null) {
             int month = 0;
@@ -70,7 +77,7 @@ public class SalaryController {
                 salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, upOrDown);
             }
         }
-        String salaryPageJson = JSON.toJSONString(salaryPage);
+        String salaryPageJson = JSON.toJSONString(salaryPage, SerializerFeature.DisableCircularReferenceDetect);
         out.write(salaryPageJson);
     }
 
@@ -112,7 +119,7 @@ public class SalaryController {
                 empSalaries = salaryService.selectDepartmentSalary(time, upOrDown);
             }
         }
-        String json = JSON.toJSONString(empSalaries);
+        String json = JSON.toJSONString(empSalaries, SerializerFeature.DisableCircularReferenceDetect);
         out.write(json);
     }
 
@@ -153,28 +160,89 @@ public class SalaryController {
                 empSalaries = salaryService.selectPositionSalary(time, upOrDown);
             }
         }
-        String json = JSON.toJSONString(empSalaries);
+        String json = JSON.toJSONString(empSalaries, SerializerFeature.DisableCircularReferenceDetect);
         out.write(json);
     }
 
     /**
-     * 获得各部门人员工资详情
-     *
+     * 导出报表
+     * @param request
      * @param response
-     * @param out
-     * @param date
+     * @param departmentId
+     * @param time
      * @param upOrDown
-     * @param department
      */
-    @RequestMapping("/departEmpSalary")
-    public void selectDepartEmpSalary(HttpServletResponse response, PrintWriter out,
-                                      Integer pageIndex, Integer pageSize,
-                                      String date, Integer upOrDown,
-                                      Integer department) {
+    @RequestMapping("/export")
+    public void exportEmpSalary(HttpServletRequest request, HttpServletResponse response,
+                                Integer departmentId, String time, Integer upOrDown) {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
+        Salary salary = new Salary();
+        if (departmentId != null) {
+            salary.setDepartementId(departmentId);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = null;
+        try {
+            now = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        salary.setWorkdata(now);
+        List<EmpSalary> empSalaryList = salaryService.selectDepEmpSalaryList(upOrDown, salary);
+        if (empSalaryList.size() > 0) {
+            String[] title = {"姓名", "部门", "时间", "工时", "基本工资", "职务工资", "基本补贴", "加班工资", "税收", "应发总工资"};
+            String fileName = empSalaryList.get(0).getDepartment().getName() + "员工薪酬报表(" + time + ").xls";
+            String sheetName = empSalaryList.get(0).getDepartment().getName() + "员工薪酬报表(" + time + ")";
+            String content[][] = new String[empSalaryList.size()][];
+            for (int i = 0; i < empSalaryList.size(); i++) {
+                content[i] = new String[title.length];
+                EmpSalary obj = empSalaryList.get(i);
+                content[i][0] = obj.getEmployeeEntity().getName();
+                content[i][1] = obj.getDepartment().getName();
+                content[i][2] = sdf.format(obj.getWorkdata());
+                content[i][3] = obj.getWorkHours().toString();
+                content[i][4] = obj.getBasesalary().toString();
+                content[i][5] = obj.getPositionsalary().toString();
+                content[i][6] = obj.getBasesubsidy().toString();
+                content[i][7] = obj.getInsurance().toString();
+                content[i][8] = obj.getTax().toString();
+                content[i][9] = obj.getTotal().toString();
+            }
+            //创建HSSFWorkbook
+            HSSFWorkbook wb = salaryService.getHSSFWorkbook(sheetName, title, content, null);
+            //响应到客户端
+            try {
+                this.setResponseHeader(response, fileName);
+                FileOutputStream fout = new FileOutputStream("F:/" + fileName);
+                wb.write(fout);
+                fout.close();
+                response.getWriter().write("导出成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                response.getWriter().write("没有数据可导出");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-        getPageList(out, pageIndex, pageSize, department, date, upOrDown);
+
+    //发送响应流方法
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+
+            response.setContentType("application/x-msdownload");
+            response.setHeader("Content-Disposition", "attachment; filename="
+                    + URLEncoder.encode(fileName, "UTF-8"));
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

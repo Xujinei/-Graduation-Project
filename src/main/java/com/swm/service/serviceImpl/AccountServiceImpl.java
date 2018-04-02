@@ -59,4 +59,8 @@ public class AccountServiceImpl implements AccountService {
     public int add(Account account) {
         return accountMapper.insert(account);
     }
+
+    public int updatePassword(Integer id, String password) {
+        return accountMapper.updatePassword(id, password);
+    }
 }

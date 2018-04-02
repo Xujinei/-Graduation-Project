@@ -24,4 +24,6 @@ public interface EmployeeInfoService {
     int deleteInfo(Integer id);
 
     List<Employeeinfo> getEmployeeBySearch(Employeeinfo employeeinfo);
+
+
 }

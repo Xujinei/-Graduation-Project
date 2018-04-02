@@ -3,6 +3,7 @@ package com.swm.service;
 import com.swm.entity.EmpSalary;
 import com.swm.entity.Salary;
 import com.swm.util.PageUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.util.Date;
 import java.util.List;
@@ -20,5 +21,9 @@ public interface SalaryService {
     List<EmpSalary> selectDepartmentSalary(Date date, Integer upOrDown);
 
     List<EmpSalary> selectPositionSalary(Date date, Integer upOrDown);
+
+    List<EmpSalary> selectDepEmpSalaryList(Integer upOrDown, Salary salary);
+
+    HSSFWorkbook getHSSFWorkbook(String sheetName, String[] title, String[][] values, HSSFWorkbook wb);
 
 }

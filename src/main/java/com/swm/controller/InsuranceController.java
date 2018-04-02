@@ -1,6 +1,7 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.Insurancestandard;
 import com.swm.entity.Position;
 import com.swm.service.InsuranceService;
@@ -31,14 +32,14 @@ public class InsuranceController {
     @RequestMapping("/pageInsurance")
     public void getPageInsurance(Integer pageIndex, Integer pageSize, PrintWriter out) {
         PageUtil<Insurancestandard> insurancestandardPage = insuranceService.getPageInsurance(pageIndex, pageSize);
-        String PageJson = JSON.toJSONString(insurancestandardPage);
+        String PageJson = JSON.toJSONString(insurancestandardPage, SerializerFeature.DisableCircularReferenceDetect);
         out.write(PageJson);
     }
 
     @RequestMapping("/getAll")
     public void getAllInsurance(PrintWriter out) {
         List<Insurancestandard> insurancestandardList = insuranceService.getAllInsu();
-        String insJson = JSON.toJSONString(insurancestandardList);
+        String insJson = JSON.toJSONString(insurancestandardList, SerializerFeature.DisableCircularReferenceDetect);
         out.write(insJson);
     }
 

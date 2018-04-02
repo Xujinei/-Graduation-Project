@@ -62,15 +62,16 @@
                     $.each(ed.list, function (i, item) {
                         var id = item.id;
                         var name = item.name;
-                        var leaderid = item.leaderid;
+                        var leader = item.leader.name;
+                        var lid = item.leader.id;
                         var createTime = item.createtime;
                         var remark = item.remark;
                         var introduction = item.introduction;
                         console.log(createTime);
                         if (id != null && id != undefined && id != "") {
 
-                            if (leaderid == undefined || leaderid == null) {
-                                leaderid = "";
+                            if (leader == undefined || leader == null) {
+                                leader = "";
                             }
                             if (createTime == undefined || createTime == null) {
                                 createTime = "";
@@ -90,7 +91,7 @@
                             var tr = "<tr>" +
                                 "<td id='id'>" + id + "</td> " +
                                 "<td id='name'>" + name + "</td> " +
-                                "<td id='leaderid'>" + leaderid + "</td>" +
+                                "<td id='leaderid'>" + leader + "<input type='hidden' id='lid' value='" + lid + "'/></td>" +
                                 "<td id='introduction'>" + introduction + "</td>" +
                                 "<td id='remark'>" + remark + "</td>" +
                                 "<td><button class='btn btn-danger deletDepartmentBtn'>删除</button></td>" +
@@ -193,7 +194,7 @@
                     <tr>
                         <td>
                             <label>领导名字：</label>
-                            <input name="leaderid" type="text"/>
+                            <select name="leaderid" class="leaderSelect"></select>
                         </td>
                         <td>
                             <label>备注：</label>
@@ -231,7 +232,7 @@
                         </td>
                         <td>
                             <label>领导名字：</label>
-                            <input name="leaderid" type="text"/>
+                            <select name="leaderid" class="leaderSelect"></select>
                         </td>
                     </tr>
                     <tr>
@@ -264,6 +265,34 @@
 
 <script>
 
+
+    /*初始化部门领导人员信息*/
+    function initLeaderSelect() {
+        var empSelect = $(".leaderSelect");
+        $.ajax({
+            type: "POST",
+            url: "../employInfo/getAll",
+            success: function (data) {
+                var d = eval(data);
+                $.each(d, function (i, item) {
+                    option = "<option value=" + item.id + ">" + item.name + "</option>";
+                    empSelect.append(option);
+                })
+            }
+        });
+    }
+
+    // 添加部门按钮点击事件
+    $("#addDepartmentBtn").click(function () {
+        $("#addDepartmentLi").css("display", "block").addClass("active");
+        $("#addDepartment").addClass("in active");
+        $("#departmentInfo").removeClass("in active");
+        $("#departmentListLi").removeClass("active");
+        $("#departmentList").removeClass("in active");
+        initLeaderSelect();
+
+    });
+
     // 查看部门详情
     $("body").on("click", ".editDepartment", function () {
         $("#editDepartmentLi").css("display", "block").addClass("active");
@@ -271,25 +300,26 @@
 
         $("#departmentListLi").removeClass("active");
         $("#departmentList").removeClass("in active");
-
+        initLeaderSelect();
         var p = $(this).parent().parent();
         var id = p.find("#id").text();
         var name = p.find("#name").text();
         var leaderid = p.find("#leaderid").text();
+        var lid = p.find("#lid").val();
         var remark = p.find('#remark').text();
         var introduction = p.find('#introduction').text();
 
 
         $("#editDepartBody").find("input[name='id']").val(id);
         $("#editDepartBody").find("input[name='name']").val(name);
-        $("#editDepartBody").find("input[name='leaderid']").val(leaderid);
+        $("#editDepartBody").find("select[name='leaderid']").find("option[value='" + lid + "']").attr("selected", true);
         $("#editDepartBody").find("textarea[name='remark']").val(remark);
         $("#editDepartBody").find("textarea[name='introduction']").val(introduction);
 
 
     });
 
-    // 提交职务修改
+    // 提交部门修改
     $("#editDepartBut").click(function () {
         $("#editDepartBody").find("input[name='id']").removeAttr("disabled");
         $.ajax({

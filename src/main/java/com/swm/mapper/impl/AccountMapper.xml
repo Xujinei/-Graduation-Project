@@ -59,6 +59,14 @@
         promission = #{promission,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+
+    <update id="updatePassword">
+        update account
+        set password = #{password,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--
           WARNING - @mbg.generated

@@ -7,11 +7,14 @@
 --%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+<%@ page import="com.swm.entity.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="cj" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/html/";
+    Account user = (Account) request.getSession().getAttribute("account");
+    String name = user.getUsername();
 %>
 <html>
 <head>
@@ -43,7 +46,7 @@
             </div>
             <div class="col-md-2 col-md-offset-6">
                 <div>
-                    欢迎您：<span id="userName">tom</span>
+                    欢迎您：<span id="userName"><%=name%></span>
                     <button type="button" class="btn btn-primary btn-sm pull-right">退出</button>
                 </div>
             </div>
