@@ -21,6 +21,12 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="css/common.css" rel="stylesheet">
+    <style>
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
     <script src="js/my.js"></script>
 
     <script>
@@ -38,6 +44,16 @@
             var strDate = year + "-" + month + "-" + day;
             return strDate;
         }
+
+        /*格式化日期没有日期*/
+        function getStrDateNoDay(date) {
+            var entryDate = new Date(date);
+            var year = entryDate.getFullYear();
+            var month = entryDate.getMonth() + 1;
+            var strDate = year + "年" + month + "月";
+            return strDate;
+        }
+
 
         function init() {
             console.log("init");
@@ -108,6 +124,55 @@
         }
 
         init();
+
+        /*初始化个人工资列表*/
+        function initSelfSalary(a, b) {
+            $.ajax({
+                type: "POST",
+                data: {pageIndex: a, pageSize: b},
+                url: "../user/selfSalary",
+                success: function (data) {
+                    var ed = $.parseJSON(data);
+                    var salaryInfo = $("#salaryInfo");
+
+                    if (ed.list.length <= 0) {
+                        $(".salaryCount").show();
+                    }
+                    $.each(ed.list, function (i, item) {
+                        var time = item.workdata;
+                        if (time != "" && time != null) {
+                            time = getStrDateNoDay(time);
+                        }
+                        var tr = "<tr>" +
+                            "<td>" + time + "</td>" +
+                            "<td>" + item.basesalary + "</td>" +
+                            "<td>" + item.positionsalary + "</td>" +
+                            "<td>" + item.basesubsidy + "</td>" +
+                            "<td>" + item.insurance + "</td>" +
+                            "<td>" + item.tax + "</td>" +
+                            "<td>" + item.total + "</td>" +
+                            "</tr>";
+                        salaryInfo.append(tr);
+
+                    });
+                    $(".list_count").text(ed.pageNumber);
+                    $(".page_count").text(ed.pageCount);
+                    var end = ed.pageCount;
+                    var page_div = $(".page_div");
+                    for (var i = 1; i <= end; i++) {
+                        var skip = 1;
+                        if (i > 1) {
+                            skip = (i - 1) * 10;
+                        }
+                        var aSpan = " <span class='page_num'>" +
+                            "<a href='javascript:initList(" + skip + "," + 10 + ")'>" + i + "</a></span>";
+                        page_div.append(aSpan);
+                    }
+                }
+            });
+        }
+
+        initSelfSalary(1, 10);
 
     </script>
 
@@ -267,8 +332,8 @@
         <%--个人账号结束--%>
         <%--工资报表--%>
         <div class="tab-pane fade" id="salaryReport">
-            <div class="salaryCount">
-                <p>已找到<span>n</span>条工资记录 </p>
+            <div class="salaryCount" style="display: none">
+                <p>暂无工资记录</p>
             </div>
             <table class="table infoTable">
                 <thead>
@@ -280,14 +345,18 @@
                     <th>加班工资</th>
                     <th>税收</th>
                     <th>应发总工资</th>
-
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="salaryInfo">
 
                 </tbody>
 
             </table>
+            <div class="page_div">
+                <span class="list_count"></span>条 &nbsp;&nbsp;
+                共<span class="page_count"></span>页&nbsp;&nbsp;
+
+            </div>
         </div>
         <%--工资报表结束--%>
     </div>
@@ -296,8 +365,11 @@
 <script>
     // 个人信息修改页面修改按钮点击事件
     $("#editPersonalInfo").click(function () {
+
         var btHtml = $("#editPersonalInfo").html();
+        alert(btHtml);
         if (btHtml == "修改") {
+            alert(1);
             var infoTable = $(".personInfoTable");
             infoTable.find("input[name='telphone']").attr("disabled", false).css("background-color", "gray");
             infoTable.find("input[name='email']").attr("disabled", false).css("background-color", "gray");
@@ -338,6 +410,7 @@
             data: {password: oldPs},
             url: "../user/comparePw",
             success: function (data) {
+                console.log(data);
                 if (data == 0) {
                     $("#oldpwSpan").show();
                     re = false;

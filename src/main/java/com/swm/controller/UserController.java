@@ -1,6 +1,7 @@
 package com.swm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.*;
 import com.swm.service.AccountService;
 import com.swm.service.SalaryService;
@@ -76,13 +77,15 @@ public class UserController {
      * @param session
      */
     @RequestMapping("/selfSalary")
-    public void checkSelfSalary(HttpSession session) {
+    public void checkSelfSalary(HttpSession session, Integer pageIndex, Integer pageSize, PrintWriter out) {
         Account account = (Account) session.getAttribute("account");
         Salary salary = new Salary();
         if (account != null) {
             salary.setEmployeeId(account.getEmployeeId().getId());
         }
-        PageUtil<EmpSalary> salaryPage = salaryService.selectBySalary(null, null, salary, null);
+        PageUtil<EmpSalary> salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, null);
+        String json = JSON.toJSONString(salaryPage, SerializerFeature.DisableCircularReferenceDetect);
+        out.write(json);
     }
 
     /**

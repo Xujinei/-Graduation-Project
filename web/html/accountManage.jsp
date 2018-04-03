@@ -425,6 +425,7 @@
             alert("请选择要初始化密码的账号");
             return;
         } else {
+            var re = "初始化成功";
             $.each($('input[class=aCheckbox]:checked'), function () {
                 var id = $(this).val();
                 console.log("id=====" + id);
@@ -433,6 +434,7 @@
                     data: {id: id},
                     url: "../account/initPassword",
                     success: function (data) {
+                        re = data;
                         console.log(data);
                     },
                     error: function () {
@@ -440,6 +442,7 @@
                     }
                 });
             });
+            alert(re);
         }
     });
 

@@ -29,11 +29,37 @@ public class LoginController {
                 modelAndView.setViewName("/login");
             } else {
                 session.setAttribute("account", account);
-                modelAndView.setViewName("/home");
+                if (account.getPromission() == 1) {
+                    modelAndView.setViewName("/home");
+                } else {
+                    modelAndView.setViewName("/userhome");
+                }
+
             }
         } else {
-            modelAndView.setViewName("/home");
+            Account account = (Account) session.getAttribute("account");
+            if (account.getPromission() == 1) {
+                modelAndView.setViewName("/home");
+            } else {
+                modelAndView.setViewName("/userhome");
+            }
         }
+        return modelAndView;
+    }
+
+    /**
+     * 退出登录
+     *
+     * @param session
+     * @return
+     */
+    @RequestMapping("/loginOut")
+    public ModelAndView loginOut(HttpSession session) {
+        if (null != session.getAttribute("account")) {
+            session.removeAttribute("account");
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/login");
         return modelAndView;
     }
 }

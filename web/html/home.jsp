@@ -15,6 +15,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/html/";
     Account user = (Account) request.getSession().getAttribute("account");
     String name = user.getUsername();
+    Integer p = user.getPromission();
 %>
 <html>
 <head>
@@ -46,8 +47,12 @@
             </div>
             <div class="col-md-2 col-md-offset-6">
                 <div>
-                    欢迎您：<span id="userName"><%=name%></span>
-                    <button type="button" class="btn btn-primary btn-sm pull-right">退出</button>
+
+                    <form action="../login/loginOut" style="float:right;">
+                        <button type="submit" class="btn btn-primary btn-sm pull-right">退出</button>
+                    </form>
+                    <span id="userName"
+                          style="display: inline-block;float: right">欢迎您：<%=name%> &nbsp;&nbsp;&nbsp;</span>
                 </div>
             </div>
         </div>
@@ -76,44 +81,45 @@
                 </div>
                 <%--个人管理模块结束--%>
                 <%--通知模块--%>
+                <%-- <div class="panel panel-primary">
+                     <div class="panel-heading">
+                         <h4 class="panel-title">
+                             <a data-toggle="collapse" data-parent="#accordion"
+                                href="#message">
+                                 通知
+                             </a>
+                         </h4>
+                     </div>
+                     <div id="message" class="panel-collapse collapse">
+                         <div class="panel-body">
+                             <ul class="myUl">
+                                 <li class="myLi"><a>薪资发放通知</a><span class="badge pull-right">新</span></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>--%>
+                <%--通知模块结束--%>
+
+                <%--员工管理模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title" id="employeeManageTitle">
                             <a data-toggle="collapse" data-parent="#accordion"
-                               href="#message">
-                                通知
+                               href="#employee">
+                                员工管理
                             </a>
                         </h4>
                     </div>
-                    <div id="message" class="panel-collapse collapse">
+                    <div id="employee" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi"><a>薪资发放通知</a><span class="badge pull-right">新</span></li>
+                                <li class="myLi" id="employeeInfoLi"><a>员工信息管理</a></li>
+                                <li class="myLi" id="employeeAccount"><a>员工账号管理</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <%--通知模块结束--%>
-                    <%--员工管理模块--%>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title" id="employeeManageTitle">
-                                <a data-toggle="collapse" data-parent="#accordion"
-                                   href="#employee">
-                                    员工管理
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="employee" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <ul class="myUl">
-                                    <li class="myLi" id="employeeInfoLi"><a>员工信息管理</a></li>
-                                    <li class="myLi" id="employeeAccount"><a>员工账号管理</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <%--员工管理模块结束--%>
+                <%--员工管理模块结束--%>
                 <%--薪资福利管理模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -159,6 +165,7 @@
                     </div>
                 </div>
                 <%--系统管理模块结束--%>
+
             </div>
             <%--左边导航栏结束--%>
             <%--右边内容--%>

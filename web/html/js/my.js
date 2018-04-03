@@ -131,8 +131,6 @@ $(function () {
 
         $("#" + p1.data[0]).addClass("active");
         $("#" + p1.data[1]).addClass("in active");
-
-
     };
 
 
