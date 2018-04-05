@@ -27,6 +27,6 @@
     <script src="js/my.js"></script>
 </head>
 <body>
-欢迎是使用薪酬福利管理系统
+
 </body>
 </html>

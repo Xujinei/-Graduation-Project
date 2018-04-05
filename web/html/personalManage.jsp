@@ -291,8 +291,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm pull-right" id="editPersonalInfo">修改
+                            <button type="button" class="btn btn-primary btn-sm pull-right" id="editPersonalInfo"
+                                    value="修改">修改
                             </button>
+
                         </td>
                         <td>
 
@@ -366,17 +368,16 @@
     // 个人信息修改页面修改按钮点击事件
     $("#editPersonalInfo").click(function () {
 
-        var btHtml = $("#editPersonalInfo").html();
-        alert(btHtml);
+        var btHtml = $("#editPersonalInfo").text();
+
         if (btHtml == "修改") {
-            alert(1);
             var infoTable = $(".personInfoTable");
             infoTable.find("input[name='telphone']").attr("disabled", false).css("background-color", "gray");
             infoTable.find("input[name='email']").attr("disabled", false).css("background-color", "gray");
             infoTable.find("input[name='address']").attr("disabled", false).css("background-color", "gray");
-            $("#editPersonalInfo").html("保存");
+            $("#editPersonalInfo").text("保存");
         } else if ("保存" == btHtml) {
-            $("#editPersonalInfo").html("修改");
+            $("#editPersonalInfo").text("修改");
             // 保存操作
 
             $(".personInfoTable").find("tbody tr td input").attr("disabled", false).css("background-color", "gray");
