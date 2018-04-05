@@ -193,7 +193,7 @@
     <select id="selectDepartmentSalary" resultMap="EmpResultMap">
         select departementId , workData as workData, sum(total) as total
         , round(total/(SELECT sum(total)
-        FROM salary)*100,2) as status
+        FROM salary where exists (select id from department where id=salary.departementId))*100,2) as status
         from salary
         <if test="date!=null">
             <where>
@@ -213,7 +213,7 @@
     <select id="selectPositionSalary" resultMap="EmpResultMap">
         select positionId , workData as workData, sum(total) as total
         , round(total/(SELECT sum(total)
-        FROM salary)*100,2) as status
+        FROM salary where exists (select id from position where id=salary.positionId))*100,2) as status
         from salary
         <if test="date!=null">
             <where>
