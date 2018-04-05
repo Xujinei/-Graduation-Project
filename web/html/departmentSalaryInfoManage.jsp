@@ -69,16 +69,16 @@
             var salTbody = $("#salaryBody");
 
             $.each(ed.list, function (i, item) {
+                if(!("department" in item)){
+                    return ;
+                }
+
                 var workdata = item.workdata;
                 var workHours = item.workHours;
                 var name = item.employeeEntity.name;
                 var empId = item.employeeEntity.id;
-                if ('undefined' != item.department) {
-                    var department = item.department.name;
-                    if (department == undefined || department == null) {
-                        department = "";
-                    }
-                }
+
+                var department = item.department.name;
 
                 var basesalary = item.basesalary;
                 var positionsalary = item.positionsalary;

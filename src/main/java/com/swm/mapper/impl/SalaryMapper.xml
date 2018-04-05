@@ -121,6 +121,7 @@
         from salary
         <if test="salary!=null">
             <where>
+
                 <if test="salary.employeeId!=null">
                     employeeId=#{salary.employeeId}
                 </if>
@@ -133,6 +134,7 @@
                 <if test="salary.positionId!=null">
                     and positionId = #{salary.positionId}
                 </if>
+                and  exists (select id from department where id=salary.departementId)
             </where>
         </if>
         order by total
@@ -183,6 +185,7 @@
                 <if test="salary.positionId!=null">
                     and positionId = #{salary.positionId}
                 </if>
+                and  exists (select id from department where id=salary.departementId)
             </where>
         </if>
     </select>
@@ -195,6 +198,7 @@
         <if test="date!=null">
             <where>
                 workData between #{date} and last_day(#{date})
+                and  exists (select id from department where id=salary.departementId)
             </where>
         </if>
         group by departementId
@@ -214,6 +218,7 @@
         <if test="date!=null">
             <where>
                 workData between #{date} and last_day(#{date})
+                and  exists (select id from position where id=salary.positionId)
             </where>
         </if>
         group by positionId

@@ -27,7 +27,13 @@ public class LoginController {
             if (account == null) {
                 modelAndView.addObject("message", "用户名和密码错误，请重新输入");
                 modelAndView.setViewName("/login");
-            } else {
+            } else if(0 == account.getStatus()){
+                modelAndView.addObject("message", "账号未激活,无法使用");
+                modelAndView.setViewName("/login");
+            }else if(null == account.getEmployeeId()){
+                modelAndView.addObject("message", "账号未分配,无法使用");
+                modelAndView.setViewName("/login");
+            }else{
                 session.setAttribute("account", account);
                 if (account.getPromission() == 1) {
                     modelAndView.setViewName("/home");

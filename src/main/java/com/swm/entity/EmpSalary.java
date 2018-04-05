@@ -371,4 +371,23 @@ public class EmpSalary {
     public void setWorkHours(Double workHours) {
         this.workHours = workHours;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmpSalary)) return false;
+
+        EmpSalary empSalary = (EmpSalary) o;
+
+        if (getWorkdata() != null ? !getWorkdata().equals(empSalary.getWorkdata()) : empSalary.getWorkdata() != null)
+            return false;
+        return getEmployeeId() != null ? getEmployeeId().equals(empSalary.getEmployeeId()) : empSalary.getEmployeeId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getWorkdata() != null ? getWorkdata().hashCode() : 0;
+        result = 31 * result + (getEmployeeId() != null ? getEmployeeId().hashCode() : 0);
+        return result;
+    }
 }

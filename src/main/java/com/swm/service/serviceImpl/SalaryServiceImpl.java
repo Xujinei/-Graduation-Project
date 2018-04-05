@@ -77,6 +77,8 @@ public class SalaryServiceImpl implements SalaryService {
             pageCount = 1;
         }
         List<EmpSalary> salaryList = salaryMapper.selectBySalary(skipSize, pageSize, salary, upOrDown);
+
+
         /*完善部门职务信息*/
         for (EmpSalary empSalary : salaryList) {
             if (empSalary != null) {

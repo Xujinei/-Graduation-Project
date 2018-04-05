@@ -44,15 +44,27 @@
         /*绘制用户列表公共方法*/
         function successEach(data) {
             var ed = $.parseJSON(data);
+            console.log(ed);
+            // return ;
             var depTbody = $("#EmployeeListBody");
             $.each(ed.list, function (i, item) {
                 var id = item.id;
                 var name = item.name;
-                var positionid = item.position.name;
+                // var positionid = item.position.name;
+                var positionid="暂无";
+                if("position" in item){
+                    positionid = item.position.name;
+                }
+
                 console.log("poid=====" + positionid);
                 var sex = item.sex;
                 var entrytime = item.entrytime;
-                var departmentid = item.department.name;
+                // var departmentid = item.department.name;
+                var departmentid="暂无";
+                if("department" in item){
+                    departmentid = item.department.name;
+                }
+
                 console.log("deid=====" + departmentid);
                 var basesalary = item.basesalary;
                 var positionsalary = item.positionsalary;

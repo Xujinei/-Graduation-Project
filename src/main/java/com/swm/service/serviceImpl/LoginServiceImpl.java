@@ -35,7 +35,7 @@ public class LoginServiceImpl implements LoginService {
             account.setUsername(username);
             String pw = MD5.toMD5(password);
             account.setPassword(pw);
-            account.setStatus(1);
+            // account.setStatus(1);
             Account user = accountMapper.selectByAccount(account);
             if (user != null) {
                 // 记住密码

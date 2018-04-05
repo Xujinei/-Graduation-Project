@@ -61,6 +61,10 @@
                     var ed = $.parseJSON(data);
                     console.log(ed);
                     $.each(ed, function (i, item) {
+                        if(!("department" in item)){
+                            return ;
+                        }
+                        
                         var department = item.department.name;
                         var dId = item.department.id;
                         var date = item.workdata;

@@ -74,9 +74,19 @@
             $.each(ed.list, function (i, item) {
                 var id = item.id;
                 var username = item.username;
-                var employeeId = item.employeeId.name;
-                var department = item.employeeId.departmentid;
-                var lastLoginTime = item.lastLoginTime;
+                var employeeId = "未分配";
+                var department = "暂无";
+                if("employeeId" in item){
+                    employeeId = item.employeeId.name;
+                    if("departmentid" in item.employeeId){
+                        department = item.employeeId.departmentid;
+                    }
+                }
+                var lastLoginTime = "未知";
+                if("lastLoginTime" in item){
+                    lastLoginTime = item.lastLoginTime;
+                }
+
                 var status = item.status;
                 var promission = item.promission;
 
@@ -84,21 +94,22 @@
                 if (id != null && id != undefined && id != "") {
 
                     if (department != undefined && department != null && "" != department) {
-                        console.log("did=====" + department);
-                        department = $("#selectDepartment option[value='" + department + "']").text();
+                        if("暂无"!= department) {
+                            department = $("#selectDepartment option[value='" + department + "']").text();
+                        }
                         console.log("department======" + department);
                     }
-                    if (lastLoginTime != undefined || lastLoginTime != null) {
+                    if (lastLoginTime != undefined && lastLoginTime != null && "未知" != lastLoginTime) {
                         lastLoginTime = getStrDate(lastLoginTime);
                     }
-                    if (status == 1 || status == 1) {
+                    if (status == 1) {
                         status = '可用';
                     } else {
                         status = '不可用';
                     }
-                    if (promission == 1 || promission == 1) {
+                    if (promission == 1) {
                         promission = '超级管理员';
-                    } else if (promission == 0 || promission == 0) {
+                    } else if (promission == 0) {
                         promission = '普通用户';
                     }
 

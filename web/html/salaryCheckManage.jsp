@@ -55,7 +55,12 @@
                 var workHours = item.workHours;
                 var name = item.employeeEntity.name;
                 var empId = item.employeeEntity.id;
-                var department = item.department.name;
+
+                var department = "暂无";
+                if("department" in item){
+                    department = item.department.name;
+                }
+
                 var basesalary = item.basesalary;
                 var positionsalary = item.positionsalary;
                 var basesubsidy = item.basesubsidy;
