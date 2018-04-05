@@ -15,7 +15,6 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/html/";
     Account user = (Account) request.getSession().getAttribute("account");
     String name = user.getUsername();
-
 %>
 <html>
 <head>

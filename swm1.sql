@@ -1,29 +1,28 @@
--- MySQL dump 10.10
---
--- Host: localhost    Database: swm1
--- ------------------------------------------------------
--- Server version	5.0.18-nt
+/*
+Navicat MySQL Data Transfer
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+Source Server         : 127.0.0.1
+Source Server Version : 50018
+Source Host           : 127.0.0.1:3306
+Source Database       : swm1
 
---
--- Table structure for table `account`
---
+Target Server Type    : MYSQL
+Target Server Version : 50018
+File Encoding         : 65001
 
+Date: 2018-04-05 12:53:26
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for account
+-- ----------------------------
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
   `id` int(10) NOT NULL auto_increment COMMENT '账号编号',
   `username` varchar(50) default NULL COMMENT '用户名',
-  `password` varchar(30) NOT NULL default '' COMMENT '密码',
+  `password` varchar(255) NOT NULL default '' COMMENT '密码',
   `employeeId` int(10) default NULL COMMENT '员工编号',
   `lastLoginTime` timestamp NULL default CURRENT_TIMESTAMP COMMENT '最近登录时间',
   `status` int(10) default '1' COMMENT '状态',
@@ -35,21 +34,18 @@ CREATE TABLE `account` (
   KEY `account_promission_id_fk` (`promission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `account`
---
+-- ----------------------------
+-- Records of account
+-- ----------------------------
+INSERT INTO `account` VALUES ('1', 'admin', '1E4403840602BFAFC53A7D5F9653BFC0', '3', '2018-02-25 12:21:53', '1', '1');
+INSERT INTO `account` VALUES ('2', 'testes', '1E4403840602BFAFC53A7D5F9653BFC0', '2', '2018-02-25 12:22:16', '1', '0');
+INSERT INTO `account` VALUES ('3', 'user2', '1E4403840602BFAFC53A7D5F9653BFC0', '4', '2018-04-01 09:55:53', '1', '0');
+INSERT INTO `account` VALUES ('4', 'chenxx', '1E4403840602BFAFC53A7D5F9653BFC0', '5', '2018-04-01 09:55:59', '1', '1');
+INSERT INTO `account` VALUES ('5', 'chendd', '1E4403840602BFAFC53A7D5F9653BFC0', '6', null, '1', '0');
 
-
-/*!40000 ALTER TABLE `account` DISABLE KEYS */;
-LOCK TABLES `account` WRITE;
-INSERT INTO `account` VALUES (1,'admin','admin',1,'2018-02-25 04:21:53',1,NULL),(2,'testes','testes',2,'2018-02-25 04:22:16',1,NULL),(3,'测试','测试',2,'2018-02-25 04:22:32',1,NULL);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `account` ENABLE KEYS */;
-
---
--- Table structure for table `accountstatus`
---
-
+-- ----------------------------
+-- Table structure for accountstatus
+-- ----------------------------
 DROP TABLE IF EXISTS `accountstatus`;
 CREATE TABLE `accountstatus` (
   `id` int(10) NOT NULL,
@@ -59,21 +55,14 @@ CREATE TABLE `accountstatus` (
   UNIQUE KEY `accountStatus_name_uindex` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `accountstatus`
---
+-- ----------------------------
+-- Records of accountstatus
+-- ----------------------------
+INSERT INTO `accountstatus` VALUES ('0', '有效', null);
 
-
-/*!40000 ALTER TABLE `accountstatus` DISABLE KEYS */;
-LOCK TABLES `accountstatus` WRITE;
-INSERT INTO `accountstatus` VALUES (0,'有效',NULL);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `accountstatus` ENABLE KEYS */;
-
---
--- Table structure for table `department`
---
-
+-- ----------------------------
+-- Table structure for department
+-- ----------------------------
 DROP TABLE IF EXISTS `department`;
 CREATE TABLE `department` (
   `name` varchar(30) default NULL,
@@ -86,21 +75,16 @@ CREATE TABLE `department` (
   UNIQUE KEY `department_name_uindex` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `department`
---
+-- ----------------------------
+-- Records of department
+-- ----------------------------
+INSERT INTO `department` VALUES ('人事部', '1', '2', '无', null, '管人');
+INSERT INTO `department` VALUES ('测试', '3', '3', '测试发送给和', null, '第三方');
+INSERT INTO `department` VALUES ('行政', '5', '5', '有穷人', null, '大幅度涣发大号');
 
-
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-LOCK TABLES `department` WRITE;
-INSERT INTO `department` VALUES ('人事部',1,1,'无',NULL,'管人'),('测试',3,NULL,'测试发送给和',NULL,'第三方'),('打开了父',4,NULL,'规范的发给',NULL,'但是发是');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
-
---
--- Table structure for table `employeeinfo`
---
-
+-- ----------------------------
+-- Table structure for employeeinfo
+-- ----------------------------
 DROP TABLE IF EXISTS `employeeinfo`;
 CREATE TABLE `employeeinfo` (
   `id` int(10) NOT NULL auto_increment COMMENT '员工信息编号',
@@ -128,21 +112,18 @@ CREATE TABLE `employeeinfo` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `employeeinfo`
---
+-- ----------------------------
+-- Records of employeeinfo
+-- ----------------------------
+INSERT INTO `employeeinfo` VALUES ('2', '大幅度', '女', '2018-01-20 00:00:00', '18874489766', '1293630493@qq.com', 'dfddf', '4330255636363696', 'dfdfjdkslj', 'jldj', '发动机', '二大姐夫', '2018-01-18 00:00:00', '2018-01-11 00:00:00', '4', '1', '4520', '5456', '546', null, '1', '249');
+INSERT INTO `employeeinfo` VALUES ('3', '测试', '女', '2018-02-18 00:00:00', '188744897', '1293654545@qq.com', '广场非官方', '460223199705602536', ' 订酒店', '砥砺奋进的', '大幅度', '就砥砺奋进', '2018-02-11 00:00:00', '2018-03-01 00:00:00', '1', '4', '4566', '1229', '456', null, '1', '145');
+INSERT INTO `employeeinfo` VALUES ('4', '的接口合肥', '男', '2004-02-17 00:00:00', '18874456363', '1293630493@qq.com', '大幅度', '453636363636363252', '大', '的给付对价', '的减肥的', '绝地反', '2018-02-13 00:00:00', '2020-02-11 00:00:00', '3', '1', '4568', '4525', '124.9', null, '1', '227');
+INSERT INTO `employeeinfo` VALUES ('5', 'chenxx', '男', '2004-03-10 00:00:00', '1887442639', '1529@qq.con', '长沙', '465336363525632541', '大学', '衡阳师范', '物流', '团员', '2018-04-01 00:00:00', '2028-05-17 00:00:00', '1', '1', '2536', '4563', '145', null, '1', '177');
+INSERT INTO `employeeinfo` VALUES ('6', 'chendd', '女', '2004-03-10 00:00:00', '1887442639', '152535359@qq.con', '长沙', '465336363525632541', '大学', '衡阳师范', '物流', '团员', '2018-04-01 00:00:00', '2028-05-17 00:00:00', '3', '4', '5536', '4563', '145', null, '1', '252');
 
-
-/*!40000 ALTER TABLE `employeeinfo` DISABLE KEYS */;
-LOCK TABLES `employeeinfo` WRITE;
-INSERT INTO `employeeinfo` VALUES (2,'大幅度','女','2018-01-19 16:00:00','18874489766','1293630493@qq.com','dfddf','4330255636363696','dfdfjdkslj','jldj','发动机','二大姐夫','2018-01-17 16:00:00','2018-01-10 16:00:00',4,1,4520,5456,546,NULL,1,249),(3,'测试','女','2018-02-17 16:00:00','18874489766','1293630493@qq.com','广场','460223199705602536',' 订酒店','砥砺奋进的','大幅度','就砥砺奋进','2018-02-10 16:00:00','2018-02-28 16:00:00',1,4,4566,1229,456,NULL,1,145);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `employeeinfo` ENABLE KEYS */;
-
---
--- Table structure for table `employeestatus`
---
-
+-- ----------------------------
+-- Table structure for employeestatus
+-- ----------------------------
 DROP TABLE IF EXISTS `employeestatus`;
 CREATE TABLE `employeestatus` (
   `id` int(10) NOT NULL,
@@ -151,21 +132,14 @@ CREATE TABLE `employeestatus` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `employeestatus`
---
+-- ----------------------------
+-- Records of employeestatus
+-- ----------------------------
+INSERT INTO `employeestatus` VALUES ('1', '测试', '2018-01-02');
 
-
-/*!40000 ALTER TABLE `employeestatus` DISABLE KEYS */;
-LOCK TABLES `employeestatus` WRITE;
-INSERT INTO `employeestatus` VALUES (1,'测试','2018-01-02');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `employeestatus` ENABLE KEYS */;
-
---
--- Table structure for table `employeesubsidy`
---
-
+-- ----------------------------
+-- Table structure for employeesubsidy
+-- ----------------------------
 DROP TABLE IF EXISTS `employeesubsidy`;
 CREATE TABLE `employeesubsidy` (
   `employeeId` int(10) default NULL COMMENT '员工编号',
@@ -175,21 +149,14 @@ CREATE TABLE `employeesubsidy` (
   PRIMARY KEY  (`subsidyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `employeesubsidy`
---
+-- ----------------------------
+-- Records of employeesubsidy
+-- ----------------------------
+INSERT INTO `employeesubsidy` VALUES ('1', '2018-01-02', '1', '34');
 
-
-/*!40000 ALTER TABLE `employeesubsidy` DISABLE KEYS */;
-LOCK TABLES `employeesubsidy` WRITE;
-INSERT INTO `employeesubsidy` VALUES (1,'2018-01-02',1,34);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `employeesubsidy` ENABLE KEYS */;
-
---
--- Table structure for table `insurancestandard`
---
-
+-- ----------------------------
+-- Table structure for insurancestandard
+-- ----------------------------
 DROP TABLE IF EXISTS `insurancestandard`;
 CREATE TABLE `insurancestandard` (
   `id` int(10) NOT NULL COMMENT '编号',
@@ -203,21 +170,15 @@ CREATE TABLE `insurancestandard` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `insurancestandard`
---
+-- ----------------------------
+-- Records of insurancestandard
+-- ----------------------------
+INSERT INTO `insurancestandard` VALUES ('0', '1', '3', '4', '3', '4', '5', '1');
+INSERT INTO `insurancestandard` VALUES ('5', '劜545', '3', '3', '2', '3', '4', '3');
 
-
-/*!40000 ALTER TABLE `insurancestandard` DISABLE KEYS */;
-LOCK TABLES `insurancestandard` WRITE;
-INSERT INTO `insurancestandard` VALUES (0,'1',3,4,3,4,5,1),(5,'劜545',3,3,2,3,4,3);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `insurancestandard` ENABLE KEYS */;
-
---
--- Table structure for table `notice`
---
-
+-- ----------------------------
+-- Table structure for notice
+-- ----------------------------
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `id` int(10) NOT NULL,
@@ -228,20 +189,13 @@ CREATE TABLE `notice` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `notice`
---
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
 
-
-/*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-LOCK TABLES `notice` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `notice` ENABLE KEYS */;
-
---
--- Table structure for table `position`
---
-
+-- ----------------------------
+-- Table structure for position
+-- ----------------------------
 DROP TABLE IF EXISTS `position`;
 CREATE TABLE `position` (
   `id` int(10) NOT NULL auto_increment COMMENT '职务编号',
@@ -252,21 +206,16 @@ CREATE TABLE `position` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `position`
---
+-- ----------------------------
+-- Records of position
+-- ----------------------------
+INSERT INTO `position` VALUES ('1', '助理', '任然', ' 助理', ' 漂亮啦');
+INSERT INTO `position` VALUES ('4', '测试', '测试12', '测试', '测试好');
+INSERT INTO `position` VALUES ('5', '劜gd ', 'fghj', 'fghn', 'fdghjm');
 
-
-/*!40000 ALTER TABLE `position` DISABLE KEYS */;
-LOCK TABLES `position` WRITE;
-INSERT INTO `position` VALUES (1,'助理','任然',' 助理',' 漂亮啦'),(4,'测试','测试12','测试','测试好'),(5,'劜gd ','fghj','fghn','fdghjm');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `position` ENABLE KEYS */;
-
---
--- Table structure for table `promission`
---
-
+-- ----------------------------
+-- Table structure for promission
+-- ----------------------------
 DROP TABLE IF EXISTS `promission`;
 CREATE TABLE `promission` (
   `id` int(10) NOT NULL auto_increment,
@@ -274,20 +223,13 @@ CREATE TABLE `promission` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `promission`
---
+-- ----------------------------
+-- Records of promission
+-- ----------------------------
 
-
-/*!40000 ALTER TABLE `promission` DISABLE KEYS */;
-LOCK TABLES `promission` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `promission` ENABLE KEYS */;
-
---
--- Table structure for table `salary`
---
-
+-- ----------------------------
+-- Table structure for salary
+-- ----------------------------
 DROP TABLE IF EXISTS `salary`;
 CREATE TABLE `salary` (
   `employeeId` int(10) NOT NULL default '0' COMMENT '员工编号',
@@ -307,21 +249,15 @@ CREATE TABLE `salary` (
   PRIMARY KEY  (`workData`,`employeeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `salary`
---
+-- ----------------------------
+-- Records of salary
+-- ----------------------------
+INSERT INTO `salary` VALUES ('2', '2018-02-01', '4520', '5456', '546', '9806', '740.2', '40', '0', '0', '2018-03-23 00:00:00', '40', '4', '1');
+INSERT INTO `salary` VALUES ('3', '2018-02-01', '4566', '1229', '456', '6152', '124.5', '20', '0', '0', '2018-03-23 00:00:00', '40', '1', '4');
 
-
-/*!40000 ALTER TABLE `salary` DISABLE KEYS */;
-LOCK TABLES `salary` WRITE;
-INSERT INTO `salary` VALUES (2,'2018-02-01',4520,5456,546,9806,740.2,40,0,0,'2018-03-23 00:00:00',40,4,1),(3,'2018-02-01',4566,1229,456,6152,124.5,20,0,0,'2018-03-23 00:00:00',40,1,4);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `salary` ENABLE KEYS */;
-
---
--- Table structure for table `salarystatus`
---
-
+-- ----------------------------
+-- Table structure for salarystatus
+-- ----------------------------
 DROP TABLE IF EXISTS `salarystatus`;
 CREATE TABLE `salarystatus` (
   `id` int(10) NOT NULL,
@@ -330,20 +266,13 @@ CREATE TABLE `salarystatus` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `salarystatus`
---
+-- ----------------------------
+-- Records of salarystatus
+-- ----------------------------
 
-
-/*!40000 ALTER TABLE `salarystatus` DISABLE KEYS */;
-LOCK TABLES `salarystatus` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `salarystatus` ENABLE KEYS */;
-
---
--- Table structure for table `subsidytype`
---
-
+-- ----------------------------
+-- Table structure for subsidytype
+-- ----------------------------
 DROP TABLE IF EXISTS `subsidytype`;
 CREATE TABLE `subsidytype` (
   `id` int(10) NOT NULL auto_increment COMMENT '编号',
@@ -353,41 +282,27 @@ CREATE TABLE `subsidytype` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `subsidytype`
---
+-- ----------------------------
+-- Records of subsidytype
+-- ----------------------------
 
-
-/*!40000 ALTER TABLE `subsidytype` DISABLE KEYS */;
-LOCK TABLES `subsidytype` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `subsidytype` ENABLE KEYS */;
-
---
--- Table structure for table `test`
---
-
+-- ----------------------------
+-- Table structure for test
+-- ----------------------------
 DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test` (
   `id` int(225) default NULL,
   `name` varchar(255) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `test`
---
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+INSERT INTO `test` VALUES ('1', '测试');
 
-
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-LOCK TABLES `test` WRITE;
-INSERT INTO `test` VALUES (1,'测试');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
-
---
--- Table structure for table `workinghours`
---
-
+-- ----------------------------
+-- Table structure for workinghours
+-- ----------------------------
 DROP TABLE IF EXISTS `workinghours`;
 CREATE TABLE `workinghours` (
   `id` int(10) NOT NULL auto_increment COMMENT '员工编号',
@@ -398,23 +313,8 @@ CREATE TABLE `workinghours` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `workinghours`
---
-
-
-/*!40000 ALTER TABLE `workinghours` DISABLE KEYS */;
-LOCK TABLES `workinghours` WRITE;
-INSERT INTO `workinghours` VALUES (27,'2018-02-01',40,2,3),(28,'2018-02-01',40,4,2);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `workinghours` ENABLE KEYS */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
+-- ----------------------------
+-- Records of workinghours
+-- ----------------------------
+INSERT INTO `workinghours` VALUES ('27', '2018-02-01', '40', '2', '3');
+INSERT INTO `workinghours` VALUES ('28', '2018-02-01', '40', '4', '2');
