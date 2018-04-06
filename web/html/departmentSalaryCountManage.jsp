@@ -781,7 +781,7 @@
                 var end = ed.pageCount;
                 var page_div = $(".page_div");
                 for (var i = 1; i <= end; i++) {
-                    var skip = 1;
+                    var skip = 0;
                     if (i > 1) {
                         skip = (i - 1) * 10;
                     }
@@ -809,7 +809,7 @@
         if (date != null && "" != date && date != undefined) {
             date = date + "-01";
         }
-        detailList(1, 10, department, date);
+        detailList(0, 10, department, date);
 
     });
 </script>

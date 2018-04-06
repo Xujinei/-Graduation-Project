@@ -160,7 +160,7 @@
                     var end = ed.pageCount;
                     var page_div = $(".page_div");
                     for (var i = 1; i <= end; i++) {
-                        var skip = 1;
+                        var skip = 0;
                         if (i > 1) {
                             skip = (i - 1) * 10;
                         }
@@ -172,7 +172,7 @@
             });
         };
 
-        initList(1, 10);
+        initList(0, 10);
     </script>
 </head>
 <body>
@@ -244,7 +244,7 @@
     /*差寻*/
     $("#searchBtn").click(function () {
 
-        initList(1, 10);
+        initList(0, 10);
     });
     /*生成时间*/
     var last_year_month = function () {

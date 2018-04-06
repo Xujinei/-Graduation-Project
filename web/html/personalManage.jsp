@@ -160,7 +160,7 @@
                     var end = ed.pageCount;
                     var page_div = $(".page_div");
                     for (var i = 1; i <= end; i++) {
-                        var skip = 1;
+                        var skip = 0;
                         if (i > 1) {
                             skip = (i - 1) * 10;
                         }
@@ -172,7 +172,7 @@
             });
         }
 
-        initSelfSalary(1, 10);
+        initSelfSalary(0, 10);
 
     </script>
 

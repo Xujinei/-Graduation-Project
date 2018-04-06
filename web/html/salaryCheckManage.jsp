@@ -133,7 +133,7 @@
                     var end = ed.pageCount;
                     var page_div = $(".page_div");
                     for (var i = 1; i <= end; i++) {
-                        var skip = 1;
+                        var skip = 0;
                         if (i > 1) {
                             skip = (i - 1) * 10;
                         }
@@ -145,7 +145,7 @@
             });
         }
 
-        initList(1, 10);
+        initList(0, 10);
         /*初始化部门列表结束*/
     </script>
 </head>
@@ -330,7 +330,7 @@
                 contentType: false,
                 success: function (data) {
                     $(".tipInfo").text(data);
-                    initList(1, 10);
+                    initList(0, 10);
                     console.log(data);
                 }
             });
@@ -385,7 +385,7 @@
                 var end = ed.pageCount;
                 var page_div = $(".page_div");
                 for (var i = 1; i <= end; i++) {
-                    var skip = 1;
+                    var skip = 0;
                     if (i > 1) {
                         skip = (i - 1) * 10;
                     }
@@ -406,7 +406,7 @@
         console.log("time========" + time);
         var department = $("#selectForm").find("#department option:selected").val();
         console.log("department=====" + department);
-        searchSalary(1, 10, time, department);
+        searchSalary(0, 10, time, department);
     });
 
     /*生成时间*/
