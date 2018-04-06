@@ -774,7 +774,7 @@
     function getStrDate(date) {
         var entryDate = new Date(date);
         var year = entryDate.getFullYear();
-        var month = entryDate.getMonth();
+        var month = entryDate.getMonth() + 1;
         var day = entryDate.getDate();
         var strDate = year + "-" + month + "-" + day;
         return strDate;

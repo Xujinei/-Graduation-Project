@@ -309,7 +309,7 @@
         $("#positionListLi").addClass("active");
         $("#positionList").addClass("in active");
         $("#addPosition").removeClass("in active");
-
+        init(1, 10);
     });
 
 

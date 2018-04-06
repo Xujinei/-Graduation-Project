@@ -43,7 +43,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         PageUtil<Department> departmentPage = new PageUtil<Department>();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = departmentMapper.countAllDepartment();
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

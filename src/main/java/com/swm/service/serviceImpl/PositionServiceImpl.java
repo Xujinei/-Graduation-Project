@@ -23,7 +23,7 @@ public class PositionServiceImpl implements PositionService {
 
     public PageUtil<Position> getPagePosition(Integer pageIndex, Integer pageSize) {
         PageUtil<Position> positionPage = new PageUtil<Position>();
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = positionMapper.countAllPosition();
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

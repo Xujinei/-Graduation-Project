@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
                                             Account account, List<Employeeinfo> empList) {
         PageUtil<Account> accountPage = new PageUtil<Account>();
 
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = accountMapper.countByPageAccount(skipSize, pageSize, account, empList);
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

@@ -31,9 +31,9 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into workinghours (id, workData, workHours,
+        insert into workinghours (workData, workHours,
     overTime,empId)
-    values (#{id,jdbcType=INTEGER}, #{workdata,jdbcType=DATE}, #{workhours,jdbcType=INTEGER},
+        values ( #{workdata,jdbcType=DATE}, #{workhours,jdbcType=INTEGER},
     #{overtime,jdbcType=INTEGER},#{empId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.swm.entity.Workinghours">

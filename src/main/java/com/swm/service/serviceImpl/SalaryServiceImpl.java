@@ -70,7 +70,7 @@ public class SalaryServiceImpl implements SalaryService {
     public PageUtil<EmpSalary> selectBySalary(Integer pageIndex, Integer pageSize, Salary salary, Integer upOrDown) {
         PageUtil<EmpSalary> pageSalary = new PageUtil<EmpSalary>();
 
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = salaryMapper.countAllByKey(salary);
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

@@ -36,10 +36,10 @@
         <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into account (id, username, password,
+        insert into account ( username, password,
         employeeId, lastLoginTime, status,
         promission)
-        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        values ( #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{employeeId.id,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
         #{promission,jdbcType=INTEGER})
     </insert>

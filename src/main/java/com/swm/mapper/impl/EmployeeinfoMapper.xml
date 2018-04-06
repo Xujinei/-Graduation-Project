@@ -84,7 +84,7 @@
         <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into employeeinfo (id, name, sex,
+        insert into employeeinfo ( name, sex,
         brithday, telPhone, email,
         address, identificationId, education,
         school, profession, politicalStatus,
@@ -92,7 +92,7 @@
         positionId, baseSalary, positionSalary,
         subsidy, insuranceStandard, employeeStatus,hoursSalary
         )
-        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+        values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
         #{brithday,jdbcType=TIMESTAMP}, #{telphone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
         #{address,jdbcType=VARCHAR}, #{identificationid,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},
         #{school,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{politicalstatus,jdbcType=VARCHAR},

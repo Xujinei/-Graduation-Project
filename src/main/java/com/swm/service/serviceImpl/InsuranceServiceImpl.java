@@ -21,7 +21,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     public PageUtil<Insurancestandard> getPageInsurance(Integer pageIndex, Integer pageSize) {
 
         PageUtil<Insurancestandard> insurancestandardPage = new PageUtil<Insurancestandard>();
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = insurancestandardMapper.countAllResurance();
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

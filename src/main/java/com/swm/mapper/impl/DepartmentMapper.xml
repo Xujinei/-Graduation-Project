@@ -34,10 +34,10 @@
         <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into department (id, name, leaderId,
+        insert into department ( name, leaderId,
         remark, createTime, introduction
         )
-        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{leaderid,jdbcType=INTEGER},
+        values ( #{name,jdbcType=VARCHAR}, #{leaderid,jdbcType=INTEGER},
         #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, #{introduction,jdbcType=VARCHAR}
         )
     </insert>

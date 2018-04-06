@@ -269,6 +269,7 @@
     /*初始化部门领导人员信息*/
     function initLeaderSelect() {
         var empSelect = $(".leaderSelect");
+        empSelect.find("option").remove();
         $.ajax({
             type: "POST",
             url: "../employInfo/getAll",

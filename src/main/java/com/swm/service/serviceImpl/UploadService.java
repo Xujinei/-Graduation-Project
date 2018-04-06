@@ -29,13 +29,13 @@ public class UploadService {
         boolean b = false;
         //创建处理EXCEL
         ReadExcel readExcel = new ReadExcel();
-        //解析excel，获取客户信息集合。
+        //解析excel，获取工时信息集合。
         List<Workinghours> workinghoursList = readExcel.getExcelInfo(name, file);
 
         if (workinghoursList != null) {
             b = true;
         }
-        //迭代添加工时信息:需判断是否已存在，如果存在则删除（注：实际上这里也可以直接将customerList集合作为参数，在Mybatis的相应映射文件中使用foreach标签进行批量添加。）
+        //迭代添加工时信息:需判断是否已存在，如果存在则删除
         for (Workinghours workinghours : workinghoursList) {
             List<Workinghours> temp = workHoursService.getByWorkinghours(workinghours);
             for (int i = 0; i < temp.size(); i++) {

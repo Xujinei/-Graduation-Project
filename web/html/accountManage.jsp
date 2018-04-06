@@ -144,7 +144,7 @@
                     var end = ed.pageCount;
                     var page_div = $(".page_div");
                     for (var i = 1; i <= end; i++) {
-                        var skip = 1;
+                        var skip = 0;
                         if (i > 1) {
                             skip = (i - 1) * 10;
                         }
@@ -156,7 +156,7 @@
             });
         }
 
-        initList(1, 10);
+        initList(0, 10);
         /*初始化账号信息列表结束*/
 
     </script>
@@ -400,7 +400,7 @@
             data: $("#editAccountForm").serialize(),
             success: function (data) {
                 alert(data);
-                initList(1, 10);
+                initList(0, 10);
             },
             error: function () {
                 alert("修改失败");
@@ -475,7 +475,7 @@
                     success: function (data) {
                         alert(data);
                         console.log(data);
-                        initList(1, 10);
+                        initList(0, 10);
                     },
                     error: function () {
                         alert("初始化密码失败");
@@ -511,7 +511,7 @@
                 var end = ed.pageCount;
                 var page_div = $(".page_div");
                 for (var i = 1; i <= end; i++) {
-                    var skip = 1;
+                    var skip = 0;
                     if (i > 1) {
                         skip = (i - 1) * 10;
                     }
@@ -524,7 +524,7 @@
     };
 
     $("#searchBtn").click(function () {
-        selectAccount(1, 10);
+        selectAccount(0, 10);
     });
 
 
@@ -587,7 +587,7 @@
         $("#accountListLi").addClass("active");
         $("#accountList").addClass("in active");
         $("#addAccountInfo").removeClass("in active");
-        initList(1, 10);
+        initList(0, 10);
     });
 </script>
 </html>
