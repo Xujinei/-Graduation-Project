@@ -58,6 +58,8 @@ public interface SalaryMapper {
      */
     int updateByPrimaryKey(Salary record);
 
+    int updateStatusByPrimaryKey(@Param("salary") EmpSalary salary);
+
     int countAll();
 
     int countAllByKey(@Param("salary") Salary salary);

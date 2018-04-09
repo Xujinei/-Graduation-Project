@@ -108,6 +108,10 @@ public class SalaryServiceImpl implements SalaryService {
         return salaryMapper.selectBySalary(null, null, salary, upOrDown);
     }
 
+    public void updateEmpSalary(EmpSalary empSalary) {
+        salaryMapper.updateStatusByPrimaryKey(empSalary);
+    }
+
 
     /**
      * 导出报表

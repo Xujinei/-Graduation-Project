@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -242,6 +243,52 @@ public class SalaryController {
             response.addHeader("Cache-Control", "no-cache");
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 批量审核
+     *
+     * @param response
+     * @param departmentId
+     * @param time
+     */
+    @RequestMapping("/check")
+    public void checkSalary(HttpSession session, HttpServletResponse response,
+                            Integer departmentId, String time) {
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        Account account = (Account) session.getAttribute("account");
+        Salary salary = new Salary();
+        if (departmentId != null) {
+            salary.setDepartementId(departmentId);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = null;
+        try {
+            now = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        salary.setWorkdata(now);
+        List<EmpSalary> empSalaryList = salaryService.selectDepEmpSalaryList(null, salary);
+        if (empSalaryList.size() > 0) {
+            for (EmpSalary empSalary : empSalaryList) {
+                empSalary.setStatus(1);
+                empSalary.setApprover(account.getEmployeeId().getId());
+                salaryService.updateEmpSalary(empSalary);
+            }
+            try {
+                response.getWriter().write("审核完成");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                response.getWriter().write("没有数据可审核");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

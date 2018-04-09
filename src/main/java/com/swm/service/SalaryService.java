@@ -24,6 +24,8 @@ public interface SalaryService {
 
     List<EmpSalary> selectDepEmpSalaryList(Integer upOrDown, Salary salary);
 
+    void updateEmpSalary(EmpSalary empSalary);
+
     HSSFWorkbook getHSSFWorkbook(String sheetName, String[] title, String[][] values, HSSFWorkbook wb);
 
 }

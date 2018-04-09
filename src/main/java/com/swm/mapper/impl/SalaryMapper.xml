@@ -93,6 +93,23 @@
         departementId=#{positionId,jdbcType=INTEGER}
         where workData = #{workdata,jdbcType=DATE}
     </update>
+    <update id="updateStatusByPrimaryKey">
+        update salary
+        set
+        status = #{salary.status},
+        approver = #{salary.approver}
+        <if test="salary!=null">
+            <where>
+                <if test="salary.employeeId!=null">
+                    employeeId=#{salary.employeeId}
+                </if>
+                <if test="salary.workdata!=null">
+                    and workData = #{salary.workdata}
+                </if>
+
+            </where>
+        </if>
+    </update>
     <select id="selectByPrimaryKey" parameterType="java.util.Date" resultMap="BaseResultMap">
         <!--
           WARNING - @mbg.generated
@@ -133,6 +150,9 @@
                 </if>
                 <if test="salary.positionId!=null">
                     and positionId = #{salary.positionId}
+                </if>
+                <if test="salary.status!=null">
+                    and status = #{salary.status}
                 </if>
                 and  exists (select id from department where id=salary.departementId)
             </where>
@@ -184,6 +204,9 @@
                 </if>
                 <if test="salary.positionId!=null">
                     and positionId = #{salary.positionId}
+                </if>
+                <if test="salary.status!=null">
+                    and status = #{salary.status}
                 </if>
                 and  exists (select id from department where id=salary.departementId)
             </where>

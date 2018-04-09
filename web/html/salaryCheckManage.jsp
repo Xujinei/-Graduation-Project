@@ -180,6 +180,7 @@
             </form>
             <%--条件查询--%>
             <form class="form-inline InitCommon" id="selectForm" style="margin-left: 2%">
+
                 <div class="form-group">
                     <label for="workData">时间</label>
                     <%--<input class="form-control" type="month" id="workData" name="workData" placeholder="如：2018-01-01">--%>
@@ -193,12 +194,14 @@
                     </select>
                 </div>
                 <button type="button" class="btn btn-primary" id="selectByKey">查询</button>
+                <button type="button" class="btn btn-primary" id="check">审核当前页</button>
             </form>
 
             <%--待审核列表列表--%>
             <table class="table infoTable ">
                 <thead>
                 <tr>
+
                     <th>姓名</th>
                     <th>时间</th>
                     <th>工时</th>
@@ -427,6 +430,41 @@
     for (var allinfo = last_year_month(), i = 0; i < allinfo.length; i++) {
         $("#workData").append("<option value='" + allinfo[i] + "'>" + allinfo[i] + "</option>");
     }
+
+
+    /*
+    * 审核*/
+    $("#check").click(function () {
+        var departmentId = $("#department").find("option:selected").val();
+        var date = $("#workData").find("option:selected").val();
+        if (departmentId == null && "" == departmentId) {
+            alert("请先选择统计时间");
+            return;
+        }
+        if (date == null && "" == date) {
+            alert("请先选择统计时间");
+            return;
+        }
+        if (date != null && "" != date && date != undefined) {
+            date = date + "-01";
+        }
+
+        console.log(departmentId + "---" + date);
+
+        $.ajax({
+            type: "POST",
+            url: "../salary/check",
+            data: {
+                time: date,
+                departmentId: departmentId
+            },
+            success: function (data) {
+                if (data != null && "" != data) {
+                    alert(data);
+                }
+            }
+        });
+    });
 
 </script>
 </html>

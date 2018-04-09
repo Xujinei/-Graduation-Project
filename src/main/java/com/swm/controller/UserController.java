@@ -83,6 +83,7 @@ public class UserController {
         if (account != null) {
             salary.setEmployeeId(account.getEmployeeId().getId());
         }
+        salary.setStatus(1);
         PageUtil<EmpSalary> salaryPage = salaryService.selectBySalary(pageIndex, pageSize, salary, null);
         String json = JSON.toJSONString(salaryPage, SerializerFeature.DisableCircularReferenceDetect);
         out.write(json);
