@@ -77,6 +77,26 @@
                     </div>
                 </div>
             </div>
+                <%--员工管理模块--%>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" id="employeeManageTitle">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#employee">
+                                员工管理
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="employee" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul class="myUl">
+                                <li class="myLi" id="employeeInfoLi"><a>员工信息管理</a></li>
+                                <li class="myLi" id="employeeAccount"><a>员工账号管理</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <%--员工管理模块结束--%>
             <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">

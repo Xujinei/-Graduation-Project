@@ -31,9 +31,9 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into notice (id, recipientId, noticeTime, 
+    insert into notice ( recipientId, noticeTime,
       status, content)
-    values (#{id,jdbcType=INTEGER}, #{recipientid,jdbcType=INTEGER}, #{noticetime,jdbcType=TIMESTAMP}, 
+    values ( #{recipientid,jdbcType=INTEGER}, #{noticetime,jdbcType=TIMESTAMP},
       #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.swm.entity.Notice">
@@ -67,5 +67,27 @@
     -->
     select id, recipientId, noticeTime, status, content
     from notice
+  </select>
+  <select id="selectByKey" resultMap="BaseResultMap">
+    select id, recipientId, noticeTime, status, content
+    from notice
+    <if test="notice!=null">
+      <where>
+        <if test="notice.recipientid!=null">
+          recipientId=#{notice.recipientid}
+        </if>
+        <if test="notice.status!=null">
+          and status=#{notice.status}
+        </if>
+      </where>
+    </if>
+    <if test="pageIndex!=null and pageSize!=null">
+      limit #{pageIndex} , #{pageSize}
+    </if>
+  </select>
+
+
+  <select id="countAll" resultType="java.lang.Integer">
+    select count(*) from notice
   </select>
 </mapper>

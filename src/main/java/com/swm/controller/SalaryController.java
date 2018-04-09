@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.swm.entity.*;
 import com.swm.service.DepartmentService;
 import com.swm.service.EmployeeInfoService;
+import com.swm.service.NoticeService;
 import com.swm.service.SalaryService;
 import com.swm.util.PageUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -34,6 +35,8 @@ public class SalaryController {
     private EmployeeInfoService employeeInfoService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private NoticeService noticeService;
 
     /**
      * 分页获取当月的薪酬信息（如果没有当月的获取上一个月的）
@@ -247,7 +250,7 @@ public class SalaryController {
     }
 
     /**
-     * 批量审核
+     * 批量审核，并且发生通知
      *
      * @param response
      * @param departmentId
@@ -264,6 +267,7 @@ public class SalaryController {
             salary.setDepartementId(departmentId);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月");
         Date now = null;
         try {
             now = sdf.parse(time);
@@ -277,6 +281,13 @@ public class SalaryController {
                 empSalary.setStatus(1);
                 empSalary.setApprover(account.getEmployeeId().getId());
                 salaryService.updateEmpSalary(empSalary);
+                /*发送通知*/
+                Notice notice = new Notice();
+                notice.setContent("发工资了！" + sdf2.format(empSalary.getWorkdata()) + "工资已到账");
+                notice.setNoticetime(new Date());
+                notice.setRecipientid(empSalary.getEmployeeId());
+                notice.setStatus(1);   // 未被查看
+                noticeService.addNotice(notice);
             }
             try {
                 response.getWriter().write("审核完成");

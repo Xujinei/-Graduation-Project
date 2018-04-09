@@ -81,7 +81,7 @@
                 </div>
                 <%--个人管理模块结束--%>
                 <%--通知模块--%>
-                <%-- <div class="panel panel-primary">
+                    <div class="panel panel-primary">
                      <div class="panel-heading">
                          <h4 class="panel-title">
                              <a data-toggle="collapse" data-parent="#accordion"
@@ -97,7 +97,7 @@
                              </ul>
                          </div>
                      </div>
-                 </div>--%>
+                    </div>
                 <%--通知模块结束--%>
 
                 <%--员工管理模块--%>
