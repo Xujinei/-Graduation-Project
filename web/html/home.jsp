@@ -37,6 +37,7 @@
 
     <script src="js/home.js"></script>
     <script src="js/my.js"></script>
+
 </head>
 <body>
 <div class="mycontain">
@@ -93,7 +94,9 @@
                      <div id="message" class="panel-collapse collapse">
                          <div class="panel-body">
                              <ul class="myUl">
-                                 <li class="myLi"><a>薪资发放通知</a><span class="badge pull-right">新</span></li>
+                                 <li class="myLi" id="noticeLi"><a>薪资发放通知</a><span id="newBadge"
+                                                                                   class="badge pull-right"
+                                                                                   style="display: none">新</span></li>
                              </ul>
                          </div>
                      </div>
@@ -177,6 +180,18 @@
         </div>
     </div>
 </div>
-
+<script>
+    /*是否有通知*/
+    $.ajax({
+        type: "POST",
+        url: "../notice/hasNotice",
+        success: function (data) {
+            console.log("has???" + data);
+            if (data > 0) {
+                $("#newBadge").show();
+            }
+        }
+    });
+</script>
 </body>
 </html>

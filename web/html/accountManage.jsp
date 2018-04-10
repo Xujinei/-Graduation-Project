@@ -478,7 +478,7 @@
                         initList(0, 10);
                     },
                     error: function () {
-                        alert("初始化密码失败");
+                        alert("删除失败");
                     }
                 });
             });

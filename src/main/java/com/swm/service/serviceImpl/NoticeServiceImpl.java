@@ -24,10 +24,14 @@ public class NoticeServiceImpl implements NoticeService {
         return 0;
     }
 
+    public int hasNotice(Notice notice) {
+        return noticeMapper.selectByKey(null, null, notice).size();
+    }
+
     public PageUtil<Notice> selectByNotice(Integer pageIndex, Integer pageSize, Notice notice) {
         PageUtil<Notice> noticePage = new PageUtil<Notice>();
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
         Integer skipSize = pageIndex;
         Integer pageNumber = noticeMapper.countAll();
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));

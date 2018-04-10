@@ -53,6 +53,10 @@ $(function () {
         date[1] = "salaryReport";
         win.postMessage(date, "*");
     });
+    //---------------------------------通知管理
+    $("#noticeLi").click(function () {
+        $("#containFrame").attr("src", "notice.jsp");
+    });
 
     //----------------------------------员工管理
 

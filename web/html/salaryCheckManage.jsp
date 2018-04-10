@@ -67,6 +67,7 @@
                 var tax = item.tax;
                 var insurance = item.insurance; // 加班工资
                 var total = item.total;
+                var check = item.status;
 
                 if (workdata != null && workdata != undefined && workdata != "") {
                     workdata = getStrDate(workdata); // 格式化时间
@@ -97,6 +98,11 @@
                     if (total == undefined || total == null) {
                         total = 0;
                     }
+                    if (check != undefined && check != null && check == 1) {
+                        check = "已审核";
+                    } else {
+                        check = "未审核";
+                    }
                     var tr = "<tr>" +
                         "<td id='name'>" + name + "<input type='hidden' id='empId' value='" + empId + "'> </td> " +
                         "<td id='workdata'>" + workdata + "</td> " +
@@ -108,6 +114,7 @@
                         "<td id='insurance'>" + insurance + "</td>" +
                         "<td id='tax'>" + tax + "</td>" +
                         "<td id='total'>" + total + "</td>" +
+                        "<td id='check'>" + check + "</td>" +
                         "<td> <button class='btn btn-primary' id='editSalaryCheckBtn'>编辑</button> </td>" +
                         "</tr>";
 
@@ -212,6 +219,7 @@
                     <th>加班工资</th>
                     <th>税收</th>
                     <th>应发总工资</th>
+                    <th>审核</th>
                     <th>编辑</th>
                     <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
                 </tr>

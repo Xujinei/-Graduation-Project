@@ -11,5 +11,7 @@ public interface NoticeService {
 
     int deleteNotice(Integer id);
 
+    int hasNotice(Notice notice);
+
     PageUtil<Notice> selectByNotice(Integer pageIndex, Integer pageSize, Notice notice);
 }
