@@ -53,4 +53,6 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice record);
 
     int countAll();
+
+    int countBySelect(@Param("notice") Notice notice);
 }

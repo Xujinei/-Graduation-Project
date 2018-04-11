@@ -14,7 +14,14 @@
 
     <link href="css/common.css" rel="stylesheet">
     <style>
+        .deleteNotice {
+            margin-left: 50%;
+        }
 
+        .page_div {
+            margin: 10px auto;
+            text-align: center;
+        }
     </style>
     <script src="js/my.js"></script>
 
@@ -26,17 +33,20 @@
                 data: {pageIndex: a, pageSize: b},
                 url: "../notice/getNotice",
                 success: function (data) {
-                    console.log(data);
                     var ed = $.parseJSON(data);
-                    console.log("ed===" + ed);
-
                     $("#noticeUL").children("li").remove();
                     $(".page_num").remove();
+
+                    var ul = $("#noticeUL");
+
                     $.each(ed.list, function (i, item) {
-                        console.log("item===" + item);
-                        var li = "<li class='list-group-item'>" + item.content + "</li>" +
-                            "<button type='button' class='btn btn-danger' class='deleteNotice'>删除</button>";
-                        $("#noticeUL").append(li);
+
+                        var li = "<li class='list-group-item'>" + item.content +
+                            "<input type='hidden' value='" + item.id + "' class='noticeId'/>" +
+                            "<button type='button' class='btn btn-danger deleteNotice' >删除</button>" +
+                            "</li>";
+                        ul.append(li);
+
                     });
 
                     $(".list_count").text(ed.pageNumber);
@@ -64,17 +74,16 @@
 </head>
 <body>
 <div class="mycontain inerFrame">
-    <ul id="myTab" class="nav nav-tabs">
+    <ul id="myTab" class="nav nav-tabs active">
         <li id="noticeListLi">
             <a href="#noticeList" data-toggle="tab">
                 通知列表
             </a>
         </li>
-
     </ul>
     <div id="myTabContent" class="tab-content">
         <%--通知列表信息--%>
-        <div class="tab-pane fade" id="noticeList" style="margin: 2%">
+        <div class="tab-pane in active" id="noticeList" style="margin: 2%">
             <%--选择删除--%>
             <%--<form class="form-inline">
                 <div class="checkbox">
@@ -87,11 +96,6 @@
             <%--通知列表--%>
 
             <ul class="list-group" id="noticeUL">
-                <li class="list-group-item">免费域名注册</li>
-                <li class="list-group-item">免费 Window 空间托管</li>
-                <li class="list-group-item">图像的数量</li>
-                <li class="list-group-item">24*7 支持</li>
-                <li class="list-group-item">每年更新成本</li>
             </ul>
             <%--通知列表结束--%>
             <div class="page_div">
@@ -108,49 +112,22 @@
 
 <script>
 
-    /*全选*/
-
-    $("#selectAll").change(function () {
-        var checkAll = $("#selectAll").is(':checked');
-        console.log(checkAll);
-        if (checkAll) {
-            $.each($('input[class=aCheckbox]'), function () {
-                $(this).attr("checked", true);
-            });
-        } else {
-            $.each($('input[class=aCheckbox]'), function () {
-                $(this).attr("checked", false);
-            });
-        }
-    });
-
-
     /*删除账号*/
-    $("#deleteAccount").click(function () {
-        var f = $(".aCheckbox").is(':checked');
-        if (!f) {
-            alert("请选择要删除的账号");
-            return;
-        } else {
-            $.each($('input[class=aCheckbox]:checked'), function () {
-                var id = $(this).val();
-                console.log("id=====" + id);
-                $.ajax({
-                    type: "POST",
-                    data: {id: id},
-                    url: "../account/delete",
-                    success: function (data) {
-                        alert(data);
-                        console.log(data);
-                        initList(0, 10);
-                    },
-                    error: function () {
-                        alert("初始化密码失败");
-                    }
-                });
-            });
-        }
-    });
+    $("body").on("click", ".deleteNotice", function () {
+        var id = $(this).parent().find(".noticeId").val();
+        $.ajax({
+            type: "POST",
+            data: {id: id},
+            url: "../notice/delete",
+            success: function (data) {
+                alert(data);
+                initList(0, 7);
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        });
+    })
 
 
 </script>

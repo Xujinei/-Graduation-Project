@@ -283,7 +283,7 @@ public class SalaryController {
                 salaryService.updateEmpSalary(empSalary);
                 /*发送通知*/
                 Notice notice = new Notice();
-                notice.setContent("发工资了！" + sdf2.format(empSalary.getWorkdata()) + "工资已到账");
+                notice.setContent("要发工资了！" + sdf2.format(empSalary.getWorkdata()) + "工资已审核");
                 notice.setNoticetime(new Date());
                 notice.setRecipientid(empSalary.getEmployeeId());
                 notice.setStatus(1);   // 未被查看

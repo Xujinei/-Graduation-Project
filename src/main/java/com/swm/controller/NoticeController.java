@@ -53,4 +53,16 @@ public class NoticeController {
         int has = noticeService.hasNotice(notice);
         out.write(String.valueOf(has));
     }
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @param out
+     */
+    @RequestMapping("/delete")
+    public void delete(Integer id, PrintWriter out) {
+        noticeService.deleteNotice(id);
+        out.write("删除成功");
+    }
 }

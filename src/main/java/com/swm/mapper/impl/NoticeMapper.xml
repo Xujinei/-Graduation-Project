@@ -90,4 +90,18 @@
   <select id="countAll" resultType="java.lang.Integer">
     select count(*) from notice
   </select>
+
+  <select id="countBySelect" resultType="java.lang.Integer">
+    select count(*) from notice
+    <if test="notice!=null">
+      <where>
+        <if test="notice.recipientid!=null">
+          recipientId=#{notice.recipientid}
+        </if>
+        <if test="notice.status!=null">
+          and status=#{notice.status}
+        </if>
+      </where>
+    </if>
+  </select>
 </mapper>

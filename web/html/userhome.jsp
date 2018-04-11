@@ -77,26 +77,27 @@
                     </div>
                 </div>
             </div>
-                <%--员工管理模块--%>
+                <%--通知模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title" id="employeeManageTitle">
+                        <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion"
-                               href="#employee">
-                                员工管理
+                               href="#message">
+                                通知
                             </a>
                         </h4>
                     </div>
-                    <div id="employee" class="panel-collapse collapse">
+                    <div id="message" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="myUl">
-                                <li class="myLi" id="employeeInfoLi"><a>员工信息管理</a></li>
-                                <li class="myLi" id="employeeAccount"><a>员工账号管理</a></li>
+                                <li class="myLi" id="noticeLi"><a>薪资发放通知</a><span id="newBadge"
+                                                                                  class="badge pull-right"
+                                                                                  style="display: none">新</span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <%--员工管理模块结束--%>
+                <%--通知模块结束--%>
             <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">
@@ -107,6 +108,18 @@
         </div>
     </div>
 </div>
-
+<script>
+    /*是否有通知*/
+    $.ajax({
+        type: "POST",
+        url: "../notice/hasNotice",
+        success: function (data) {
+            console.log("has???" + data);
+            if (data > 0) {
+                $("#newBadge").show();
+            }
+        }
+    });
+</script>
 </body>
 </html>

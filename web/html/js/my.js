@@ -123,16 +123,12 @@ $(function () {
     window.onmessage = function (p1) {
         //显示个人信息lab，隐藏其他lab :跨域
         $("#containFrame").attr("src", "personalManage.jsp");
-
         $("#" + p1.data[0]).siblings("li").each(function () {
-
             $(this).removeClass("active");
         });
         $("#" + p1.data[1]).siblings(".tab-pane").each(function () {
             $(this).removeClass("in active");
         });
-
-
         $("#" + p1.data[0]).addClass("active");
         $("#" + p1.data[1]).addClass("in active");
     };

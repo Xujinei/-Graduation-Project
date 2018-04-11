@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     public int deleteNotice(Integer id) {
-        return 0;
+        return noticeMapper.deleteByPrimaryKey(id);
     }
 
     public int hasNotice(Notice notice) {
@@ -33,7 +33,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 
         Integer skipSize = pageIndex;
-        Integer pageNumber = noticeMapper.countAll();
+        Integer pageNumber = noticeMapper.countBySelect(notice);
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {
             pageCount = 1;
