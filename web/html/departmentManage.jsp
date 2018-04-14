@@ -67,6 +67,7 @@
                         var createTime = item.createtime;
                         var remark = item.remark;
                         var introduction = item.introduction;
+                        var overTimePay = item.overTimePay;
                         console.log(createTime);
                         if (id != null && id != undefined && id != "") {
 
@@ -88,11 +89,15 @@
                             if (introduction == undefined || introduction == null) {
                                 introduction = "";
                             }
+                            if (overTimePay == undefined || overTimePay == null) {
+                                overTimePay = "";
+                            }
                             var tr = "<tr>" +
                                 "<td id='id'>" + id + "</td> " +
                                 "<td id='name'>" + name + "</td> " +
                                 "<td id='leaderid'>" + leader + "<input type='hidden' id='lid' value='" + lid + "'/></td>" +
                                 "<td id='introduction'>" + introduction + "</td>" +
+                                "<td id='overTimePay'>" + overTimePay + "</td>" +
                                 "<td id='remark'>" + remark + "</td>" +
                                 "<td><button class='btn btn-danger deletDepartmentBtn'>删除</button></td>" +
                                 "<td><button class='btn btn-primary editDepartment'>详情</button> </td>" +
@@ -160,6 +165,7 @@
                     <th>部门名称</th>
                     <th>部门领导</th>
                     <th>介绍</th>
+                    <th>加班工资</th>
                     <th>备注</th>
                     <th>删除</th>
                     <th>详情</th>
@@ -197,11 +203,15 @@
                             <select name="leaderid" class="leaderSelect"></select>
                         </td>
                         <td>
-                            <label>备注：</label>
-                            <textarea name="remark"></textarea>
+                            <label>加班工资：</label>
+                            <input name="overTimePay" type="number" step="0.1"></input>
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <label>备注：</label>
+                            <textarea name="remark"></textarea>
+                        </td>
                         <td>
                             <label>介绍：</label>
                             <textarea name="introduction"></textarea>
@@ -245,7 +255,15 @@
                             <textarea name="introduction"></textarea>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <label>加班工资：</label>
+                            <input name="overTimePay" type="number" step="0.1"/>
+                        </td>
+                        <td>
 
+                        </td>
+                    </tr>
                     <tr>
                         <td align="center">
                             <button type="button" class="btn btn-primary btn-sm" id="addDepartmentSubmit">添加</button>
@@ -309,10 +327,12 @@
         var lid = p.find("#lid").val();
         var remark = p.find('#remark').text();
         var introduction = p.find('#introduction').text();
+        var overTimePay = p.find('#overTimePay').text();
 
 
         $("#editDepartBody").find("input[name='id']").val(id);
         $("#editDepartBody").find("input[name='name']").val(name);
+        $("#editDepartBody").find("input[name='overTimePay']").val(overTimePay);
         $("#editDepartBody").find("select[name='leaderid']").find("option[value='" + lid + "']").attr("selected", true);
         $("#editDepartBody").find("textarea[name='remark']").val(remark);
         $("#editDepartBody").find("textarea[name='introduction']").val(introduction);

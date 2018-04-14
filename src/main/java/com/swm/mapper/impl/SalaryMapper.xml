@@ -174,14 +174,15 @@
     <select id="accountMonthSalary" resultMap="BaseResultMap">
         select w.workData as workData, emp.id as employeeId,
         emp.baseSalary as baseSalary, emp.positionSalary as positionSalary,
-        emp.subsidy as baseSubsidy, (emp.hoursSalary*w.workHours+(w.overTime*10)+emp.subsidy) as total,
-        (emp.baseSalary+emp.positionSalary)-3500 as tax, w.overTime*10 as insurance,
+        emp.subsidy as baseSubsidy, (emp.hoursSalary*w.workHours+(w.overTime*de.overTimePay)+emp.subsidy) as total,
+        (emp.baseSalary+emp.positionSalary)-3500 as tax, w.overTime*de.overTimePay as insurance,
         "" as status, "" as approver, curdate() as payTime,
         w.workHours as workHours,
         emp.departmentId as departementId,
         emp.positionId as positionId
-        from workinghours w , employeeinfo emp
+        from workinghours w , employeeinfo emp , department de
         where emp.id = w.empId
+        and de.id = emp.departmentId
         and w.workData=#{workdata,jdbcType=DATE}
     </select>
 

@@ -49,9 +49,12 @@ public class DepartmentController {
         Department department = new Department();
         department.setName(request.getParameter("name"));
         department.setLeaderid(Integer.valueOf(request.getParameter("leaderid")));
-
         department.setIntroduction(request.getParameter("introduction"));
         department.setRemark(request.getParameter("remark"));
+        String overTimePayString = request.getParameter("overTimePay");
+        if (overTimePayString != null && !"".equals(overTimePayString)) {
+            department.setOverTimePay(Double.parseDouble(overTimePayString));
+        }
 
         if (department == null) {
             return;
@@ -100,6 +103,10 @@ public class DepartmentController {
         department.setLeaderid(Integer.valueOf(request.getParameter("leaderid")));
         department.setIntroduction(request.getParameter("introduction"));
         department.setRemark(request.getParameter("remark"));
+        String overTimePayString = request.getParameter("overTimePay");
+        if (overTimePayString != null && !"".equals(overTimePayString)) {
+            department.setOverTimePay(Double.parseDouble(overTimePayString));
+        }
 
         departmentService.updateDepart(department);
         out.write("修改成功");
