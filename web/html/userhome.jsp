@@ -76,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
                 <%--通知模块--%>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -98,7 +97,9 @@
                     </div>
                 </div>
                 <%--通知模块结束--%>
-            <%--左边导航栏结束--%>
+            </div>
+
+                <%--左边导航栏结束--%>
             <%--右边内容--%>
             <div class="col-md-9 myHomeRight">
 

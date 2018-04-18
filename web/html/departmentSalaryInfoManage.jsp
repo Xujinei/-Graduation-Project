@@ -251,7 +251,7 @@
         var d = new Date();
         var result = [];
         for (var i = 0; i < 24; i++) {
-            d.setMonth(d.getMonth() - 1);
+            d.setMonth(d.getMonth());
             var m = d.getMonth() + 1;
             m = m < 10 ? "0" + m : m;
             //在这里可以自定义输出的日期格式

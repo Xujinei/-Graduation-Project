@@ -36,5 +36,4 @@ public class WorkHoursServiceImpl implements WorkHoursService {
         return workinghoursMapper.deleteByPrimaryKey(id);
     }
 
-
 }

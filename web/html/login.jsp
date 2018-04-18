@@ -39,8 +39,8 @@
                         <label for="username" class="col-md-2 control-label">账号</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="username" name="username" value="${username }"
-                                   placeholder="请输入账号" required="required" pattern="^[a-zA-Z][a-zA-Z0-9_@*.]{4,20}$"
-                                   oninvalid="setCustomValidity('请输入5到20个由数字和英文字母组成的用户名')"
+                                   placeholder="请输入账号" required="required" pattern="^[a-zA-Z][a-zA-Z0-9_@*.]{1,20}$"
+                                   oninvalid="setCustomValidity('请输入用户名')"
                                    oninput="setCustomValidity('')">
                         </div>
                       </div>
@@ -49,20 +49,20 @@
                         <div class="col-md-10">
                             <input type="password" class="form-control" id="password" name="password"
                                    value="${password }" placeholder="请输入密码" required="required"
-                                   pattern="^[a-zA-Z][a-zA-Z0-9_@*.]{4,20}$"
-                                   oninvalid="setCustomValidity('请输入5到20个由数字和英文字母组成的密码')"
+                                   pattern="^[a-zA-Z0-9_@*.]{1,20}$"
+                                   oninvalid="setCustomValidity('请输入密码')"
                                    oninput="setCustomValidity('')">
                         </div>
                       </div>
-                      <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                          <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember"> 记住密码
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                          <%--  <div class="form-group">
+                              <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="remember"> 记住密码
+                                  </label>
+                                </div>
+                              </div>
+                            </div>--%>
                       <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn btn-primary">登录</button>

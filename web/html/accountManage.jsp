@@ -108,7 +108,7 @@
                         status = '不可用';
                     }
                     if (promission == 1) {
-                        promission = '超级管理员';
+                        promission = '管理员';
                     } else if (promission == 0) {
                         promission = '普通用户';
                     }
@@ -195,7 +195,7 @@
                     <label for="promission">权限</label>
                     <select class="form-control" id="promission" name="promission">
                         <option value="">所有</option>
-                        <option value="1">超级管理员</option>
+                        <option value="1">管理员</option>
                         <option value="0">普通员工</option>
                     </select>
                 </div>
@@ -278,7 +278,7 @@
                         <td>
                             <label>权限：</label>
                             <select class="form-control" style="width: 50%;display: inline-block" name="promission">
-                                <option value="1">超级管理员</option>
+                                <option value="1">管理员</option>
                                 <option value="0">普通员工</option>
                             </select>
                         </td>
@@ -330,7 +330,7 @@
                         <td>
                             <label>权限：</label>
                             <select class="form-control" style="width: 50%;display: inline-block" name="promission">
-                                <option value="1">超级管理员</option>
+                                <option value="1">管理员</option>
                                 <option value="0">普通员工</option>
                             </select>
                         </td>
@@ -554,9 +554,9 @@
     /*提交添加*/
     $("#addBtn").click(function () {
         var userName = $("#addAccountForm").find("input[name='username']").val();
-        var name = $("#addAccountForm select").find('option:selected').val();
-        var promission = $("#addAccountForm").find("input[name='promission']").val();
-        var status = $("#addAccountForm").find("input[name='status']").val();
+        var name = $("#addAccountForm").find("select[name='name']").find('option:selected').val();
+        var promission = $("#addAccountForm").find("select[name='promission']").find('option:selected').val();
+        var status = $("#addAccountForm").find("select[name='status']").find('option:selected').val();
 
         if (userName == null || "" == userName) {
             alert("请输入用户名");

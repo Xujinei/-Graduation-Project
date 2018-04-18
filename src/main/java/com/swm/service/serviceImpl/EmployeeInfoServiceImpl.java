@@ -41,7 +41,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         PageUtil<EmployeeinfoEntity> employeeinfoPage = new PageUtil<EmployeeinfoEntity>();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Integer skipSize = (pageIndex - 1) * pageSize;
+        Integer skipSize = pageIndex;
         Integer pageNumber = employeeinfoMapper.countAll();
         Integer pageCount = (int) Math.ceil(pageNumber / (pageSize * 1.0));
         if (pageCount == 0) {

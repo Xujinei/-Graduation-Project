@@ -146,7 +146,7 @@ public class AccountController {
     @RequestMapping("/add")
     public void addAccount(PrintWriter out, String accountName, Integer promission, Integer status, Integer empId) {
         Account account = new Account();
-        String pw = MD5.toMD5("aaa88");
+        String pw = MD5.toMD5("aaa888");
         account.setPassword(pw);
         account.setEmployeeId(employeeInfoService.getEmployeeDetail(empId));
         account.setUsername(accountName);
@@ -159,6 +159,5 @@ public class AccountController {
         } else {
             out.write("添加失败");
         }
-
     }
 }

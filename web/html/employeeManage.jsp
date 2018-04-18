@@ -128,7 +128,7 @@
                     var end = ed.pageCount;
                     var page_div = $(".page_div");
                     for (var i = 1; i <= end; i++) {
-                        var skip = 1;
+                        var skip = 0;
                         if (i > 1) {
                             skip = (i - 1) * 10;
                         }
@@ -141,7 +141,7 @@
         }
 
         /*初始化员工列表*/
-        initList(1, 10);
+        initList(0, 10);
     </script>
 
 </head>
@@ -531,7 +531,7 @@
     }
 
     $("#selectEmpByKey").click(function () {
-        selectByKey(1, 10);
+        selectByKey(0, 10);
     });
 
     /*添加员工信息*/
@@ -725,7 +725,7 @@
         $("#employeeInfo").removeClass("in active");
         $("#employeeList").addClass("in active");
         $("#employeeListLab").addClass("active");
-        initList(1, 10);
+        initList(0, 10);
     });
 
 
@@ -766,7 +766,7 @@
                     }
                 });
             });
-            initList(1, 10);
+            initList(0, 10);
         }
     });
 

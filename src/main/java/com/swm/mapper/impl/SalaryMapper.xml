@@ -154,7 +154,7 @@
                 <if test="salary.status!=null">
                     and status = #{salary.status}
                 </if>
-                and  exists (select id from department where id=salary.departementId)
+                and exists (select id from department where id=salary.departementId)
             </where>
         </if>
         order by total
@@ -209,20 +209,24 @@
                 <if test="salary.status!=null">
                     and status = #{salary.status}
                 </if>
-                and  exists (select id from department where id=salary.departementId)
+                and exists (select id from department where id=salary.departementId)
             </where>
         </if>
     </select>
 
     <select id="selectDepartmentSalary" resultMap="EmpResultMap">
         select departementId , workData as workData, sum(total) as total
-        , round(total/(SELECT sum(total)
-        FROM salary where exists (select id from department where id=salary.departementId))*100,2) as status
+        , round(((SELECT sum(total)
+        FROM salary where exists (select id from department where id=salary.departementId)
+        <if test="date!=null">
+            and workData between #{date} and last_day(#{date})
+        </if>
+        )/total),2) as status
         from salary
         <if test="date!=null">
             <where>
                 workData between #{date} and last_day(#{date})
-                and  exists (select id from department where id=salary.departementId)
+                and exists (select id from department where id=salary.departementId)
             </where>
         </if>
         group by departementId
@@ -236,13 +240,13 @@
     </select>
     <select id="selectPositionSalary" resultMap="EmpResultMap">
         select positionId , workData as workData, sum(total) as total
-        , round(total/(SELECT sum(total)
-        FROM salary where exists (select id from position where id=salary.positionId))*100,2) as status
+        , round((SELECT sum(total)
+        FROM salary where exists (select id from position where id=salary.positionId))/total,2) as status
         from salary
         <if test="date!=null">
             <where>
                 workData between #{date} and last_day(#{date})
-                and  exists (select id from position where id=salary.positionId)
+                and exists (select id from position where id=salary.positionId)
             </where>
         </if>
         group by positionId

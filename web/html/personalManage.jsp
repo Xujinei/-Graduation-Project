@@ -291,8 +291,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm pull-right" id="editPersonalInfo"
-                                    value="修改">修改
+                            <button type="button" class="btn btn-primary btn-sm pull-right" id="editPersonalInfo">修改
                             </button>
 
                         </td>
@@ -370,13 +369,16 @@
 
         var btHtml = $("#editPersonalInfo").text();
 
-        if (btHtml == "修改") {
+
+        if (btHtml.trim() == "修改") {
             var infoTable = $(".personInfoTable");
+
             infoTable.find("input[name='telphone']").attr("disabled", false).css("background-color", "gray");
             infoTable.find("input[name='email']").attr("disabled", false).css("background-color", "gray");
             infoTable.find("input[name='address']").attr("disabled", false).css("background-color", "gray");
             $("#editPersonalInfo").text("保存");
-        } else if ("保存" == btHtml) {
+
+        } else if ("保存" == btHtml.trim()) {
             $("#editPersonalInfo").text("修改");
             // 保存操作
 
