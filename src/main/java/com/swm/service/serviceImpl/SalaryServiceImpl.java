@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class SalaryServiceImpl implements SalaryService {
     public List<Salary> accountMonthSalary(Date date) {
         List<Salary> salaryList = salaryMapper.accountMonthSalary(date);
         /*调整税收和总工资*/
+
         for (Salary salary : salaryList) {
             double tax = salary.getTax();
             if (tax < 1500 && tax > 0) {
@@ -48,8 +51,10 @@ public class SalaryServiceImpl implements SalaryService {
             } else if (tax >= 80000) {
                 tax = tax * 0.45 - 13505;
             }
-            salary.setTax(tax);
-            salary.setTotal(salary.getTotal() - tax);
+            BigDecimal bd = new BigDecimal(tax);
+            Double dtax = bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            salary.setTax(dtax);
+            salary.setTotal(salary.getTotal() - dtax);
         }
 
         return salaryList;
@@ -79,14 +84,14 @@ public class SalaryServiceImpl implements SalaryService {
         List<EmpSalary> salaryList = salaryMapper.selectBySalary(skipSize, pageSize, salary, upOrDown);
 
 
-        /*完善部门职务信息*/
+        /*完善员工信息*/
         for (EmpSalary empSalary : salaryList) {
             if (empSalary != null) {
                 Integer empId = empSalary.getEmployeeId();
                 EmployeeinfoEntity emp = employeeInfoService.getEmployeeEntityById(empId);
-                empSalary.setEmployeeEntity(emp);
+                empSalary.setEmployeeEntity(emp);/*
                 empSalary.setPosition(emp.getPosition());
-                empSalary.setDepartment(emp.getDepartment());
+                empSalary.setDepartment(emp.getDepartment());*/
             }
         }
         pageSalary.setList(salaryList);

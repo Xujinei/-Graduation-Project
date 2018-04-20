@@ -53,8 +53,12 @@
             $.each(ed.list, function (i, item) {
                 var workdata = item.workdata;
                 var workHours = item.workHours;
-                var name = item.employeeEntity.name;
-                var empId = item.employeeEntity.id;
+                var name = "已删除";
+                if ("employeeEntity" in item) {
+                    name = item.employeeEntity.name;
+                }
+
+                var empId = item.employeeId;
 
                 var department = "暂无";
                 if("department" in item){
@@ -424,8 +428,9 @@
     var last_year_month = function () {
         var d = new Date();
         var result = [];
+        d.setMonth(d.getMonth() + 1);
         for (var i = 0; i < 24; i++) {
-            d.setMonth(d.getMonth());
+            d.setMonth(d.getMonth() - 1);
             var m = d.getMonth() + 1;
             m = m < 10 ? "0" + m : m;
             //在这里可以自定义输出的日期格式

@@ -240,8 +240,7 @@ public class EmployeeInfoController {
         employeeinfo.setPositionsalary(dPositionSalary);
         employeeinfo.setInsurancestandard(intInsuStand);
         employeeinfo.setSubsidy(dSubsidy);
-        employeeinfo.setHoursSalary((employeeinfo.getBasesalary() + employeeinfo.getPositionsalary()) / 40.0); // 小时工资
+        employeeinfo.setHoursSalary((employeeinfo.getBasesalary() + employeeinfo.getPositionsalary()) / 147.0); // 小时工资
         return employeeinfo;
-
     }
 }

@@ -62,8 +62,13 @@
                     $.each(ed.list, function (i, item) {
                         var id = item.id;
                         var name = item.name;
-                        var leader = item.leader.name;
-                        var lid = item.leader.id;
+                        var leader = "无";
+                        var lid = ""
+                        if ("leader" in item) {
+                            leader = item.leader.name;
+                            lid = item.leader.id;
+                        }
+
                         var createTime = item.createtime;
                         var remark = item.remark;
                         var introduction = item.introduction;

@@ -38,16 +38,11 @@ public class LoginServiceImpl implements LoginService {
             // account.setStatus(1);
             Account user = accountMapper.selectByAccount(account);
             if (user != null) {
-                // 记住密码
-                if ("1".equals(ifRemb)) {
-                    String loginInfo = username + password;
-                    Cookie cookie = new Cookie("loginInfo", loginInfo);
-                    response.addCookie(cookie);
-                }
-                account.setLastLoginTime(new Date());
+
+                user.setLastLoginTime(new Date());
 
                 //更新最后登录时间
-                accountMapper.updateByPrimaryKey(account);
+                accountMapper.updateByPrimaryKey(user);
                 return user;
             }
         }

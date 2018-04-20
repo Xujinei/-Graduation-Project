@@ -642,20 +642,7 @@
             }
         });
 
-        /*  $.ajax({
-              type: 'POST',
-              scriptCharset: 'utf-8',
-              contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-              url: '../insurance/getAll',
-              success: function (data) {
-                  var d = eval(data);
 
-                  $.each(d, function (i, item) {
-                      var option = "<option value=" + item.id + ">" + item.name + "</option>";
-                      insurancestandardSelect.append(option);
-                  })
-              }
-          });*/
 
         var p = $(this).parent().parent();
         var id = p.find(".id").val();
@@ -667,6 +654,7 @@
             url: "../employInfo/detail",
             success: function (data) {
                 var info = $.parseJSON(data);
+                console.log(info);
                 var strBriDate = getStrDate(info.brithday);
                 var strentryDate = getStrDate(info.entrytime);
                 var strExpDate = getStrDate(info.expiredate);
@@ -755,6 +743,7 @@
         if (!f) {
             alert("请选择要删除的员工");
         } else {
+            var flag = 1;
             $.each($('input[class=aEmpCheck]:checked'), function () {
                 var id = $(this).val();
                 $.ajax({
@@ -763,9 +752,15 @@
                     url: "../employInfo/delete",
                     success: function (data) {
                         console.log(data);
+                        if ("删除成功" != data.trim()) {
+                            f = 0;
+                        }
                     }
                 });
             });
+            if (f == 1) {
+                alert("删除成功");
+            }
             initList(0, 10);
         }
     });

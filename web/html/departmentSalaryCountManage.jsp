@@ -87,7 +87,7 @@
                             "<td class='department'>" + department + "<input type='hidden' class='departId' value='" + dId + "'/></td>" +
                             "<td class='date'>" + date + "</td>" +
                             "<td class='total'>" + total + "</td>" +
-                            "<td id='" + ratio + "'>" + ratio + "%</td>" +
+                            /*  "<td id='" + ratio + "'>" + ratio + "%</td>" +*/
                             "<td>  <button class='btn btn-primary editDepartmentSalaryCheckBtn'>详情</button> </td>" +
                             "</tr>";
                         body.append(tr);
@@ -616,7 +616,7 @@
                     <th>部门</th>
                     <th>时间</th>
                     <th>总工资支出</th>
-                    <th>所占比例</th>
+                    <%-- <th>所占比例</th>--%>
                     <th>详情</th>
                     <%--启用编辑后该按钮变为保存，点击保存才会保存修改--%>
                 </tr>
@@ -676,8 +676,9 @@
     var last_year_month = function () {
         var d = new Date();
         var result = [];
+        d.setMonth(d.getMonth() + 1);
         for (var i = 0; i < 24; i++) {
-            d.setMonth(d.getMonth());
+            d.setMonth(d.getMonth() - 1);
             var m = d.getMonth() + 1;
             m = m < 10 ? "0" + m : m;
             //在这里可以自定义输出的日期格式
@@ -703,9 +704,17 @@
         $.each(ed.list, function (i, item) {
             var workdata = item.workdata;
             var workHours = item.workHours;
-            var name = item.employeeEntity.name;
-            var empId = item.employeeEntity.id;
-            var department = item.department.name;
+            var name = "已删除";
+            if ("employeeEntity" in item) {
+                name = item.employeeEntity.name;
+            }
+
+            var empId = item.employeeId;
+            var department = "无";
+            if ("department" in item) {
+                var department = item.department.name;
+            }
+
             var basesalary = item.basesalary;
             var positionsalary = item.positionsalary;
             var basesubsidy = item.basesubsidy;
